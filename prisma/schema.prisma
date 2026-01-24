@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator seed {
+  provider = "ts-node"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum BorrowStatus {
+  ACTIVE
+  RETURNED
+  OVERDUE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  username     String   @unique
+  password     String
+  name         String
+  role         Role     @default(MEMBER)
+  nisNim       String?  @unique
+  phone        String?
+  address      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  borrowings   Borrowing[]
+}
+
+model Book {
+  id          String   @id @default(cuid())
+  isbn        String   @unique
+  title       String
+  author      String
+  publisher   String
+  year        Int
+  category    String
+  stock       Int
+  coverImage  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  borrowings  Borrowing[]
+}
+
+model Borrowing {
+  id          String       @id @default(cuid())
+  userId      String
+  bookId      String
+  borrowDate  DateTime     @default(now())
+  dueDate     DateTime
+  returnDate  DateTime?
+  fine        Float        @default(0)
+  status      BorrowStatus @default(ACTIVE)
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book        Book         @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([bookId])
+  @@index([status])
+}

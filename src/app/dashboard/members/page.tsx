@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState, useEffect } from "react";
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,8 +31,18 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { Plus, Search, Edit, Trash2, User, Mail, Phone, MapPin, Calendar } from 'lucide-react';
+} from "@/components/ui/alert-dialog";
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+} from "lucide-react";
 
 interface Member {
   id: string;
@@ -48,12 +58,16 @@ interface Member {
     borrowings: number;
   };
 }
+export const dynamic = "force-dynamic";
 
 export default function MembersPage() {
-  const [user, setUser] = useState<{ name: string; role: 'ADMIN' | 'MEMBER' } | null>(null);
+  const [user, setUser] = useState<{
+    name: string;
+    role: "ADMIN" | "MEMBER";
+  } | null>(null);
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -61,24 +75,24 @@ export default function MembersPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    password: '',
-    name: '',
-    nisNim: '',
-    phone: '',
-    address: '',
+    email: "",
+    username: "",
+    password: "",
+    name: "",
+    nisNim: "",
+    phone: "",
+    address: "",
   });
 
   useEffect(() => {
     fetchUser();
-    if (user?.role === 'ADMIN') {
+    if (user?.role === "ADMIN") {
       fetchMembers();
     }
   }, [user?.role, search, page]);
 
   const fetchUser = () => {
-    fetch('/api/auth/session')
+    fetch("/api/auth/session")
       .then((res) => res.json())
       .then((data) => {
         setUser(data.user);
@@ -93,17 +107,17 @@ export default function MembersPage() {
     try {
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: '10',
+        limit: "10",
       });
 
-      if (search) params.append('search', search);
+      if (search) params.append("search", search);
 
       const response = await fetch(`/api/members?${params}`);
       const data = await response.json();
       setMembers(data.members || []);
       setTotalPages(data.pagination?.totalPages || 1);
     } catch (error) {
-      console.error('Error fetching members:', error);
+      console.error("Error fetching members:", error);
     } finally {
       setLoading(false);
     }
@@ -113,15 +127,15 @@ export default function MembersPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/members', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/members", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal menambahkan anggota');
+        throw new Error(data.error || "Gagal menambahkan anggota");
       }
 
       setIsAddDialogOpen(false);
@@ -139,14 +153,14 @@ export default function MembersPage() {
 
     try {
       const response = await fetch(`/api/members/${selectedMember.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal mengupdate anggota');
+        throw new Error(data.error || "Gagal mengupdate anggota");
       }
 
       setIsEditDialogOpen(false);
@@ -163,12 +177,12 @@ export default function MembersPage() {
 
     try {
       const response = await fetch(`/api/members/${selectedMember.id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal menghapus anggota');
+        throw new Error(data.error || "Gagal menghapus anggota");
       }
 
       setIsDeleteDialogOpen(false);
@@ -184,11 +198,11 @@ export default function MembersPage() {
     setFormData({
       email: member.email,
       username: member.username,
-      password: '',
+      password: "",
       name: member.name,
-      nisNim: member.nisNim || '',
-      phone: member.phone || '',
-      address: member.address || '',
+      nisNim: member.nisNim || "",
+      phone: member.phone || "",
+      address: member.address || "",
     });
     setIsEditDialogOpen(true);
   };
@@ -200,17 +214,17 @@ export default function MembersPage() {
 
   const resetForm = () => {
     setFormData({
-      email: '',
-      username: '',
-      password: '',
-      name: '',
-      nisNim: '',
-      phone: '',
-      address: '',
+      email: "",
+      username: "",
+      password: "",
+      name: "",
+      nisNim: "",
+      phone: "",
+      address: "",
     });
   };
 
-  if (!user || user.role !== 'ADMIN') {
+  if (!user || user.role !== "ADMIN") {
     return null;
   }
 
@@ -219,8 +233,12 @@ export default function MembersPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Manajemen Anggota</h1>
-            <p className="text-gray-600 mt-1">Kelola data anggota perpustakaan</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Manajemen Anggota
+            </h1>
+            <p className="text-gray-600 mt-1">
+              Kelola data anggota perpustakaan
+            </p>
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
@@ -232,7 +250,9 @@ export default function MembersPage() {
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Tambah Anggota Baru</DialogTitle>
-                <DialogDescription>Isi data anggota yang akan ditambahkan</DialogDescription>
+                <DialogDescription>
+                  Isi data anggota yang akan ditambahkan
+                </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleAdd} className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
@@ -241,7 +261,9 @@ export default function MembersPage() {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
                       placeholder="Nama lengkap"
                       required
                     />
@@ -251,7 +273,9 @@ export default function MembersPage() {
                     <Input
                       id="nisNim"
                       value={formData.nisNim}
-                      onChange={(e) => setFormData({ ...formData, nisNim: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, nisNim: e.target.value })
+                      }
                       placeholder="Nomor NIS/NIM"
                     />
                   </div>
@@ -263,7 +287,9 @@ export default function MembersPage() {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       placeholder="email@example.com"
                       required
                     />
@@ -273,7 +299,9 @@ export default function MembersPage() {
                     <Input
                       id="username"
                       value={formData.username}
-                      onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, username: e.target.value })
+                      }
                       placeholder="Username"
                       required
                     />
@@ -286,7 +314,9 @@ export default function MembersPage() {
                       id="password"
                       type="password"
                       value={formData.password}
-                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
                       placeholder="Minimal 8 karakter"
                       required
                     />
@@ -296,7 +326,9 @@ export default function MembersPage() {
                     <Input
                       id="phone"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
                       placeholder="62xxxxxxxxxx"
                     />
                   </div>
@@ -306,11 +338,16 @@ export default function MembersPage() {
                   <Input
                     id="address"
                     value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, address: e.target.value })
+                    }
                     placeholder="Alamat lengkap"
                   />
                 </div>
-                <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+                <Button
+                  type="submit"
+                  className="w-full bg-green-600 hover:bg-green-700"
+                >
                   Simpan Anggota
                 </Button>
               </form>
@@ -345,7 +382,9 @@ export default function MembersPage() {
             {loading ? (
               <div className="text-center py-8">Memuat data...</div>
             ) : members.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">Tidak ada anggota ditemukan</div>
+              <div className="text-center py-8 text-gray-500">
+                Tidak ada anggota ditemukan
+              </div>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
@@ -364,14 +403,18 @@ export default function MembersPage() {
                   <TableBody>
                     {members.map((member) => (
                       <TableRow key={member.id}>
-                        <TableCell className="font-medium">{member.name}</TableCell>
-                        <TableCell>{member.nisNim || '-'}</TableCell>
+                        <TableCell className="font-medium">
+                          {member.name}
+                        </TableCell>
+                        <TableCell>{member.nisNim || "-"}</TableCell>
                         <TableCell>{member.email}</TableCell>
                         <TableCell>{member.username}</TableCell>
-                        <TableCell>{member.phone || '-'}</TableCell>
+                        <TableCell>{member.phone || "-"}</TableCell>
                         <TableCell>{member._count.borrowings}</TableCell>
                         <TableCell>
-                          {new Date(member.createdAt).toLocaleDateString('id-ID')}
+                          {new Date(member.createdAt).toLocaleDateString(
+                            "id-ID",
+                          )}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
@@ -438,7 +481,9 @@ export default function MembersPage() {
                   <Input
                     id="edit-name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -447,7 +492,9 @@ export default function MembersPage() {
                   <Input
                     id="edit-nisNim"
                     value={formData.nisNim}
-                    onChange={(e) => setFormData({ ...formData, nisNim: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, nisNim: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -458,7 +505,9 @@ export default function MembersPage() {
                     id="edit-email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -467,19 +516,25 @@ export default function MembersPage() {
                   <Input
                     id="edit-username"
                     value={formData.username}
-                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, username: e.target.value })
+                    }
                     required
                   />
                 </div>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="edit-password">Password (Biarkan kosong jika tidak diubah)</Label>
+                  <Label htmlFor="edit-password">
+                    Password (Biarkan kosong jika tidak diubah)
+                  </Label>
                   <Input
                     id="edit-password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
                     placeholder="Minimal 8 karakter"
                   />
                 </div>
@@ -488,7 +543,9 @@ export default function MembersPage() {
                   <Input
                     id="edit-phone"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
                     placeholder="62xxxxxxxxxx"
                   />
                 </div>
@@ -498,10 +555,15 @@ export default function MembersPage() {
                 <Input
                   id="edit-address"
                   value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
                 />
               </div>
-              <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+              <Button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700"
+              >
                 Update Anggota
               </Button>
             </form>
@@ -509,17 +571,24 @@ export default function MembersPage() {
         </Dialog>
 
         {/* Delete Confirmation Dialog */}
-        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Hapus Anggota</AlertDialogTitle>
               <AlertDialogDescription>
-                Apakah Anda yakin ingin menghapus anggota "{selectedMember?.name}"? Tindakan ini tidak dapat dibatalkan.
+                Apakah Anda yakin ingin menghapus anggota "
+                {selectedMember?.name}"? Tindakan ini tidak dapat dibatalkan.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Batal</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+              <AlertDialogAction
+                onClick={handleDelete}
+                className="bg-red-600 hover:bg-red-700"
+              >
                 Hapus
               </AlertDialogAction>
             </AlertDialogFooter>

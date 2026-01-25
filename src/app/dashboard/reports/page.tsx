@@ -84,6 +84,7 @@ const defaultSummary: BorrowingReportSummary = {
   overdueBorrowings: 0,
   totalFines: 0
 };
+export const dynamic = "force-dynamic";
 
 export default function ReportsPage() {
   const [user, setUser] = useState<{ name: string; role: 'ADMIN' | 'MEMBER' } | null>(null);

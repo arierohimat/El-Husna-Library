@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { UserTable } from "@/components/users/user-table";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminUsersPage() {
   const session = await getSession();
 

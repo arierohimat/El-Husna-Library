@@ -7,6 +7,8 @@ import { TopBorrowersChart } from "@/components/charts/top-borrowers-chart";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
   const session = await getSession();
 

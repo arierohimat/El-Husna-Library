@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,18 +29,25 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Search, Plus, Book, Calendar, CheckCircle, AlertTriangle } from 'lucide-react';
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import {
+  Search,
+  Plus,
+  Book,
+  Calendar,
+  CheckCircle,
+  AlertTriangle,
+} from "lucide-react";
 
 interface Book {
   id: string;
@@ -56,7 +63,7 @@ interface Borrowing {
   dueDate: string;
   returnDate: string | null;
   fine: number;
-  status: 'ACTIVE' | 'RETURNED' | 'OVERDUE';
+  status: "ACTIVE" | "RETURNED" | "OVERDUE";
   book: {
     id: string;
     isbn: string;
@@ -71,24 +78,33 @@ interface Borrowing {
     email: string;
   };
 }
+export const dynamic = "force-dynamic";
 
 export default function BorrowingsPage() {
-  const [user, setUser] = useState<{ name: string; role: 'ADMIN' | 'MEMBER'; userId: string } | null>(null);
+  const [user, setUser] = useState<{
+    name: string;
+    role: "ADMIN" | "MEMBER";
+    userId: string;
+  } | null>(null);
   const [borrowings, setBorrowings] = useState<Borrowing[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [status, setStatus] = useState('all');
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isBorrowDialogOpen, setIsBorrowDialogOpen] = useState(false);
   const [isReturnDialogOpen, setIsReturnDialogOpen] = useState(false);
-  const [selectedBorrowing, setSelectedBorrowing] = useState<Borrowing | null>(null);
+  const [selectedBorrowing, setSelectedBorrowing] = useState<Borrowing | null>(
+    null,
+  );
   const [formData, setFormData] = useState({
-    bookId: '',
-    borrowDate: new Date().toISOString().split('T')[0],
-    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days from now
-    fine: '',
+    bookId: "",
+    borrowDate: new Date().toISOString().split("T")[0],
+    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0], // 7 days from now
+    fine: "",
   });
 
   useEffect(() => {
@@ -98,14 +114,14 @@ export default function BorrowingsPage() {
   useEffect(() => {
     if (user) {
       fetchBorrowings();
-      if (user.role === 'MEMBER') {
+      if (user.role === "MEMBER") {
         fetchAvailableBooks();
       }
     }
   }, [user, search, status, page]);
 
   const fetchUser = () => {
-    fetch('/api/auth/session')
+    fetch("/api/auth/session")
       .then((res) => res.json())
       .then((data) => {
         setUser(data.user);
@@ -120,18 +136,18 @@ export default function BorrowingsPage() {
     try {
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: '10',
+        limit: "10",
       });
 
-      if (search) params.append('search', search);
-      if (status && status !== 'all') params.append('status', status);
+      if (search) params.append("search", search);
+      if (status && status !== "all") params.append("status", status);
 
       const response = await fetch(`/api/borrowings?${params}`);
       const data = await response.json();
       setBorrowings(data.borrowings || []);
       setTotalPages(data.pagination?.totalPages || 1);
     } catch (error) {
-      console.error('Error fetching borrowings:', error);
+      console.error("Error fetching borrowings:", error);
     } finally {
       setLoading(false);
     }
@@ -139,11 +155,11 @@ export default function BorrowingsPage() {
 
   const fetchAvailableBooks = async () => {
     try {
-      const response = await fetch('/api/books?limit=100');
+      const response = await fetch("/api/books?limit=100");
       const data = await response.json();
       setBooks((data.books || []).filter((book: Book) => book.stock > 0));
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error("Error fetching books:", error);
     }
   };
 
@@ -151,15 +167,15 @@ export default function BorrowingsPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/borrowings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/borrowings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal meminjam buku');
+        throw new Error(data.error || "Gagal meminjam buku");
       }
 
       setIsBorrowDialogOpen(false);
@@ -176,8 +192,8 @@ export default function BorrowingsPage() {
 
     try {
       const response = await fetch(`/api/borrowings/${selectedBorrowing.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fine: formData.fine ? parseFloat(formData.fine) : undefined,
         }),
@@ -185,7 +201,7 @@ export default function BorrowingsPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal mengembalikan buku');
+        throw new Error(data.error || "Gagal mengembalikan buku");
       }
 
       setIsReturnDialogOpen(false);
@@ -202,40 +218,45 @@ export default function BorrowingsPage() {
     setSelectedBorrowing(borrowing);
     const overdueDays = Math.max(
       0,
-      Math.floor((Date.now() - new Date(borrowing.dueDate).getTime()) / (1000 * 60 * 60 * 24))
+      Math.floor(
+        (Date.now() - new Date(borrowing.dueDate).getTime()) /
+          (1000 * 60 * 60 * 24),
+      ),
     );
     setFormData({
       ...formData,
-      fine: overdueDays > 0 ? (overdueDays * 1000).toString() : '',
+      fine: overdueDays > 0 ? (overdueDays * 1000).toString() : "",
     });
     setIsReturnDialogOpen(true);
   };
 
   const resetForm = () => {
     setFormData({
-      bookId: '',
-      borrowDate: new Date().toISOString().split('T')[0],
-      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      fine: '',
+      bookId: "",
+      borrowDate: new Date().toISOString().split("T")[0],
+      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0],
+      fine: "",
     });
   };
 
-  const isAdmin = user?.role === 'ADMIN';
+  const isAdmin = user?.role === "ADMIN";
 
   if (!user) {
     return null;
   }
 
   const getStatusBadge = (status: string, dueDate: string) => {
-    const isOverdue = new Date(dueDate) < new Date() && status === 'ACTIVE';
-    const actualStatus = isOverdue ? 'OVERDUE' : status;
+    const isOverdue = new Date(dueDate) < new Date() && status === "ACTIVE";
+    const actualStatus = isOverdue ? "OVERDUE" : status;
 
     switch (actualStatus) {
-      case 'ACTIVE':
+      case "ACTIVE":
         return <Badge className="bg-blue-600">Aktif</Badge>;
-      case 'RETURNED':
+      case "RETURNED":
         return <Badge className="bg-green-600">Dikembalikan</Badge>;
-      case 'OVERDUE':
+      case "OVERDUE":
         return <Badge className="bg-red-600">Terlambat</Badge>;
       default:
         return <Badge>{status}</Badge>;
@@ -247,13 +268,20 @@ export default function BorrowingsPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Peminjaman Buku</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Peminjaman Buku
+            </h1>
             <p className="text-gray-600 mt-1">
-              {isAdmin ? 'Kelola peminjaman dan pengembalian buku' : 'Kelola peminjaman buku Anda'}
+              {isAdmin
+                ? "Kelola peminjaman dan pengembalian buku"
+                : "Kelola peminjaman buku Anda"}
             </p>
           </div>
-          {user.role === 'MEMBER' && (
-            <Dialog open={isBorrowDialogOpen} onOpenChange={setIsBorrowDialogOpen}>
+          {user.role === "MEMBER" && (
+            <Dialog
+              open={isBorrowDialogOpen}
+              onOpenChange={setIsBorrowDialogOpen}
+            >
               <DialogTrigger asChild>
                 <Button className="bg-green-600 hover:bg-green-700">
                   <Plus className="w-4 h-4 mr-2" />
@@ -263,14 +291,18 @@ export default function BorrowingsPage() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Pinjam Buku</DialogTitle>
-                  <DialogDescription>Pilih buku yang ingin dipinjam</DialogDescription>
+                  <DialogDescription>
+                    Pilih buku yang ingin dipinjam
+                  </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleBorrow} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="book">Pilih Buku *</Label>
                     <Select
                       value={formData.bookId}
-                      onValueChange={(value) => setFormData({ ...formData, bookId: value })}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, bookId: value })
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Pilih buku" />
@@ -291,7 +323,12 @@ export default function BorrowingsPage() {
                         id="borrowDate"
                         type="date"
                         value={formData.borrowDate}
-                        onChange={(e) => setFormData({ ...formData, borrowDate: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            borrowDate: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
@@ -301,12 +338,17 @@ export default function BorrowingsPage() {
                         id="dueDate"
                         type="date"
                         value={formData.dueDate}
-                        onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, dueDate: e.target.value })
+                        }
                         required
                       />
                     </div>
                   </div>
-                  <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+                  <Button
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
                     Pinjam Buku
                   </Button>
                 </form>
@@ -355,7 +397,9 @@ export default function BorrowingsPage() {
             {loading ? (
               <div className="text-center py-8">Memuat data...</div>
             ) : borrowings.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">Tidak ada peminjaman ditemukan</div>
+              <div className="text-center py-8 text-gray-500">
+                Tidak ada peminjaman ditemukan
+              </div>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
@@ -374,7 +418,9 @@ export default function BorrowingsPage() {
                   </TableHeader>
                   <TableBody>
                     {borrowings.map((borrowing) => {
-                      const isOverdue = new Date(borrowing.dueDate) < new Date() && borrowing.status === 'ACTIVE';
+                      const isOverdue =
+                        new Date(borrowing.dueDate) < new Date() &&
+                        borrowing.status === "ACTIVE";
                       return (
                         <TableRow key={borrowing.id}>
                           <TableCell>
@@ -390,26 +436,41 @@ export default function BorrowingsPage() {
                               </div>
                             )}
                           </TableCell>
-                          <TableCell className="font-medium">{borrowing.book.title}</TableCell>
+                          <TableCell className="font-medium">
+                            {borrowing.book.title}
+                          </TableCell>
                           <TableCell>{borrowing.book.author}</TableCell>
                           {isAdmin && borrowing.user && (
                             <TableCell>{borrowing.user.name}</TableCell>
                           )}
                           <TableCell>
-                            {new Date(borrowing.borrowDate).toLocaleDateString('id-ID')}
+                            {new Date(borrowing.borrowDate).toLocaleDateString(
+                              "id-ID",
+                            )}
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-1">
-                              {isOverdue && <AlertTriangle className="w-4 h-4 text-red-600" />}
-                              {new Date(borrowing.dueDate).toLocaleDateString('id-ID')}
+                              {isOverdue && (
+                                <AlertTriangle className="w-4 h-4 text-red-600" />
+                              )}
+                              {new Date(borrowing.dueDate).toLocaleDateString(
+                                "id-ID",
+                              )}
                             </div>
                           </TableCell>
-                          <TableCell>{getStatusBadge(borrowing.status, borrowing.dueDate)}</TableCell>
                           <TableCell>
-                            {borrowing.fine > 0 ? `Rp ${borrowing.fine.toLocaleString('id-ID')}` : '-'}
+                            {getStatusBadge(
+                              borrowing.status,
+                              borrowing.dueDate,
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {borrowing.fine > 0
+                              ? `Rp ${borrowing.fine.toLocaleString("id-ID")}`
+                              : "-"}
                           </TableCell>
                           <TableCell className="text-right">
-                            {borrowing.status === 'ACTIVE' && (
+                            {borrowing.status === "ACTIVE" && (
                               <Button
                                 size="sm"
                                 onClick={() => openReturnDialog(borrowing)}
@@ -454,13 +515,16 @@ export default function BorrowingsPage() {
         </Card>
 
         {/* Return Dialog */}
-        <AlertDialog open={isReturnDialogOpen} onOpenChange={setIsReturnDialogOpen}>
+        <AlertDialog
+          open={isReturnDialogOpen}
+          onOpenChange={setIsReturnDialogOpen}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Kembalikan Buku</AlertDialogTitle>
               <AlertDialogDescription>
                 Konfirmasi pengembalian buku "{selectedBorrowing?.book?.title}".
-                {new Date(selectedBorrowing?.dueDate || '') < new Date() && (
+                {new Date(selectedBorrowing?.dueDate || "") < new Date() && (
                   <span className="block mt-2 text-red-600 font-semibold">
                     Peringatan: Buku ini terlambat dikembalikan!
                   </span>
@@ -474,13 +538,18 @@ export default function BorrowingsPage() {
                 type="number"
                 min="0"
                 value={formData.fine}
-                onChange={(e) => setFormData({ ...formData, fine: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, fine: e.target.value })
+                }
                 placeholder="Masukkan denda jika ada"
               />
             </div>
             <AlertDialogFooter>
               <AlertDialogCancel>Batal</AlertDialogCancel>
-              <AlertDialogAction onClick={handleReturn} className="bg-green-600 hover:bg-green-700">
+              <AlertDialogAction
+                onClick={handleReturn}
+                className="bg-green-600 hover:bg-green-700"
+              >
                 Konfirmasi Pengembalian
               </AlertDialogAction>
             </AlertDialogFooter>

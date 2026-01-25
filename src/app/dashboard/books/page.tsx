@@ -53,6 +53,7 @@ interface Book {
   stock: number;
   coverImage?: string | null;
 }
+export const dynamic = "force-dynamic";
 
 export default function BooksPage() {
   const [user, setUser] = useState<{ name: string; role: 'ADMIN' | 'MEMBER' } | null>(null);

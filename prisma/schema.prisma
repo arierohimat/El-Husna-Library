@@ -5,12 +5,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator seed {
-  provider = "ts-node"
-}
-
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 

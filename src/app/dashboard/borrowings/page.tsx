@@ -78,7 +78,6 @@ interface Borrowing {
     email: string;
   };
 }
-export const dynamic = "force-dynamic";
 
 export default function BorrowingsPage() {
   const [user, setUser] = useState<{

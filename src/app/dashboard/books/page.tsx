@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState, useEffect } from "react";
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,16 +31,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Search, Edit, Trash2, Book } from 'lucide-react';
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Search, Edit, Trash2, Book } from "lucide-react";
 
 interface Book {
   id: string;
@@ -53,14 +53,16 @@ interface Book {
   stock: number;
   coverImage?: string | null;
 }
-export const dynamic = "force-dynamic";
 
 export default function BooksPage() {
-  const [user, setUser] = useState<{ name: string; role: 'ADMIN' | 'MEMBER' } | null>(null);
+  const [user, setUser] = useState<{
+    name: string;
+    role: "ADMIN" | "MEMBER";
+  } | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('all');
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("all");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -68,17 +70,25 @@ export default function BooksPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [formData, setFormData] = useState({
-    isbn: '',
-    title: '',
-    author: '',
-    publisher: '',
-    year: '',
-    category: 'Fiksi',
-    stock: '',
-    coverImage: '',
+    isbn: "",
+    title: "",
+    author: "",
+    publisher: "",
+    year: "",
+    category: "Fiksi",
+    stock: "",
+    coverImage: "",
   });
 
-  const categories = ['Fiksi', 'Sastra', 'Pengembangan Diri', 'Sains', 'Sejarah', 'Teknologi', 'Lainnya'];
+  const categories = [
+    "Fiksi",
+    "Sastra",
+    "Pengembangan Diri",
+    "Sains",
+    "Sejarah",
+    "Teknologi",
+    "Lainnya",
+  ];
 
   useEffect(() => {
     fetchUser();
@@ -86,7 +96,7 @@ export default function BooksPage() {
   }, [search, category, page]);
 
   const fetchUser = () => {
-    fetch('/api/auth/session')
+    fetch("/api/auth/session")
       .then((res) => res.json())
       .then((data) => {
         setUser(data.user);
@@ -101,18 +111,18 @@ export default function BooksPage() {
     try {
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: '10',
+        limit: "10",
       });
 
-      if (search) params.append('search', search);
-      if (category && category !== 'all') params.append('category', category);
+      if (search) params.append("search", search);
+      if (category && category !== "all") params.append("category", category);
 
       const response = await fetch(`/api/books?${params}`);
       const data = await response.json();
       setBooks(data.books || []);
       setTotalPages(data.pagination?.totalPages || 1);
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error("Error fetching books:", error);
     } finally {
       setLoading(false);
     }
@@ -122,9 +132,9 @@ export default function BooksPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/books', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/books", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           year: parseInt(formData.year),
@@ -134,7 +144,7 @@ export default function BooksPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal menambahkan buku');
+        throw new Error(data.error || "Gagal menambahkan buku");
       }
 
       setIsAddDialogOpen(false);
@@ -152,8 +162,8 @@ export default function BooksPage() {
 
     try {
       const response = await fetch(`/api/books/${selectedBook.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           year: parseInt(formData.year),
@@ -163,7 +173,7 @@ export default function BooksPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal mengupdate buku');
+        throw new Error(data.error || "Gagal mengupdate buku");
       }
 
       setIsEditDialogOpen(false);
@@ -180,12 +190,12 @@ export default function BooksPage() {
 
     try {
       const response = await fetch(`/api/books/${selectedBook.id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Gagal menghapus buku');
+        throw new Error(data.error || "Gagal menghapus buku");
       }
 
       setIsDeleteDialogOpen(false);
@@ -204,9 +214,9 @@ export default function BooksPage() {
       author: book.author,
       publisher: book.publisher,
       year: book.year.toString(),
-      category: book.category || 'Fiksi',
+      category: book.category || "Fiksi",
       stock: book.stock.toString(),
-      coverImage: book.coverImage || '',
+      coverImage: book.coverImage || "",
     });
     setIsEditDialogOpen(true);
   };
@@ -218,14 +228,14 @@ export default function BooksPage() {
 
   const resetForm = () => {
     setFormData({
-      isbn: '',
-      title: '',
-      author: '',
-      publisher: '',
-      year: '',
-      category: 'Fiksi',
-      stock: '',
-      coverImage: '',
+      isbn: "",
+      title: "",
+      author: "",
+      publisher: "",
+      year: "",
+      category: "Fiksi",
+      stock: "",
+      coverImage: "",
     });
   };
 
@@ -233,7 +243,7 @@ export default function BooksPage() {
     return null;
   }
 
-  const isAdmin = user.role === 'ADMIN';
+  const isAdmin = user.role === "ADMIN";
 
   return (
     <DashboardLayout userRole={user.role} userName={user.name}>
@@ -241,7 +251,9 @@ export default function BooksPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Manajemen Buku</h1>
-            <p className="text-gray-600 mt-1">Kelola koleksi buku perpustakaan</p>
+            <p className="text-gray-600 mt-1">
+              Kelola koleksi buku perpustakaan
+            </p>
           </div>
           {isAdmin && (
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -254,7 +266,9 @@ export default function BooksPage() {
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Tambah Buku Baru</DialogTitle>
-                  <DialogDescription>Isi data buku yang akan ditambahkan</DialogDescription>
+                  <DialogDescription>
+                    Isi data buku yang akan ditambahkan
+                  </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleAdd} className="space-y-4">
                   <div className="grid gap-4 md:grid-cols-2">
@@ -263,7 +277,9 @@ export default function BooksPage() {
                       <Input
                         id="isbn"
                         value={formData.isbn}
-                        onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, isbn: e.target.value })
+                        }
                         placeholder="Contoh: 978-602-03-2891-5"
                         required
                       />
@@ -272,7 +288,9 @@ export default function BooksPage() {
                       <Label htmlFor="category">Kategori *</Label>
                       <Select
                         value={formData.category}
-                        onValueChange={(value) => setFormData({ ...formData, category: value })}
+                        onValueChange={(value) =>
+                          setFormData({ ...formData, category: value })
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Pilih kategori" />
@@ -292,7 +310,9 @@ export default function BooksPage() {
                     <Input
                       id="title"
                       value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, title: e.target.value })
+                      }
                       placeholder="Judul buku"
                       required
                     />
@@ -302,7 +322,9 @@ export default function BooksPage() {
                     <Input
                       id="author"
                       value={formData.author}
-                      onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, author: e.target.value })
+                      }
                       placeholder="Nama penulis"
                       required
                     />
@@ -313,7 +335,12 @@ export default function BooksPage() {
                       <Input
                         id="publisher"
                         value={formData.publisher}
-                        onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            publisher: e.target.value,
+                          })
+                        }
                         placeholder="Nama penerbit"
                         required
                       />
@@ -324,7 +351,9 @@ export default function BooksPage() {
                         id="year"
                         type="number"
                         value={formData.year}
-                        onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, year: e.target.value })
+                        }
                         placeholder="2025"
                         required
                       />
@@ -337,21 +366,30 @@ export default function BooksPage() {
                       type="number"
                       min="0"
                       value={formData.stock}
-                      onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, stock: e.target.value })
+                      }
                       placeholder="Jumlah stok"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="coverImage">URL Cover Buku (Opsional)</Label>
+                    <Label htmlFor="coverImage">
+                      URL Cover Buku (Opsional)
+                    </Label>
                     <Input
                       id="coverImage"
                       value={formData.coverImage}
-                      onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, coverImage: e.target.value })
+                      }
                       placeholder="https://example.com/cover.jpg"
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+                  <Button
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
                     Simpan Buku
                   </Button>
                 </form>
@@ -376,7 +414,10 @@ export default function BooksPage() {
                   className="pl-10"
                 />
               </div>
-              <Select value={category} onValueChange={(value) => setCategory(value)}>
+              <Select
+                value={category}
+                onValueChange={(value) => setCategory(value)}
+              >
                 <SelectTrigger className="md:w-[200px]">
                   <SelectValue placeholder="Semua Kategori" />
                 </SelectTrigger>
@@ -402,7 +443,9 @@ export default function BooksPage() {
             {loading ? (
               <div className="text-center py-8">Memuat data...</div>
             ) : books.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">Tidak ada buku ditemukan</div>
+              <div className="text-center py-8 text-gray-500">
+                Tidak ada buku ditemukan
+              </div>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
@@ -416,7 +459,9 @@ export default function BooksPage() {
                       <TableHead>Tahun</TableHead>
                       <TableHead>Kategori</TableHead>
                       <TableHead>Stok</TableHead>
-                      {isAdmin && <TableHead className="text-right">Aksi</TableHead>}
+                      {isAdmin && (
+                        <TableHead className="text-right">Aksi</TableHead>
+                      )}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -435,8 +480,12 @@ export default function BooksPage() {
                             </div>
                           )}
                         </TableCell>
-                        <TableCell className="font-medium">{book.isbn}</TableCell>
-                        <TableCell className="font-medium">{book.title}</TableCell>
+                        <TableCell className="font-medium">
+                          {book.isbn}
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {book.title}
+                        </TableCell>
                         <TableCell>{book.author}</TableCell>
                         <TableCell>{book.publisher}</TableCell>
                         <TableCell>{book.year}</TableCell>
@@ -445,8 +494,8 @@ export default function BooksPage() {
                         </TableCell>
                         <TableCell>
                           <Badge
-                            variant={book.stock > 0 ? 'default' : 'destructive'}
-                            className={book.stock > 0 ? 'bg-green-600' : ''}
+                            variant={book.stock > 0 ? "default" : "destructive"}
+                            className={book.stock > 0 ? "bg-green-600" : ""}
                           >
                             {book.stock}
                           </Badge>
@@ -518,7 +567,9 @@ export default function BooksPage() {
                   <Input
                     id="edit-isbn"
                     value={formData.isbn}
-                    onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, isbn: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -526,7 +577,9 @@ export default function BooksPage() {
                   <Label htmlFor="edit-category">Kategori *</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, category: value })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih kategori" />
@@ -546,7 +599,9 @@ export default function BooksPage() {
                 <Input
                   id="edit-title"
                   value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -555,7 +610,9 @@ export default function BooksPage() {
                 <Input
                   id="edit-author"
                   value={formData.author}
-                  onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, author: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -565,7 +622,9 @@ export default function BooksPage() {
                   <Input
                     id="edit-publisher"
                     value={formData.publisher}
-                    onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, publisher: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -575,7 +634,9 @@ export default function BooksPage() {
                     id="edit-year"
                     type="number"
                     value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, year: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -587,19 +648,28 @@ export default function BooksPage() {
                   type="number"
                   min="0"
                   value={formData.stock}
-                  onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, stock: e.target.value })
+                  }
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="edit-coverImage">URL Cover Buku (Opsional)</Label>
+                <Label htmlFor="edit-coverImage">
+                  URL Cover Buku (Opsional)
+                </Label>
                 <Input
                   id="edit-coverImage"
                   value={formData.coverImage}
-                  onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, coverImage: e.target.value })
+                  }
                 />
               </div>
-              <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+              <Button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700"
+              >
                 Update Buku
               </Button>
             </form>
@@ -607,17 +677,24 @@ export default function BooksPage() {
         </Dialog>
 
         {/* Delete Confirmation Dialog */}
-        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Hapus Buku</AlertDialogTitle>
               <AlertDialogDescription>
-                Apakah Anda yakin ingin menghapus buku "{selectedBook?.title}"? Tindakan ini tidak dapat dibatalkan.
+                Apakah Anda yakin ingin menghapus buku "{selectedBook?.title}"?
+                Tindakan ini tidak dapat dibatalkan.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Batal</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+              <AlertDialogAction
+                onClick={handleDelete}
+                className="bg-red-600 hover:bg-red-700"
+              >
                 Hapus
               </AlertDialogAction>
             </AlertDialogFooter>

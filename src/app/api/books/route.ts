@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
 // GET /api/books - Get all books with search and filter

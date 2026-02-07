@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,17 +7,22 @@ import { BookOpen, Users, Bookmark, BookCopy, AlertCircle } from "lucide-react";
 import { TopBorrowersChart } from "@/components/charts/top-borrowers-chart";
 
 import { db } from "@/lib/db";
-import { getSession } from "@/lib/session";
-
-export const dynamic = "force-dynamic";
+import { getSession, SessionUser } from "@/lib/session";
 
 export default async function AdminDashboard() {
-  const session = await getSession();
+  let session: SessionUser | null = null; // ✅ FIX UTAMA
+
+  try {
+    session = await getSession();
+  } catch {
+    redirect("/");
+  }
 
   if (!session || session.role !== "ADMIN") {
     redirect("/");
   }
 
+  // ⬇️ DI SINI session SUDAH PASTI SessionUser
   const [
     totalBooks,
     totalMembers,
@@ -71,7 +78,6 @@ export default async function AdminDashboard() {
   return (
     <DashboardLayout userRole={session.role} userName={session.name}>
       <div className="space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
           <p className="text-gray-600 mt-1">
@@ -136,7 +142,6 @@ export default async function AdminDashboard() {
           </Card>
         </div>
 
-        {/* Chart */}
         <Card>
           <CardHeader>
             <CardTitle>Anggota Paling Aktif</CardTitle>
@@ -146,7 +151,6 @@ export default async function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Notifikasi Terlambat */}
         {overdueBorrowings > 0 && (
           <Card className="bg-red-50 border-red-200">
             <CardHeader>

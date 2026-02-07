@@ -1,80 +1,68 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
-// GET /api/borrowings - Get all borrowings
 export async function GET(request: NextRequest) {
   try {
     const session = await getSession();
-
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || "";
-    const status = searchParams.get("status") || "";
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
+    const status = searchParams.get("status") || "all";
 
     const where: any = {};
 
-    // Members can only see their own borrowings
+    // 🔒 MEMBER hanya melihat miliknya
     if (session.role === "MEMBER") {
       where.userId = session.userId;
     }
 
+    // 🔍 Search
     if (search) {
       where.OR = [
-        { book: { title: { contains: search } } },
-        { book: { author: { contains: search } } },
-        { book: { isbn: { contains: search } } },
-        { user: { name: { contains: search } } },
+        { book: { title: { contains: search, mode: "insensitive" } } },
+        { book: { author: { contains: search, mode: "insensitive" } } },
+        ...(session.role === "ADMIN"
+          ? [{ user: { name: { contains: search, mode: "insensitive" } } }]
+          : []),
       ];
     }
 
-    if (status) {
+    // ⚠️ STATUS FILTER (OVERDUE tidak ada di DB)
+    if (status !== "all" && status !== "OVERDUE") {
       where.status = status;
     }
 
-    const [borrowings, total] = await Promise.all([
-      db.borrowing.findMany({
-        where,
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy: { borrowDate: "desc" },
-        include: {
-          book: {
-            select: {
-              id: true,
-              isbn: true,
-              title: true,
-              author: true,
-              category: true,
-              coverImage: true,
-            },
-          },
-          user: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
-          },
-        },
-      }),
-      db.borrowing.count({ where }),
-    ]);
-
-    return NextResponse.json({
-      borrowings,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
+    const borrowings = await db.borrowing.findMany({
+      where,
+      orderBy: { borrowDate: "desc" },
+      include: {
+        book: true,
+        user:
+          session.role === "ADMIN"
+            ? { select: { id: true, name: true, email: true } }
+            : false,
       },
     });
+
+    // 🔄 Normalisasi OVERDUE (virtual)
+    const normalized = borrowings
+      .map((b) => {
+        const isOverdue =
+          b.status === "ACTIVE" && new Date(b.dueDate) < new Date();
+
+        return {
+          ...b,
+          status: isOverdue ? "OVERDUE" : b.status,
+        };
+      })
+      // filter OVERDUE jika dipilih
+      .filter((b) => (status === "OVERDUE" ? b.status === "OVERDUE" : true));
+
+    return NextResponse.json({ borrowings: normalized });
   } catch (error) {
     console.error("Get borrowings error:", error);
     return NextResponse.json(
@@ -84,19 +72,15 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/borrowings - Create a new borrowing
 export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
-
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
-    const { bookId, borrowDate, dueDate } = body;
+    const { bookId, borrowDate, dueDate } = await request.json();
 
-    // Validation
     if (!bookId || !borrowDate || !dueDate) {
       return NextResponse.json(
         { error: "Semua field wajib diisi" },
@@ -104,44 +88,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if book exists and has stock
-    const book = await db.book.findUnique({
-      where: { id: bookId },
-    });
-
-    if (!book) {
+    // 🕒 validasi tanggal
+    if (new Date(dueDate) <= new Date(borrowDate)) {
       return NextResponse.json(
-        { error: "Buku tidak ditemukan" },
-        { status: 404 },
+        { error: "Tanggal jatuh tempo tidak valid" },
+        { status: 400 },
       );
     }
 
-    if (book.stock <= 0) {
-      return NextResponse.json({ error: "Stok buku habis" }, { status: 400 });
-    }
-
-    // Check if user already borrowed this book (for members)
+    // 🔒 MEMBER maksimal 1 peminjaman aktif
     if (session.role === "MEMBER") {
-      const existingBorrowing = await db.borrowing.findFirst({
+      const activeCount = await db.borrowing.count({
         where: {
           userId: session.userId,
-          bookId,
           status: "ACTIVE",
         },
       });
 
-      if (existingBorrowing) {
+      if (activeCount >= 1) {
         return NextResponse.json(
-          { error: "Anda sedang meminjam buku ini" },
+          { error: "Anda masih memiliki peminjaman aktif" },
           { status: 400 },
         );
       }
     }
 
-    // Create borrowing
+    const book = await db.book.findUnique({ where: { id: bookId } });
+    if (!book || book.stock <= 0) {
+      return NextResponse.json(
+        { error: "Buku tidak tersedia" },
+        { status: 400 },
+      );
+    }
+
     const borrowing = await db.$transaction(async (tx) => {
-      // Create borrowing record
-      const newBorrowing = await tx.borrowing.create({
+      const created = await tx.borrowing.create({
         data: {
           userId: session.userId,
           bookId,
@@ -149,25 +130,14 @@ export async function POST(request: NextRequest) {
           dueDate: new Date(dueDate),
           status: "ACTIVE",
         },
-        include: {
-          book: {
-            select: {
-              id: true,
-              isbn: true,
-              title: true,
-              author: true,
-            },
-          },
-        },
       });
 
-      // Decrease book stock
       await tx.book.update({
         where: { id: bookId },
         data: { stock: { decrement: 1 } },
       });
 
-      return newBorrowing;
+      return created;
     });
 
     return NextResponse.json({ borrowing }, { status: 201 });

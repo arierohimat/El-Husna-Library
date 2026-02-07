@@ -49,7 +49,6 @@ interface Member {
   email: string;
   username: string;
   name: string;
-  nisNim?: string | null;
   phone?: string | null;
   address?: string | null;
   role: string;
@@ -79,7 +78,6 @@ export default function MembersPage() {
     username: "",
     password: "",
     name: "",
-    nisNim: "",
     phone: "",
     address: "",
   });
@@ -200,7 +198,6 @@ export default function MembersPage() {
       username: member.username,
       password: "",
       name: member.name,
-      nisNim: member.nisNim || "",
       phone: member.phone || "",
       address: member.address || "",
     });
@@ -218,7 +215,6 @@ export default function MembersPage() {
       username: "",
       password: "",
       name: "",
-      nisNim: "",
       phone: "",
       address: "",
     });
@@ -266,17 +262,6 @@ export default function MembersPage() {
                       }
                       placeholder="Nama lengkap"
                       required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="nisNim">NIS/NIM</Label>
-                    <Input
-                      id="nisNim"
-                      value={formData.nisNim}
-                      onChange={(e) =>
-                        setFormData({ ...formData, nisNim: e.target.value })
-                      }
-                      placeholder="Nomor NIS/NIM"
                     />
                   </div>
                 </div>
@@ -361,7 +346,7 @@ export default function MembersPage() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Cari berdasarkan nama, email, username, atau NIS/NIM..."
+                placeholder="Cari berdasarkan nama, email, username..."
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
@@ -391,7 +376,6 @@ export default function MembersPage() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Nama</TableHead>
-                      <TableHead>NIS/NIM</TableHead>
                       <TableHead>Email</TableHead>
                       <TableHead>Username</TableHead>
                       <TableHead>Telepon</TableHead>
@@ -406,7 +390,6 @@ export default function MembersPage() {
                         <TableCell className="font-medium">
                           {member.name}
                         </TableCell>
-                        <TableCell>{member.nisNim || "-"}</TableCell>
                         <TableCell>{member.email}</TableCell>
                         <TableCell>{member.username}</TableCell>
                         <TableCell>{member.phone || "-"}</TableCell>
@@ -485,16 +468,6 @@ export default function MembersPage() {
                       setFormData({ ...formData, name: e.target.value })
                     }
                     required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-nisNim">NIS/NIM</Label>
-                  <Input
-                    id="edit-nisNim"
-                    value={formData.nisNim}
-                    onChange={(e) =>
-                      setFormData({ ...formData, nisNim: e.target.value })
-                    }
                   />
                 </div>
               </div>

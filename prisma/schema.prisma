@@ -28,7 +28,6 @@ model User {
   password     String
   name         String
   role         Role     @default(MEMBER)
-  nisNim       String?  @unique
   phone        String?
   address      String?
   createdAt    DateTime @default(now())
@@ -73,3 +72,4 @@ model Borrowing {
   @@index([bookId])
   @@index([status])
 }
+

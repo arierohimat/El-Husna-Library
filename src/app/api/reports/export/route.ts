@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
 // GET /api/reports/export - Export data (Excel/CSV)
@@ -57,21 +57,12 @@ export async function GET(request: NextRequest) {
         Nama: member.name,
         Email: member.email,
         Username: member.username,
-        "NIS/NIM": member.nisNim || "-",
         Telepon: member.phone || "-",
         Alamat: member.address || "-",
         Terdaftar: new Date(member.createdAt).toLocaleDateString("id-ID"),
       }));
       filename = "data-anggota";
-      headers = [
-        "Nama",
-        "Email",
-        "Username",
-        "NIS/NIM",
-        "Telepon",
-        "Alamat",
-        "Terdaftar",
-      ];
+      headers = ["Nama", "Email", "Username", "Telepon", "Alamat", "Terdaftar"];
     } else if (type === "borrowings") {
       const where: any = {};
 

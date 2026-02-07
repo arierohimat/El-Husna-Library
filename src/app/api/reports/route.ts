@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import ExcelJS from "exceljs";
 
@@ -82,7 +82,6 @@ async function generateMembersReport() {
       name: true,
       email: true,
       username: true,
-      nisNim: true,
       phone: true,
       address: true,
       createdAt: true,
@@ -102,7 +101,6 @@ async function generateMembersReport() {
       Nama: member.name,
       Email: member.email,
       Username: member.username,
-      "NIS/NIM": member.nisNim || "-",
       Telepon: member.phone || "-",
       Alamat: member.address || "-",
       "Total Peminjaman": member._count.borrowings,
@@ -277,7 +275,6 @@ async function generateExcelReport(type: string, data: any) {
       "Nama",
       "Email",
       "Username",
-      "NIS/NIM",
       "Telepon",
       "Alamat",
       "Total Peminjaman",
@@ -302,7 +299,6 @@ async function generateExcelReport(type: string, data: any) {
       worksheet.getCell(`A${rowIndex}`).value = member.Nama;
       worksheet.getCell(`B${rowIndex}`).value = member.Email;
       worksheet.getCell(`C${rowIndex}`).value = member.Username;
-      worksheet.getCell(`D${rowIndex}`).value = member["NIS/NIM"];
       worksheet.getCell(`E${rowIndex}`).value = member.Telepon;
       worksheet.getCell(`F${rowIndex}`).value = member.Alamat;
       worksheet.getCell(`G${rowIndex}`).value = member["Total Peminjaman"];

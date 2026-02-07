@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
 // GET /api/members - Get all members (Admin only)
@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
         { name: { contains: search } },
         { email: { contains: search } },
         { username: { contains: search } },
-        { nisNim: { contains: search } },
       ];
     }
 
@@ -38,7 +37,6 @@ export async function GET(request: NextRequest) {
           email: true,
           username: true,
           name: true,
-          nisNim: true,
           phone: true,
           address: true,
           createdAt: true,
@@ -80,7 +78,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { email, username, password, name, nisNim, phone, address } = body;
+    const { email, username, password, name, phone, address } = body;
 
     // Validation
     if (!email || !username || !password || !name) {
@@ -122,14 +120,10 @@ export async function POST(request: NextRequest) {
       where: {
         OR: [{ email }, { username }],
       },
+      select: {
+        id: true, // PENTING: batasi kolom yang diambil
+      },
     });
-
-    if (existingUser) {
-      return NextResponse.json(
-        { error: "Email atau username sudah terdaftar" },
-        { status: 400 },
-      );
-    }
 
     // Hash password
     const bcrypt = (await import("bcryptjs")).default;
@@ -141,7 +135,6 @@ export async function POST(request: NextRequest) {
         username,
         password: hashedPassword,
         name,
-        nisNim,
         phone,
         address,
         role: "MEMBER",
@@ -151,7 +144,6 @@ export async function POST(request: NextRequest) {
         email: true,
         username: true,
         name: true,
-        nisNim: true,
         phone: true,
         address: true,
         role: true,

@@ -34,7 +34,6 @@ async function main() {
       password: memberPassword,
       name: "Ahmad Santoso",
       role: "MEMBER",
-      nisNim: "12345678",
       phone: "081987654321",
       address: "Surabaya, Indonesia",
     },

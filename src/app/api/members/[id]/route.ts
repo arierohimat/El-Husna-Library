@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import bcrypt from "bcryptjs";
 
@@ -23,7 +23,6 @@ export async function GET(
         email: true,
         username: true,
         name: true,
-        nisNim: true,
         phone: true,
         address: true,
         role: true,
@@ -67,7 +66,7 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { email, username, name, nisNim, phone, address, password } = body;
+    const { email, username, name, phone, address, password } = body;
 
     // Validation
     if (!email || !username || !name) {
@@ -117,7 +116,6 @@ export async function PUT(
       email,
       username,
       name,
-      nisNim,
       phone,
       address,
     };
@@ -141,7 +139,6 @@ export async function PUT(
         email: true,
         username: true,
         name: true,
-        nisNim: true,
         phone: true,
         address: true,
         role: true,

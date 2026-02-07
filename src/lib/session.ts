@@ -1,38 +1,40 @@
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 export interface SessionUser {
   userId: string;
   email: string;
   username: string;
   name: string;
-  role: 'ADMIN' | 'MEMBER';
+  role: "ADMIN" | "MEMBER";
 }
 
 export async function getSession(): Promise<SessionUser | null> {
   try {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('session');
+    const cookieStore = await cookies(); // ✅ BENAR untuk Next 16
+    const sessionCookie = cookieStore.get("session");
 
-    if (!sessionCookie) {
+    if (!sessionCookie?.value) {
       return null;
     }
 
-    const sessionData = JSON.parse(sessionCookie.value) as SessionUser;
-    return sessionData;
+    return JSON.parse(sessionCookie.value) as SessionUser;
   } catch (error) {
-    return null;
+    console.error("getSession error:", error);
+    return null; // ❗ jangan throw
   }
 }
 
-export async function requireAuth(role?: 'ADMIN' | 'MEMBER'): Promise<SessionUser> {
+export async function requireAuth(
+  role?: "ADMIN" | "MEMBER",
+): Promise<SessionUser> {
   const session = await getSession();
 
   if (!session) {
-    throw new Error('Unauthorized');
+    throw new Error("Unauthorized");
   }
 
   if (role && session.role !== role) {
-    throw new Error('Forbidden');
+    throw new Error("Forbidden");
   }
 
   return session;
@@ -40,5 +42,5 @@ export async function requireAuth(role?: 'ADMIN' | 'MEMBER'): Promise<SessionUse
 
 export async function isAdmin(): Promise<boolean> {
   const session = await getSession();
-  return session?.role === 'ADMIN';
+  return session?.role === "ADMIN";
 }

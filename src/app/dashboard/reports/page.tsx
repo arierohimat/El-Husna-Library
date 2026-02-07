@@ -74,7 +74,6 @@ interface MemberReportData {
     Nama: string;
     Email: string;
     Username: string;
-    "NIS/NIM": string;
     Telepon: string;
     "Total Peminjaman": number;
     "Terdaftar Pada": string;
@@ -460,9 +459,6 @@ export default function ReportsPage() {
                     Username
                   </th>
                   <th style={{ padding: "0.5rem 1rem", textAlign: "left" }}>
-                    NIS/NIM
-                  </th>
-                  <th style={{ padding: "0.5rem 1rem", textAlign: "left" }}>
                     Telepon
                   </th>
                   <th style={{ padding: "0.5rem 1rem", textAlign: "left" }}>
@@ -505,14 +501,6 @@ export default function ReportsPage() {
                       }}
                     >
                       {member.Username}
-                    </td>
-                    <td
-                      style={{
-                        padding: "0.5rem 1rem",
-                        borderBottom: "1px solid #E5E7EB",
-                      }}
-                    >
-                      {member["NIS/NIM"]}
                     </td>
                     <td
                       style={{

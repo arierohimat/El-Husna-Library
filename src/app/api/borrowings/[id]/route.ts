@@ -1,40 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/hooks/db";
+import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
-// GET /api/borrowings/[id] - Get a single borrowing
-export async function GET(
+export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
-
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // ✅ WAJIB: unwrap params
     const { id } = await params;
 
-    const where: any = { id };
+    // body boleh kosong (MEMBER)
+    let penaltyBookId: string | null = null;
+    let penaltyNote: string | null = null;
 
-    // Members can only see their own borrowings
-    if (session.role === "MEMBER") {
-      where.userId = session.userId;
+    try {
+      const body = await request.json();
+      penaltyBookId = body.penaltyBookId ?? null;
+      penaltyNote = body.penaltyNote ?? null;
+    } catch {
+      // body kosong → valid untuk MEMBER
     }
 
-    const borrowing = await db.borrowing.findFirst({
-      where,
-      include: {
-        book: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
+    const borrowing = await db.borrowing.findUnique({
+      where: { id },
     });
 
     if (!borrowing) {
@@ -44,44 +38,11 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ borrowing });
-  } catch (error) {
-    console.error("Get borrowing error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
-  }
-}
-
-// PUT /api/borrowings/[id] - Return a book
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  try {
-    const session = await getSession();
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { id } = await params;
-    const body = await request.json();
-    const { fine } = body;
-
-    // Get borrowing
-    const borrowing = await db.borrowing.findUnique({
-      where: { id },
-      include: {
-        book: true,
-      },
-    });
-
-    if (!borrowing) {
+    // 🔒 MEMBER hanya boleh mengembalikan miliknya sendiri
+    if (session.role === "MEMBER" && borrowing.userId !== session.userId) {
       return NextResponse.json(
-        { error: "Peminjaman tidak ditemukan" },
-        { status: 404 },
+        { error: "Anda tidak berhak mengakses peminjaman ini" },
+        { status: 403 },
       );
     }
 
@@ -92,49 +53,50 @@ export async function PUT(
       );
     }
 
-    // Calculate fine if not provided
-    let calculatedFine = fine || 0;
-    if (!fine && borrowing.dueDate < new Date()) {
-      const overdueDays = Math.floor(
-        (Date.now() - new Date(borrowing.dueDate).getTime()) /
-          (1000 * 60 * 60 * 24),
-      );
-      calculatedFine = overdueDays * 1000; // Rp 1.000 per day
+    const now = new Date();
+    const isOverdue = now > borrowing.dueDate;
+
+    // 🔐 RULE KONSEKUENSI
+    if (session.role === "MEMBER") {
+      if (penaltyBookId || penaltyNote) {
+        return NextResponse.json(
+          { error: "Aksi tidak diizinkan" },
+          { status: 403 },
+        );
+      }
     }
 
-    // Update borrowing and increase book stock
-    const updatedBorrowing = await db.$transaction(async (tx) => {
-      const updated = await tx.borrowing.update({
+    if (isOverdue && session.role === "ADMIN" && !penaltyBookId) {
+      return NextResponse.json(
+        { error: "Buku tugas analisis wajib dipilih" },
+        { status: 400 },
+      );
+    }
+
+    await db.$transaction(async (tx) => {
+      await tx.borrowing.update({
         where: { id },
         data: {
-          status: "RETURNED",
-          returnDate: new Date(),
-          fine: calculatedFine,
-        },
-        include: {
-          book: {
-            select: {
-              id: true,
-              isbn: true,
-              title: true,
-              author: true,
-            },
-          },
+          returnDate: now,
+          status: isOverdue ? "OVERDUE" : "RETURNED",
+          penaltyType:
+            isOverdue && session.role === "ADMIN" ? "ANALYSIS_TASK" : "NONE",
+          penaltyBookId:
+            isOverdue && session.role === "ADMIN" ? penaltyBookId : null,
+          penaltyNote:
+            isOverdue && session.role === "ADMIN" ? penaltyNote : null,
         },
       });
 
-      // Increase book stock
       await tx.book.update({
         where: { id: borrowing.bookId },
         data: { stock: { increment: 1 } },
       });
-
-      return updated;
     });
 
-    return NextResponse.json({ borrowing: updatedBorrowing });
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Return book error:", error);
+    console.error("Return borrowing error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

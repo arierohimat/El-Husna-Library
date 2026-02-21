@@ -574,14 +574,6 @@ export default function ReportsPage() {
   return (
     <DashboardLayout userRole={user.role} userName={user.name}>
       <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Laporan</h1>
-          <p className="text-gray-600 mt-1">
-            Generate dan unduh laporan data perpustakaan
-          </p>
-        </div>
-
         {/* Card Pilihan Laporan */}
         <Card>
           <CardHeader>

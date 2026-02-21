@@ -172,15 +172,16 @@ async function generateBorrowingsReport(
     },
     borrowings: borrowings.map((borrowing) => {
       let konsekuensi = "-";
-      if (
-        borrowing.status === "ACTIVE" &&
-        new Date(borrowing.dueDate) < new Date()
-      ) {
-        if (borrowing.penaltyBook) {
-          konsekuensi = `Analisis: ${borrowing.penaltyBook.title}`;
-        } else {
-          konsekuensi = `Denda: Rp ${borrowing.fine?.toLocaleString("id-ID") || 0}`;
-        }
+
+      // tampilkan konsekuensi jika memang ada penalti tersimpan
+      if (borrowing.penaltyBook) {
+        konsekuensi = `Analisis Buku: ${borrowing.penaltyBook.title}`;
+      } else if (borrowing.penaltyType) {
+        konsekuensi = `Sanksi: ${borrowing.penaltyType}`;
+      } else if (borrowing.penaltyNote) {
+        konsekuensi = borrowing.penaltyNote;
+      } else if (borrowing.fine && borrowing.fine > 0) {
+        konsekuensi = `Denda: ${borrowing.fine}`;
       }
 
       return {
@@ -386,15 +387,18 @@ async function generateExcelReport(type: string, data: any) {
   // === PERBAIKAN AUTO-FIT KOLOM ===
   worksheet.columns.forEach((column) => {
     let maxLength = 0;
-    // Iterasi setiap sel dalam kolom (termasuk header)
-    column.eachCell({ includeEmpty: false }, (cell) => {
-      const cellValue = cell.value ? cell.value.toString() : "";
-      maxLength = Math.max(maxLength, cellValue.length);
-    });
-    // Beri lebar minimal 10 meskipun tidak ada data
+
+    if (!column) return;
+
+    if (typeof column.eachCell === "function") {
+      column.eachCell({ includeEmpty: false }, (cell) => {
+        const cellValue = cell.value ? cell.value.toString() : "";
+        maxLength = Math.max(maxLength, cellValue.length);
+      });
+    }
+
     column.width = maxLength > 0 ? Math.min(maxLength + 2, 50) : 10;
   });
-
   const buffer = await workbook.xlsx.writeBuffer();
   return new NextResponse(buffer, {
     headers: {

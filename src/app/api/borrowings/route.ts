@@ -15,12 +15,15 @@ export async function GET(request: NextRequest) {
 
     const where: any = {};
 
+    /* ================= ROLE FILTER ================= */
+
     // 🔒 MEMBER hanya melihat miliknya
     if (session.role === "MEMBER") {
       where.userId = session.userId;
     }
 
-    // 🔍 Search
+    /* ================= SEARCH ================= */
+
     if (search) {
       where.OR = [
         { book: { title: { contains: search, mode: "insensitive" } } },
@@ -31,24 +34,53 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    // ⚠️ STATUS FILTER (OVERDUE tidak ada di DB)
+    /* ================= STATUS FILTER ================= */
+
+    // ⚠️ OVERDUE adalah status virtual
     if (status !== "all" && status !== "OVERDUE") {
       where.status = status;
     }
+
+    /* ================= QUERY ================= */
 
     const borrowings = await db.borrowing.findMany({
       where,
       orderBy: { borrowDate: "desc" },
       include: {
-        book: true,
+        book: {
+          select: {
+            id: true,
+            title: true,
+            author: true,
+          },
+        },
+
+        // ✅ KONSEKUENSI (ADMIN ONLY)
+        penaltyBook:
+          session.role === "ADMIN"
+            ? {
+                select: {
+                  id: true,
+                  title: true,
+                },
+              }
+            : false,
+
         user:
           session.role === "ADMIN"
-            ? { select: { id: true, name: true, email: true } }
+            ? {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                },
+              }
             : false,
       },
     });
 
-    // 🔄 Normalisasi OVERDUE (virtual)
+    /* ================= NORMALISASI OVERDUE ================= */
+
     const normalized = borrowings
       .map((b) => {
         const isOverdue =
@@ -59,7 +91,6 @@ export async function GET(request: NextRequest) {
           status: isOverdue ? "OVERDUE" : b.status,
         };
       })
-      // filter OVERDUE jika dipilih
       .filter((b) => (status === "OVERDUE" ? b.status === "OVERDUE" : true));
 
     return NextResponse.json({ borrowings: normalized });
@@ -71,6 +102,10 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+/* ====================================================== */
+/* ======================= POST ========================= */
+/* ====================================================== */
 
 export async function POST(request: NextRequest) {
   try {

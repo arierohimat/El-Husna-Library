@@ -21,55 +21,72 @@ enum BorrowStatus {
   OVERDUE
 }
 
-model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  username     String   @unique
-  password     String
-  name         String
-  role         Role     @default(MEMBER)
-  phone        String?
-  address      String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+enum PenaltyType {
+  ANALYSIS_TASK
+  FINE
+}
 
-  borrowings   Borrowing[]
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String
+  role      Role     @default(MEMBER)
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  borrowings Borrowing[]
 }
 
 model Book {
-  id          String   @id @default(cuid())
-  isbn        String   @unique
-  title       String
-  author      String
-  publisher   String
-  year        Int
-  category    String
-  stock       Int
-  coverImage  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  isbn       String   @unique
+  title      String
+  author     String
+  publisher  String
+  year       Int
+  category   String
+  stock      Int
+  coverImage String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  borrowings  Borrowing[]
+  // relasi buku yang dipinjam
+  borrowings Borrowing[] @relation("BorrowedBook")
+
+  // relasi buku analisis
+  penaltyUsages Borrowing[] @relation("PenaltyBook")
 }
 
 model Borrowing {
-  id          String       @id @default(cuid())
-  userId      String
-  bookId      String
+  id            String  @id @default(cuid())
+  userId        String
+  bookId        String
+  penaltyBookId String?
+
   borrowDate  DateTime     @default(now())
   dueDate     DateTime
   returnDate  DateTime?
   fine        Float        @default(0)
   status      BorrowStatus @default(ACTIVE)
+  penaltyType PenaltyType?
+  penaltyNote String?
 
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  book        Book         @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  // buku yang dipinjam
+  book Book @relation("BorrowedBook", fields: [bookId], references: [id], onDelete: Cascade)
+
+  // buku analisis (konsekuensi)
+  penaltyBook Book? @relation("PenaltyBook", fields: [penaltyBookId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([bookId])
-  @@index([status])
+  @@index([penaltyBookId])
 }
-

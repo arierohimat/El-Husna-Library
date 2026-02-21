@@ -3,11 +3,9 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import ExcelJS from "exceljs";
 
-// GET /api/reports - Generate reports
 export async function GET(request: NextRequest) {
   try {
     const session = await getSession();
-
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -28,7 +26,7 @@ export async function GET(request: NextRequest) {
         data = await generateMembersReport();
         break;
       case "borrowings":
-        data = await generateBorrowingsReport(startDate, endDate);
+        data = await generateBorrowingsReport(startDate, endDate, session);
         break;
       default:
         return NextResponse.json(
@@ -112,6 +110,7 @@ async function generateMembersReport() {
 async function generateBorrowingsReport(
   startDate?: string | null,
   endDate?: string | null,
+  session?: any,
 ) {
   const where: any = {};
 
@@ -125,8 +124,6 @@ async function generateBorrowingsReport(
     }
   }
 
-  // Members can only see their own borrowings
-  const session = await getSession();
   if (session?.role === "MEMBER") {
     where.userId = session.userId;
   }
@@ -148,6 +145,9 @@ async function generateBorrowingsReport(
           email: true,
         },
       },
+      penaltyBook: {
+        select: { title: true },
+      },
     },
   });
 
@@ -160,7 +160,6 @@ async function generateBorrowingsReport(
   const overdueBorrowings = borrowings.filter(
     (b) => b.status === "ACTIVE" && new Date(b.dueDate) < new Date(),
   ).length;
-  const totalFines = borrowings.reduce((sum, b) => sum + b.fine, 0);
 
   return {
     title: "Laporan Peminjaman",
@@ -170,31 +169,41 @@ async function generateBorrowingsReport(
       activeBorrowings,
       returnedBorrowings,
       overdueBorrowings,
-      totalFines,
     },
-    borrowings: borrowings.map((borrowing) => ({
-      Judul: borrowing.book.title,
-      Penulis: borrowing.book.author,
-      ISBN: borrowing.book.isbn,
-      Peminjam: borrowing.user.name,
-      "Tanggal Pinjam": new Date(borrowing.borrowDate).toLocaleDateString(
-        "id-ID",
-      ),
-      "Jatuh Tempo": new Date(borrowing.dueDate).toLocaleDateString("id-ID"),
-      "Tanggal Kembali": borrowing.returnDate
-        ? new Date(borrowing.returnDate).toLocaleDateString("id-ID")
-        : "-",
-      Status:
-        borrowing.status === "ACTIVE"
-          ? "Aktif"
-          : borrowing.status === "RETURNED"
-            ? "Dikembalikan"
-            : "Terlambat",
-      Denda:
-        borrowing.fine > 0
-          ? `Rp ${borrowing.fine.toLocaleString("id-ID")}`
-          : "Rp 0",
-    })),
+    borrowings: borrowings.map((borrowing) => {
+      let konsekuensi = "-";
+      if (
+        borrowing.status === "ACTIVE" &&
+        new Date(borrowing.dueDate) < new Date()
+      ) {
+        if (borrowing.penaltyBook) {
+          konsekuensi = `Analisis: ${borrowing.penaltyBook.title}`;
+        } else {
+          konsekuensi = `Denda: Rp ${borrowing.fine?.toLocaleString("id-ID") || 0}`;
+        }
+      }
+
+      return {
+        Judul: borrowing.book.title,
+        Penulis: borrowing.book.author,
+        ISBN: borrowing.book.isbn,
+        Peminjam: borrowing.user.name,
+        "Tanggal Pinjam": new Date(borrowing.borrowDate).toLocaleDateString(
+          "id-ID",
+        ),
+        "Jatuh Tempo": new Date(borrowing.dueDate).toLocaleDateString("id-ID"),
+        "Tanggal Kembali": borrowing.returnDate
+          ? new Date(borrowing.returnDate).toLocaleDateString("id-ID")
+          : "-",
+        Status:
+          borrowing.status === "ACTIVE"
+            ? "Aktif"
+            : borrowing.status === "RETURNED"
+              ? "Dikembalikan"
+              : "Terlambat",
+        Konsekuensi: konsekuensi,
+      };
+    }),
   };
 }
 
@@ -202,14 +211,14 @@ async function generateExcelReport(type: string, data: any) {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Laporan");
 
-  // Add title
+  // Title
   worksheet.mergeCells("A1:H1");
   const titleCell = worksheet.getCell("A1");
   titleCell.value = data.title;
   titleCell.font = { size: 16, bold: true };
   titleCell.alignment = { horizontal: "center" };
 
-  // Add date
+  // Date
   worksheet.mergeCells("A2:H2");
   const dateCell = worksheet.getCell("A2");
   dateCell.value = `Tanggal: ${new Date(data.date).toLocaleDateString("id-ID", {
@@ -222,14 +231,14 @@ async function generateExcelReport(type: string, data: any) {
   let rowIndex = 4;
 
   if (type === "books") {
-    // Add summary
+    // Summary
     worksheet.getCell(`A${rowIndex}`).value = "Total Buku:";
     worksheet.getCell(`B${rowIndex}`).value = data.totalBooks;
     worksheet.getCell(`C${rowIndex}`).value = "Total Stok:";
     worksheet.getCell(`D${rowIndex}`).value = data.totalStock;
     rowIndex += 2;
 
-    // Add headers
+    // Headers
     const headers = [
       "ISBN",
       "Judul",
@@ -253,31 +262,37 @@ async function generateExcelReport(type: string, data: any) {
     });
     rowIndex++;
 
-    // Add data
-    data.books.forEach((book: any) => {
-      worksheet.getCell(`A${rowIndex}`).value = book.ISBN;
-      worksheet.getCell(`B${rowIndex}`).value = book.Judul;
-      worksheet.getCell(`C${rowIndex}`).value = book.Penulis;
-      worksheet.getCell(`D${rowIndex}`).value = book.Penerbit;
-      worksheet.getCell(`E${rowIndex}`).value = book["Tahun Terbit"];
-      worksheet.getCell(`F${rowIndex}`).value = book.Kategori;
-      worksheet.getCell(`G${rowIndex}`).value = book.Stok;
-      rowIndex++;
-    });
+    // Data
+    if (data.books && data.books.length > 0) {
+      data.books.forEach((book: any) => {
+        worksheet.getCell(`A${rowIndex}`).value = book.ISBN;
+        worksheet.getCell(`B${rowIndex}`).value = book.Judul;
+        worksheet.getCell(`C${rowIndex}`).value = book.Penulis;
+        worksheet.getCell(`D${rowIndex}`).value = book.Penerbit;
+        worksheet.getCell(`E${rowIndex}`).value = book["Tahun Terbit"];
+        worksheet.getCell(`F${rowIndex}`).value = book.Kategori;
+        worksheet.getCell(`G${rowIndex}`).value = book.Stok;
+        rowIndex++;
+      });
+    } else {
+      worksheet.mergeCells(`A${rowIndex}:G${rowIndex}`);
+      worksheet.getCell(`A${rowIndex}`).value = "Tidak ada data";
+      worksheet.getCell(`A${rowIndex}`).alignment = { horizontal: "center" };
+    }
   } else if (type === "members") {
-    // Add summary
+    // Summary
     worksheet.getCell(`A${rowIndex}`).value = "Total Anggota:";
     worksheet.getCell(`B${rowIndex}`).value = data.totalMembers;
     rowIndex += 2;
 
-    // Add headers
+    // Headers
     const headers = [
       "Nama",
       "Email",
       "Username",
       "Telepon",
       "Alamat",
-      "Total Peminjaman",
+      "Total Pinjam",
       "Terdaftar",
     ];
     headers.forEach((header, index) => {
@@ -294,30 +309,35 @@ async function generateExcelReport(type: string, data: any) {
     });
     rowIndex++;
 
-    // Add data
-    data.members.forEach((member: any) => {
-      worksheet.getCell(`A${rowIndex}`).value = member.Nama;
-      worksheet.getCell(`B${rowIndex}`).value = member.Email;
-      worksheet.getCell(`C${rowIndex}`).value = member.Username;
-      worksheet.getCell(`E${rowIndex}`).value = member.Telepon;
-      worksheet.getCell(`F${rowIndex}`).value = member.Alamat;
-      worksheet.getCell(`G${rowIndex}`).value = member["Total Peminjaman"];
-      worksheet.getCell(`H${rowIndex}`).value = member["Terdaftar Pada"];
-      rowIndex++;
-    });
+    if (data.members && data.members.length > 0) {
+      data.members.forEach((member: any) => {
+        worksheet.getCell(`A${rowIndex}`).value = member.Nama;
+        worksheet.getCell(`B${rowIndex}`).value = member.Email;
+        worksheet.getCell(`C${rowIndex}`).value = member.Username;
+        worksheet.getCell(`D${rowIndex}`).value = member.Telepon; // kolom D
+        worksheet.getCell(`E${rowIndex}`).value = member.Alamat; // kolom E
+        worksheet.getCell(`F${rowIndex}`).value = member["Total Peminjaman"]; // kolom F
+        worksheet.getCell(`G${rowIndex}`).value = member["Terdaftar Pada"]; // kolom G
+        rowIndex++;
+      });
+    } else {
+      worksheet.mergeCells(`A${rowIndex}:G${rowIndex}`);
+      worksheet.getCell(`A${rowIndex}`).value = "Tidak ada data";
+      worksheet.getCell(`A${rowIndex}`).alignment = { horizontal: "center" };
+    }
   } else if (type === "borrowings") {
-    // Add summary
+    // Summary
     worksheet.getCell(`A${rowIndex}`).value = "Total Peminjaman:";
     worksheet.getCell(`B${rowIndex}`).value = data.summary.totalBorrowings;
     worksheet.getCell(`C${rowIndex}`).value = "Aktif:";
     worksheet.getCell(`D${rowIndex}`).value = data.summary.activeBorrowings;
     worksheet.getCell(`E${rowIndex}`).value = "Dikembalikan:";
     worksheet.getCell(`F${rowIndex}`).value = data.summary.returnedBorrowings;
-    worksheet.getCell(`G${rowIndex}`).value = "Total Denda:";
-    worksheet.getCell(`H${rowIndex}`).value = data.summary.totalFines;
+    worksheet.getCell(`G${rowIndex}`).value = "Terlambat:";
+    worksheet.getCell(`H${rowIndex}`).value = data.summary.overdueBorrowings;
     rowIndex += 2;
 
-    // Add headers
+    // Headers (9 kolom: A s/d I)
     const headers = [
       "Judul",
       "Penulis",
@@ -327,7 +347,7 @@ async function generateExcelReport(type: string, data: any) {
       "Jatuh Tempo",
       "Tanggal Kembali",
       "Status",
-      "Denda",
+      "Konsekuensi",
     ];
     headers.forEach((header, index) => {
       const cell = worksheet.getCell(
@@ -343,34 +363,39 @@ async function generateExcelReport(type: string, data: any) {
     });
     rowIndex++;
 
-    // Add data
-    data.borrowings.forEach((borrowing: any) => {
-      worksheet.getCell(`A${rowIndex}`).value = borrowing.Judul;
-      worksheet.getCell(`B${rowIndex}`).value = borrowing.Penulis;
-      worksheet.getCell(`C${rowIndex}`).value = borrowing.ISBN;
-      worksheet.getCell(`D${rowIndex}`).value = borrowing.Peminjam;
-      worksheet.getCell(`E${rowIndex}`).value = borrowing["Tanggal Pinjam"];
-      worksheet.getCell(`F${rowIndex}`).value = borrowing["Jatuh Tempo"];
-      worksheet.getCell(`G${rowIndex}`).value = borrowing["Tanggal Kembali"];
-      worksheet.getCell(`H${rowIndex}`).value = borrowing.Status;
-      worksheet.getCell(`I${rowIndex}`).value = borrowing.Denda;
-      rowIndex++;
-    });
+    if (data.borrowings && data.borrowings.length > 0) {
+      data.borrowings.forEach((borrowing: any) => {
+        worksheet.getCell(`A${rowIndex}`).value = borrowing.Judul;
+        worksheet.getCell(`B${rowIndex}`).value = borrowing.Penulis;
+        worksheet.getCell(`C${rowIndex}`).value = borrowing.ISBN;
+        worksheet.getCell(`D${rowIndex}`).value = borrowing.Peminjam;
+        worksheet.getCell(`E${rowIndex}`).value = borrowing["Tanggal Pinjam"];
+        worksheet.getCell(`F${rowIndex}`).value = borrowing["Jatuh Tempo"];
+        worksheet.getCell(`G${rowIndex}`).value = borrowing["Tanggal Kembali"];
+        worksheet.getCell(`H${rowIndex}`).value = borrowing.Status;
+        worksheet.getCell(`I${rowIndex}`).value = borrowing.Konsekuensi;
+        rowIndex++;
+      });
+    } else {
+      worksheet.mergeCells(`A${rowIndex}:I${rowIndex}`);
+      worksheet.getCell(`A${rowIndex}`).value = "Tidak ada data";
+      worksheet.getCell(`A${rowIndex}`).alignment = { horizontal: "center" };
+    }
   }
 
-  // Auto-fit columns
-  worksheet.columns.forEach((column: any) => {
-    if (column.values) {
-      const maxLength = Math.max(
-        ...column.values.map((v: any) => String(v || "").length),
-      );
-      column.width = Math.min(maxLength + 2, 50);
-    }
+  // === PERBAIKAN AUTO-FIT KOLOM ===
+  worksheet.columns.forEach((column) => {
+    let maxLength = 0;
+    // Iterasi setiap sel dalam kolom (termasuk header)
+    column.eachCell({ includeEmpty: false }, (cell) => {
+      const cellValue = cell.value ? cell.value.toString() : "";
+      maxLength = Math.max(maxLength, cellValue.length);
+    });
+    // Beri lebar minimal 10 meskipun tidak ada data
+    column.width = maxLength > 0 ? Math.min(maxLength + 2, 50) : 10;
   });
 
-  // Generate buffer
   const buffer = await workbook.xlsx.writeBuffer();
-
   return new NextResponse(buffer, {
     headers: {
       "Content-Type":

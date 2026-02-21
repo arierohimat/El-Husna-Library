@@ -1,45 +1,51 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { BookOpen, Lock, User, AlertCircle } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { BookOpen, Lock, User, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     // Validation
     if (!formData.email.trim()) {
-      setError('Email atau username wajib diisi');
+      setError("Email atau username wajib diisi");
       setIsLoading(false);
       return;
     }
 
     if (formData.password.length < 8) {
-      setError('Password minimal 8 karakter');
+      setError("Password minimal 8 karakter");
       setIsLoading(false);
       return;
     }
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -47,19 +53,19 @@ export default function Home() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Login gagal. Silakan coba lagi.');
+        setError(data.error || "Login gagal. Silakan coba lagi.");
         setIsLoading(false);
         return;
       }
 
       // Redirect to dashboard based on role
-      if (data.user.role === 'ADMIN') {
-        window.location.href = '/dashboard/admin';
+      if (data.user.role === "ADMIN") {
+        window.location.href = "/dashboard/admin";
       } else {
-        window.location.href = '/dashboard/member';
+        window.location.href = "/dashboard/member";
       }
     } catch (err) {
-      setError('Terjadi kesalahan. Silakan coba lagi.');
+      setError("Terjadi kesalahan. Silakan coba lagi.");
       setIsLoading(false);
     }
   };
@@ -74,7 +80,9 @@ export default function Home() {
               <BookOpen className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">El-Husna Library</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            El-Husna Library
+          </h1>
           <p className="text-gray-600">Sistem Informasi Perpustakaan</p>
         </div>
 
@@ -107,7 +115,9 @@ export default function Home() {
                     placeholder="Masukkan email atau username"
                     className="pl-10"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     disabled={isLoading}
                   />
                 </div>
@@ -125,7 +135,9 @@ export default function Home() {
                     placeholder="Masukkan password"
                     className="pl-10"
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
                     disabled={isLoading}
                   />
                 </div>
@@ -136,25 +148,19 @@ export default function Home() {
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-medium"
                 disabled={isLoading}
               >
-                {isLoading ? 'Memproses...' : 'Masuk'}
+                {isLoading ? "Memproses..." : "Masuk"}
               </Button>
 
               <div className="text-center text-sm text-gray-600">
-                Belum punya akun?{' '}
-                <Link href="/register" className="text-green-600 hover:text-green-700 font-medium">
+                Belum punya akun?{" "}
+                <Link
+                  href="/register"
+                  className="text-green-600 hover:text-green-700 font-medium"
+                >
                   Daftar sekarang
                 </Link>
               </div>
             </form>
-
-            {/* Demo Accounts */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-xs font-semibold text-gray-700 mb-2">Akun Demo:</p>
-              <div className="text-xs space-y-1 text-gray-600">
-                <p><strong>Admin:</strong> admin / admin123</p>
-                <p><strong>Anggota:</strong> member / member123</p>
-              </div>
-            </div>
           </CardContent>
         </Card>
 

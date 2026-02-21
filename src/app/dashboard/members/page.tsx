@@ -2,25 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -41,7 +28,9 @@ import {
   Mail,
   Phone,
   MapPin,
-  Calendar,
+  Loader2,
+  Users,
+  AlertCircle,
 } from "lucide-react";
 
 interface Member {
@@ -53,52 +42,47 @@ interface Member {
   address?: string | null;
   role: string;
   createdAt: string;
-  _count: {
-    borrowings: number;
-  };
+  _count: { borrowings: number };
 }
+
 export const dynamic = "force-dynamic";
 
 export default function MembersPage() {
-  const [user, setUser] = useState<{
-    name: string;
-    role: "ADMIN" | "MEMBER";
-  } | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
-  const [formData, setFormData] = useState({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  const emptyForm = {
     email: "",
     username: "",
     password: "",
     name: "",
     phone: "",
     address: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(emptyForm);
 
   useEffect(() => {
-    fetchUser();
-    if (user?.role === "ADMIN") {
-      fetchMembers();
-    }
-  }, [user?.role, search, page]);
-
-  const fetchUser = () => {
     fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data.user);
-      })
-      .catch(() => {
-        setUser(null);
-      });
-  };
+      .then((r) => r.json())
+      .then((d) => setUser(d.user))
+      .catch(() => setUser(null));
+  }, []);
+
+  useEffect(() => {
+    if (user?.role === "ADMIN") fetchMembers();
+  }, [user?.role, search, page]);
 
   const fetchMembers = async () => {
     setLoading(true);
@@ -107,91 +91,165 @@ export default function MembersPage() {
         page: page.toString(),
         limit: "10",
       });
-
       if (search) params.append("search", search);
 
-      const response = await fetch(`/api/members?${params}`);
-      const data = await response.json();
+      const res = await fetch(`/api/members?${params}`);
+      const data = await res.json();
       setMembers(data.members || []);
       setTotalPages(data.pagination?.totalPages || 1);
-    } catch (error) {
-      console.error("Error fetching members:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const resetForm = () => {
+    setFormData(emptyForm);
+    setError("");
+  };
+
+  // Validasi client-side
+  const validateForm = (isEdit: boolean) => {
+    if (!formData.name.trim()) return "Nama lengkap harus diisi";
+    if (!formData.email.trim()) return "Email harus diisi";
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) return "Email tidak valid";
+    if (!formData.username.trim()) return "Username harus diisi";
+    if (!isEdit && formData.password.length < 6) {
+      return "Password minimal 6 karakter";
+    }
+    return null;
+  };
+
+  // Helper untuk mengambil pesan error dari response
+  const getErrorMessage = (data: any, defaultMsg: string): string => {
+    if (data?.message) return data.message;
+    if (data?.error) return data.error;
+    if (typeof data === "string") return data;
+    return defaultMsg;
+  };
+
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
+    const validationError = validateForm(false);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    // Ubah string kosong menjadi null untuk field opsional
+    const payload = {
+      email: formData.email,
+      username: formData.username,
+      password: formData.password,
+      name: formData.name,
+      phone: formData.phone || null,
+      address: formData.address || null,
+    };
+
+    setIsSubmitting(true);
     try {
-      const response = await fetch("/api/members", {
+      const res = await fetch("/api/members", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Gagal menambahkan anggota");
+      const data = await res.json();
+      console.log("Response add:", { status: res.status, data }); // untuk debugging
+
+      if (!res.ok) {
+        setError(getErrorMessage(data, "Gagal menambahkan anggota"));
+        return;
       }
 
-      setIsAddDialogOpen(false);
+      // Sukses
+      setIsAddOpen(false);
       resetForm();
       fetchMembers();
-    } catch (error: any) {
-      alert(error.message);
+    } catch (err) {
+      console.error(err);
+      setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!selectedMember) return;
+    setError("");
 
+    const validationError = validateForm(true);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    const payload = {
+      email: formData.email,
+      username: formData.username,
+      // password hanya dikirim jika diisi (opsional saat edit)
+      ...(formData.password ? { password: formData.password } : {}),
+      name: formData.name,
+      phone: formData.phone || null,
+      address: formData.address || null,
+    };
+
+    setIsSubmitting(true);
     try {
-      const response = await fetch(`/api/members/${selectedMember.id}`, {
+      const res = await fetch(`/api/members/${selectedMember.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Gagal mengupdate anggota");
+      const data = await res.json();
+      console.log("Response edit:", { status: res.status, data });
+
+      if (!res.ok) {
+        setError(getErrorMessage(data, "Gagal mengupdate anggota"));
+        return;
       }
 
-      setIsEditDialogOpen(false);
+      setIsEditOpen(false);
       setSelectedMember(null);
       resetForm();
       fetchMembers();
-    } catch (error: any) {
-      alert(error.message);
+    } catch (err) {
+      console.error(err);
+      setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleDelete = async () => {
     if (!selectedMember) return;
-
+    setIsSubmitting(true);
     try {
-      const response = await fetch(`/api/members/${selectedMember.id}`, {
+      const res = await fetch(`/api/members/${selectedMember.id}`, {
         method: "DELETE",
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Gagal menghapus anggota");
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(getErrorMessage(data, "Gagal menghapus anggota"));
+        return;
       }
 
-      setIsDeleteDialogOpen(false);
+      setIsDeleteOpen(false);
       setSelectedMember(null);
       fetchMembers();
-    } catch (error: any) {
-      alert(error.message);
+    } catch (err) {
+      alert("Terjadi kesalahan jaringan");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const openEditDialog = (member: Member) => {
+  const openEdit = (member: Member) => {
     setSelectedMember(member);
     setFormData({
       email: member.email,
@@ -201,373 +259,278 @@ export default function MembersPage() {
       phone: member.phone || "",
       address: member.address || "",
     });
-    setIsEditDialogOpen(true);
+    setError("");
+    setIsEditOpen(true);
   };
 
-  const openDeleteDialog = (member: Member) => {
-    setSelectedMember(member);
-    setIsDeleteDialogOpen(true);
+  const openAdd = () => {
+    resetForm();
+    setIsAddOpen(true);
   };
 
-  const resetForm = () => {
-    setFormData({
-      email: "",
-      username: "",
-      password: "",
-      name: "",
-      phone: "",
-      address: "",
-    });
-  };
-
-  if (!user || user.role !== "ADMIN") {
-    return null;
-  }
+  if (!user || user.role !== "ADMIN") return null;
 
   return (
     <DashboardLayout userRole={user.role} userName={user.name}>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              Manajemen Anggota
-            </h1>
-            <p className="text-gray-600 mt-1">
-              Kelola data anggota perpustakaan
-            </p>
-          </div>
-          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-green-600 hover:bg-green-700">
-                <Plus className="w-4 h-4 mr-2" />
-                Tambah Anggota
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Tambah Anggota Baru</DialogTitle>
-                <DialogDescription>
-                  Isi data anggota yang akan ditambahkan
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleAdd} className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nama Lengkap *</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="Nama lengkap"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      placeholder="email@example.com"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="username">Username *</Label>
-                    <Input
-                      id="username"
-                      value={formData.username}
-                      onChange={(e) =>
-                        setFormData({ ...formData, username: e.target.value })
-                      }
-                      placeholder="Username"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password *</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      value={formData.password}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
-                      placeholder="Minimal 8 karakter"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Nomor Telepon</Label>
-                    <Input
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      placeholder="62xxxxxxxxxx"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="address">Alamat</Label>
-                  <Input
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) =>
-                      setFormData({ ...formData, address: e.target.value })
-                    }
-                    placeholder="Alamat lengkap"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700"
-                >
-                  Simpan Anggota
-                </Button>
-              </form>
-            </DialogContent>
-          </Dialog>
+        {/* STAT CARDS */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <StatCard
+            icon={<Users className="text-emerald-600" />}
+            label="Total Anggota"
+            value={members.length}
+          />
+          <StatCard
+            icon={<User className="text-blue-600" />}
+            label="Halaman"
+            value={page}
+          />
+          <StatCard
+            icon={<Mail className="text-amber-600" />}
+            label="Total Halaman"
+            value={totalPages}
+          />
         </div>
 
-        {/* Search */}
-        <Card>
-          <CardContent className="pt-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Cari berdasarkan nama, email, username..."
+        {/* FILTER BAR */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div className="flex flex-col sm:flex-row gap-3 items-center">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                placeholder="Cari nama, email, username..."
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                className="pl-10"
               />
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Members Table */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Daftar Anggota</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="text-center py-8">Memuat data...</div>
-            ) : members.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
-                Tidak ada anggota ditemukan
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Nama</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Username</TableHead>
-                      <TableHead>Telepon</TableHead>
-                      <TableHead>Peminjaman</TableHead>
-                      <TableHead>Terdaftar</TableHead>
-                      <TableHead className="text-right">Aksi</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {members.map((member) => (
-                      <TableRow key={member.id}>
-                        <TableCell className="font-medium">
-                          {member.name}
-                        </TableCell>
-                        <TableCell>{member.email}</TableCell>
-                        <TableCell>{member.username}</TableCell>
-                        <TableCell>{member.phone || "-"}</TableCell>
-                        <TableCell>{member._count.borrowings}</TableCell>
-                        <TableCell>
-                          {new Date(member.createdAt).toLocaleDateString(
-                            "id-ID",
-                          )}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => openEditDialog(member)}
-                            >
-                              <Edit className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => openDeleteDialog(member)}
-                              className="text-red-600 hover:text-red-700"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
+            <button
+              onClick={openAdd}
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-sm font-semibold rounded-xl shadow-sm"
+            >
+              <Plus className="w-4 h-4" />
+              Tambah Anggota
+            </button>
+          </div>
+        </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                >
-                  Sebelumnya
-                </Button>
-                <span className="text-sm text-gray-600">
-                  Halaman {page} dari {totalPages}
-                </span>
-                <Button
-                  variant="outline"
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
-                >
-                  Selanjutnya
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        {/* TABLE */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100">
+            <h3 className="text-base font-semibold text-gray-900">
+              Daftar Anggota
+            </h3>
+          </div>
 
-        {/* Edit Dialog */}
-        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Edit Anggota</DialogTitle>
-              <DialogDescription>Update data anggota</DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleEdit} className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="edit-name">Nama Lengkap *</Label>
-                  <Input
-                    id="edit-name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="edit-email">Email *</Label>
-                  <Input
-                    id="edit-email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-username">Username *</Label>
-                  <Input
-                    id="edit-username"
-                    value={formData.username}
-                    onChange={(e) =>
-                      setFormData({ ...formData, username: e.target.value })
-                    }
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="edit-password">
-                    Password (Biarkan kosong jika tidak diubah)
-                  </Label>
-                  <Input
-                    id="edit-password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
-                    }
-                    placeholder="Minimal 8 karakter"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-phone">Nomor Telepon</Label>
-                  <Input
-                    id="edit-phone"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                    placeholder="62xxxxxxxxxx"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="edit-address">Alamat</Label>
-                <Input
-                  id="edit-address"
-                  value={formData.address}
-                  onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })
-                  }
-                />
-              </div>
-              <Button
-                type="submit"
-                className="w-full bg-green-600 hover:bg-green-700"
-              >
-                Update Anggota
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 className="animate-spin text-emerald-500" />
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr className="h-14">
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
+                      Nama
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
+                      Email
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
+                      Username
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
+                      Telepon
+                    </th>
+                    <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase">
+                      Peminjaman
+                    </th>
+                    <th className="px-8 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider align-middle">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
 
-        {/* Delete Confirmation Dialog */}
-        <AlertDialog
-          open={isDeleteDialogOpen}
-          onOpenChange={setIsDeleteDialogOpen}
-        >
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Hapus Anggota</AlertDialogTitle>
-              <AlertDialogDescription>
-                Apakah Anda yakin ingin menghapus anggota "
-                {selectedMember?.name}"? Tindakan ini tidak dapat dibatalkan.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Batal</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleDelete}
-                className="bg-red-600 hover:bg-red-700"
-              >
-                Hapus
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+                <tbody className="divide-y divide-gray-100">
+                  {members.map((m) => (
+                    <tr key={m.id} className="h-16 hover:bg-gray-50 transition">
+                      <td className="px-6 py-3 font-medium">{m.name}</td>
+                      <td className="px-6 py-3">{m.email}</td>
+                      <td className="px-6 py-3">{m.username}</td>
+                      <td className="px-6 py-3">{m.phone || "-"}</td>
+                      <td className="px-6 py-3 text-center font-semibold">
+                        {m._count.borrowings}
+                      </td>
+                      <td className="px-6 py-3">
+                        <div className="flex justify-end gap-1.5">
+                          <ActionButton onClick={() => openEdit(m)}>
+                            <Edit size={14} />
+                          </ActionButton>
+                          <ActionButton
+                            danger
+                            onClick={() => {
+                              setSelectedMember(m);
+                              setIsDeleteOpen(true);
+                            }}
+                          >
+                            <Trash2 size={14} />
+                          </ActionButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* ADD / EDIT DIALOG */}
+      <Dialog
+        open={isAddOpen || isEditOpen}
+        onOpenChange={(o) => {
+          if (!o) {
+            setIsAddOpen(false);
+            setIsEditOpen(false);
+            resetForm();
+          }
+        }}
+      >
+        <DialogContent className="rounded-2xl max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-gray-900">
+              {isEditOpen ? "Edit Anggota" : "Tambah Anggota"}
+            </DialogTitle>
+            <DialogDescription>Isi informasi lengkap anggota</DialogDescription>
+          </DialogHeader>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start gap-2">
+              <AlertCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
+
+          <form
+            onSubmit={isEditOpen ? handleEdit : handleAdd}
+            className="space-y-4"
+          >
+            {InputField("Nama Lengkap", formData.name, (v) =>
+              setFormData({ ...formData, name: v }),
+            )}
+            {InputField(
+              "Email",
+              formData.email,
+              (v) => setFormData({ ...formData, email: v }),
+              "email",
+            )}
+            {InputField("Username", formData.username, (v) =>
+              setFormData({ ...formData, username: v }),
+            )}
+            {!isEditOpen &&
+              InputField(
+                "Password",
+                formData.password,
+                (v) => setFormData({ ...formData, password: v }),
+                "password",
+              )}
+            {InputField("Nomor Telepon", formData.phone, (v) =>
+              setFormData({ ...formData, phone: v }),
+            )}
+            {InputField("Alamat", formData.address, (v) =>
+              setFormData({ ...formData, address: v }),
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting
+                ? "Menyimpan..."
+                : isEditOpen
+                  ? "Update Anggota"
+                  : "Simpan Anggota"}
+            </button>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* DELETE CONFIRMATION */}
+      <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+        <AlertDialogContent className="rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Hapus Anggota?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Anda yakin ingin menghapus "{selectedMember?.name}"?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isSubmitting}>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={isSubmitting}
+              className="bg-red-600 hover:bg-red-700 text-white disabled:opacity-50"
+            >
+              {isSubmitting ? "Menghapus..." : "Hapus"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardLayout>
+  );
+}
+
+/* ───────── Helper Components ───────── */
+
+function StatCard({ icon, label, value }: any) {
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      <div className="p-3 bg-gray-50 rounded-xl w-fit mb-3">{icon}</div>
+      <p className="text-sm text-gray-600">{label}</p>
+      <p className="text-2xl font-bold text-gray-900">{value}</p>
+    </div>
+  );
+}
+
+function ActionButton({ children, danger, ...props }: any) {
+  return (
+    <button
+      {...props}
+      className={`w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 transition ${
+        danger
+          ? "hover:bg-red-50 hover:text-red-600"
+          : "hover:bg-emerald-50 hover:text-emerald-600"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function InputField(
+  label: string,
+  value: string,
+  onChange: any,
+  type = "text",
+) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+        {label}
+      </label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+      />
+    </div>
   );
 }

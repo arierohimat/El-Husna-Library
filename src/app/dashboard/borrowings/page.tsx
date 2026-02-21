@@ -2,318 +2,626 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Search, Plus, Book, CheckCircle, AlertTriangle } from "lucide-react";
-
-/* ================= TYPES ================= */
+  Plus,
+  Search,
+  Loader2,
+  BookOpen,
+  Calendar,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+} from "lucide-react";
 
 interface Book {
   id: string;
   title: string;
-  author: string;
   stock: number;
 }
 
 interface Borrowing {
   id: string;
-  borrowDate: string;
   dueDate: string;
   status: "ACTIVE" | "RETURNED" | "OVERDUE";
-  book: {
-    title: string;
-    author: string;
-    coverImage?: string | null;
-  };
-  user?: {
-    name: string;
-  };
+  penaltyType?: "ANALYSIS_TASK" | null;
+  penaltyBook?: { title: string } | null;
+  book: { title: string };
+  user?: { name: string };
 }
 
-/* ================= PAGE ================= */
-
 export default function BorrowingsPage() {
-  const [user, setUser] = useState<{
-    name: string;
-    role: "ADMIN" | "MEMBER";
-  }>();
+  const [user, setUser] = useState<any>(null);
   const [borrowings, setBorrowings] = useState<Borrowing[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
   const [loading, setLoading] = useState(true);
 
-  const [returnDialogOpen, setReturnDialogOpen] = useState(false);
+  const [borrowOpen, setBorrowOpen] = useState(false);
+  const [returnOpen, setReturnOpen] = useState(false);
   const [selected, setSelected] = useState<Borrowing | null>(null);
 
+  const [borrowBookId, setBorrowBookId] = useState("");
+  const [borrowDate, setBorrowDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [penaltyBookId, setPenaltyBookId] = useState("");
-  const [penaltyNote, setPenaltyNote] = useState("");
 
-  /* ================= EFFECT ================= */
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  const isAdmin = user?.role === "ADMIN";
+
+  // Helper untuk format tanggal
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  // Helper untuk mengambil pesan error dari response
+  const getErrorMessage = (data: any, defaultMsg: string): string => {
+    if (data?.message) return data.message;
+    if (data?.error) return data.error;
+    if (typeof data === "string") return data;
+    return defaultMsg;
+  };
+
+  const isOverdue = (b?: Borrowing | null) =>
+    !!b && b.status !== "RETURNED" && new Date(b.dueDate) < new Date();
 
   useEffect(() => {
     fetch("/api/auth/session")
       .then((r) => r.json())
-      .then((d) => setUser(d.user));
+      .then((d) => setUser(d.user))
+      .catch(() => setUser(null));
   }, []);
 
   useEffect(() => {
-    if (user) {
-      loadBorrowings();
-      if (user.role === "MEMBER") loadBooks();
-    }
+    if (!user) return;
+    loadBorrowings();
+    loadBooks();
   }, [user, search, status]);
-
-  /* ================= FETCH ================= */
 
   const loadBorrowings = async () => {
     setLoading(true);
-    const p = new URLSearchParams();
-    if (search) p.append("search", search);
-    if (status !== "all") p.append("status", status);
+    try {
+      const p = new URLSearchParams();
+      if (search) p.append("search", search);
+      if (status !== "all") p.append("status", status);
 
-    const r = await fetch(`/api/borrowings?${p}`);
-    const d = await r.json();
-    setBorrowings(d.borrowings || []);
-    setLoading(false);
+      const r = await fetch(`/api/borrowings?${p}`);
+      const d = await r.json();
+      setBorrowings(d.borrowings || []);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loadBooks = async () => {
-    const r = await fetch("/api/books?limit=100");
-    const d = await r.json();
-    setBooks(d.books || []);
+    try {
+      const r = await fetch("/api/books?limit=100");
+      const d = await r.json();
+      setBooks(d.books || []);
+    } catch (err) {
+      console.error("Gagal memuat buku:", err);
+    }
   };
 
-  /* ================= ACTION ================= */
+  // Validasi form peminjaman
+  const validateBorrowForm = () => {
+    if (!borrowBookId) return "Pilih buku yang akan dipinjam";
+    if (!borrowDate) return "Pilih tanggal peminjaman";
+    if (!dueDate) return "Pilih tanggal jatuh tempo";
+    if (new Date(borrowDate) > new Date(dueDate)) {
+      return "Tanggal jatuh tempo harus setelah tanggal peminjaman";
+    }
+    return null;
+  };
 
-  const openReturn = (b: Borrowing) => {
-    setSelected(b);
-    setPenaltyBookId("");
-    setPenaltyNote("");
-    setReturnDialogOpen(true);
+  const confirmBorrow = async () => {
+    setError("");
+    const validationError = validateBorrowForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/borrowings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookId: borrowBookId, borrowDate, dueDate }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(getErrorMessage(data, "Gagal meminjam buku"));
+        return;
+      }
+
+      setBorrowOpen(false);
+      setBorrowBookId("");
+      setBorrowDate("");
+      setDueDate("");
+      setError("");
+      loadBorrowings();
+    } catch (err) {
+      setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const confirmReturn = async () => {
     if (!selected) return;
+    setError("");
 
-    await fetch(`/api/borrowings/${selected.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        penaltyBookId: penaltyBookId || null,
-        penaltyNote: penaltyNote || null,
-      }),
-    });
+    // Validasi untuk admin jika buku terlambat
+    if (isAdmin && isOverdue(selected) && !penaltyBookId) {
+      setError(
+        "Pilih buku untuk tugas analisis sebagai konsekuensi keterlambatan",
+      );
+      return;
+    }
 
-    setReturnDialogOpen(false);
-    setSelected(null);
-    loadBorrowings();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(`/api/borrowings/${selected.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ penaltyBookId: penaltyBookId || null }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(getErrorMessage(data, "Gagal mengembalikan buku"));
+        return;
+      }
+
+      setReturnOpen(false);
+      setSelected(null);
+      setPenaltyBookId("");
+      setError("");
+      loadBorrowings();
+    } catch (err) {
+      setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  /* ================= UTIL ================= */
-
-  const overdue = (b?: Borrowing | null) => {
-    if (!b) return false;
-    return b.status === "ACTIVE" && new Date(b.dueDate) < new Date();
-  };
+  // Hitung statistik
+  const totalBorrowings = borrowings.length;
+  const activeCount = borrowings.filter(
+    (b) => b.status === "ACTIVE" && !isOverdue(b),
+  ).length;
+  const overdueCount = borrowings.filter((b) => isOverdue(b)).length;
+  const returnedCount = borrowings.filter(
+    (b) => b.status === "RETURNED",
+  ).length;
 
   if (!user) return null;
 
-  /* ================= RENDER ================= */
-
   return (
     <DashboardLayout userRole={user.role} userName={user.name}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Peminjaman Buku</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex gap-4 mb-4">
-            <Input
-              placeholder="Cari..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua</SelectItem>
-                <SelectItem value="ACTIVE">Aktif</SelectItem>
-                <SelectItem value="RETURNED">Dikembalikan</SelectItem>
-              </SelectContent>
-            </Select>
+      <div className="space-y-6">
+        {/* STAT CARDS */}
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <StatCard
+            icon={<BookOpen className="text-emerald-600" />}
+            label="Total Peminjaman"
+            value={totalBorrowings}
+          />
+          <StatCard
+            icon={<CheckCircle className="text-blue-600" />}
+            label="Aktif"
+            value={activeCount}
+          />
+          <StatCard
+            icon={<AlertCircle className="text-orange-600" />}
+            label="Terlambat"
+            value={overdueCount}
+          />
+          <StatCard
+            icon={<Clock className="text-gray-600" />}
+            label="Dikembalikan"
+            value={returnedCount}
+          />
+        </div>
 
-            {/* ✅ MEMBER PINJAM */}
+        {/* FILTER BAR */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              <input
+                className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all placeholder:text-gray-400"
+                placeholder="Cari buku atau anggota..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+
+            <div className="relative">
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all appearance-none cursor-pointer min-w-[160px]"
+              >
+                <option value="all">Semua Status</option>
+                <option value="ACTIVE">Aktif</option>
+                <option value="OVERDUE">Terlambat</option>
+                <option value="RETURNED">Dikembalikan</option>
+              </select>
+            </div>
+
             {user.role === "MEMBER" && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>
-                    <Plus className="w-4 h-4 mr-1" /> Pinjam
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Pinjam Buku</DialogTitle>
-                  </DialogHeader>
-                  <p>Form pinjam sudah Anda miliki (tidak dihapus)</p>
-                </DialogContent>
-              </Dialog>
+              <button
+                onClick={() => {
+                  setBorrowOpen(true);
+                  setError("");
+                }}
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-md whitespace-nowrap"
+              >
+                <Plus className="w-4 h-4" strokeWidth={2.5} />
+                Pinjam Buku
+              </button>
             )}
+          </div>
+        </div>
+
+        {/* TABLE */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">
+                Daftar Peminjaman
+              </h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                {loading
+                  ? "Memuat..."
+                  : `${borrowings.length} peminjaman ditemukan`}
+              </p>
+            </div>
           </div>
 
           {loading ? (
-            <p>Memuat...</p>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Buku</TableHead>
-                  {user.role === "ADMIN" && <TableHead>Anggota</TableHead>}
-                  <TableHead>Jatuh Tempo</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Konsekuensi</TableHead>
-                  <TableHead className="text-right">Aksi</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {borrowings.map((b) => (
-                  <TableRow key={b.id}>
-                    <TableCell>{b.book.title}</TableCell>
-                    {user.role === "ADMIN" && (
-                      <TableCell>{b.user?.name}</TableCell>
-                    )}
-                    <TableCell>
-                      {new Date(b.dueDate).toLocaleDateString("id-ID")}
-                    </TableCell>
-                    <TableCell>
-                      {overdue(b) ? (
-                        <Badge className="bg-red-600">Terlambat</Badge>
-                      ) : (
-                        <Badge>Aktif</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {overdue(b) ? (
-                        <Badge className="bg-orange-500">Analisis Buku</Badge>
-                      ) : (
-                        "-"
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {b.status === "ACTIVE" && (
-                        <Button size="sm" onClick={() => openReturn(b)}>
-                          <CheckCircle className="w-4 h-4 mr-1" />
-                          Kembalikan
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* ================= RETURN DIALOG ================= */}
-
-      <AlertDialog open={returnDialogOpen} onOpenChange={setReturnDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Pengembalian Buku</AlertDialogTitle>
-            <AlertDialogDescription>
-              {selected?.book.title}
-              {selected && overdue(selected) && (
-                <div className="text-red-600 mt-2">
-                  Buku terlambat dikembalikan.
-                </div>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-
-          {/* ✅ ADMIN INPUT */}
-          {selected && overdue(selected) && user.role === "ADMIN" && (
-            <div className="space-y-4 py-4">
-              <div>
-                <Label>Buku Analisis *</Label>
-                <Select value={penaltyBookId} onValueChange={setPenaltyBookId}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih buku" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {books.map((b) => (
-                      <SelectItem key={b.id} value={b.id}>
-                        {b.title} – {b.author}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400">
+              <Loader2 size={28} className="animate-spin text-emerald-500" />
+              <p className="text-sm">Memuat data peminjaman...</p>
+            </div>
+          ) : borrowings.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 gap-3">
+              <div className="p-4 bg-gray-100 rounded-2xl">
+                <BookOpen size={32} className="text-gray-300" />
               </div>
-              <Input
-                placeholder="Catatan (opsional)"
-                value={penaltyNote}
-                onChange={(e) => setPenaltyNote(e.target.value)}
-              />
+              <div className="text-center">
+                <p className="text-sm font-medium text-gray-600">
+                  Belum ada data peminjaman
+                </p>
+                {user.role === "MEMBER" && (
+                  <p className="text-xs text-gray-400 mt-1">
+                    Klik tombol "Pinjam Buku" untuk meminjam
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr className="h-14">
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Buku
+                    </th>
+
+                    {isAdmin && (
+                      <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Anggota
+                      </th>
+                    )}
+
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Jatuh Tempo
+                    </th>
+
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+
+                    {isAdmin && (
+                      <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Konsekuensi
+                      </th>
+                    )}
+
+                    {isAdmin && (
+                      <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Aksi
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-gray-100">
+                  {borrowings.map((b) => (
+                    <tr key={b.id} className="h-16 hover:bg-gray-50 transition">
+                      <td className="px-6 py-3">
+                        <p className="text-sm font-semibold text-gray-900">
+                          {b.book.title}
+                        </p>
+                      </td>
+
+                      {isAdmin && (
+                        <td className="px-6 py-3 text-sm text-gray-700">
+                          {b.user?.name}
+                        </td>
+                      )}
+
+                      <td className="px-6 py-3 text-sm text-gray-700">
+                        {formatDate(b.dueDate)}
+                      </td>
+
+                      <td className="px-6 py-3">
+                        {b.status === "RETURNED" ? (
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                            Dikembalikan
+                          </span>
+                        ) : isOverdue(b) ? (
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600 border border-red-100">
+                            Terlambat
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
+                            Aktif
+                          </span>
+                        )}
+                      </td>
+
+                      {isAdmin && (
+                        <td className="px-6 py-3">
+                          {b.penaltyType === "ANALYSIS_TASK" &&
+                          b.penaltyBook ? (
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-100">
+                              Analisis: {b.penaltyBook.title}
+                            </span>
+                          ) : (
+                            <span className="text-sm text-gray-400">-</span>
+                          )}
+                        </td>
+                      )}
+
+                      {isAdmin && (
+                        <td className="px-6 py-3 text-center">
+                          {b.status !== "RETURNED" && (
+                            <button
+                              onClick={() => {
+                                setSelected(b);
+                                setPenaltyBookId("");
+                                setError("");
+                                setReturnOpen(true);
+                              }}
+                              className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-all duration-150"
+                            >
+                              Kembalikan
+                            </button>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* DIALOG PEMINJAMAN */}
+      <Dialog
+        open={borrowOpen}
+        onOpenChange={(o) => {
+          setBorrowOpen(o);
+          if (!o) {
+            setBorrowBookId("");
+            setBorrowDate("");
+            setDueDate("");
+            setError("");
+          }
+        }}
+      >
+        <DialogContent className="rounded-2xl max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-gray-900">
+              Pinjam Buku
+            </DialogTitle>
+            <DialogDescription className="text-sm text-gray-500">
+              Pilih buku dan tanggal peminjaman
+            </DialogDescription>
+          </DialogHeader>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start gap-2">
+              <AlertCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
             </div>
           )}
 
-          {/* ✅ MEMBER INFO */}
-          {selected && overdue(selected) && user.role === "MEMBER" && (
-            <p className="text-sm text-red-600 mt-2">
-              Hubungi admin untuk instruksi analisis buku.
-            </p>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Pilih Buku
+              </label>
+              <select
+                value={borrowBookId}
+                onChange={(e) => setBorrowBookId(e.target.value)}
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+              >
+                <option value="">-- Pilih buku --</option>
+                {books
+                  .filter((b) => b.stock > 0)
+                  .map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.title} (Stok: {b.stock})
+                    </option>
+                  ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Tanggal Pinjam
+              </label>
+              <input
+                type="date"
+                value={borrowDate}
+                onChange={(e) => setBorrowDate(e.target.value)}
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Jatuh Tempo
+              </label>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+              />
+            </div>
+
+            <button
+              onClick={confirmBorrow}
+              disabled={isSubmitting}
+              className="w-full mt-2 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:from-gray-400 disabled:to-gray-400 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-sm shadow-emerald-500/20 flex items-center justify-center gap-2"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={15} className="animate-spin" /> Memproses...
+                </>
+              ) : (
+                "Pinjam Buku"
+              )}
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* DIALOG PENGEMBALIAN */}
+      <AlertDialog open={returnOpen} onOpenChange={setReturnOpen}>
+        <AlertDialogContent className="rounded-2xl max-w-md max-h-[90vh] overflow-y-auto">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-lg font-bold text-gray-900">
+              Konfirmasi Pengembalian
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-gray-600">
+              {selected?.book.title}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start gap-2 mt-2">
+              <AlertCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
+            </div>
           )}
 
-          <AlertDialogFooter>
-            <AlertDialogCancel>Batal</AlertDialogCancel>
+          {isAdmin && isOverdue(selected) && (
+            <div className="space-y-3 pt-2">
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                Buku Analisis <span className="text-red-500">*</span>
+              </label>
+
+              <select
+                value={penaltyBookId}
+                onChange={(e) => setPenaltyBookId(e.target.value)}
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+              >
+                <option value="">-- Pilih buku konsekuensi --</option>
+                {books.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.title}
+                  </option>
+                ))}
+              </select>
+
+              <p className="text-xs text-gray-400">
+                Anggota wajib membuat analisis buku sebagai konsekuensi
+                keterlambatan.
+              </p>
+            </div>
+          )}
+
+          <AlertDialogFooter className="mt-4">
+            <AlertDialogCancel
+              disabled={isSubmitting}
+              className="rounded-xl border-gray-200 text-sm font-medium"
+            >
+              Batal
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmReturn}
-              disabled={
-                user.role === "ADMIN" && overdue(selected!) && !penaltyBookId
-              }
+              disabled={isSubmitting}
+              className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm shadow-emerald-500/20 disabled:opacity-50"
             >
-              Konfirmasi
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={15} className="animate-spin" /> Memproses...
+                </>
+              ) : (
+                "Konfirmasi Pengembalian"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </DashboardLayout>
+  );
+}
+
+/* KOMPONEN STAT CARD */
+function StatCard({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+}) {
+  return (
+    <div className="group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+      <div className="flex items-start justify-between mb-3">
+        <div className="p-3 bg-gray-50 rounded-xl">{icon}</div>
+      </div>
+      <div className="space-y-1">
+        <p className="text-sm font-medium text-gray-600">{label}</p>
+        <p className="text-2xl font-bold text-gray-900">{value}</p>
+      </div>
+    </div>
   );
 }

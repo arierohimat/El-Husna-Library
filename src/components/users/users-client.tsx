@@ -1,7 +1,7 @@
+// components/users/users-client.tsx
 "use client";
 
 import { useState, useEffect } from "react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import {
   Dialog,
   DialogContent,
@@ -34,6 +34,7 @@ import {
   Shield,
   UserCircle,
 } from "lucide-react";
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
 
 interface User {
   id: string;
@@ -46,20 +47,18 @@ interface User {
   createdAt: string;
 }
 
+interface UsersClientProps {
+  users: User[];
+}
+
 const ROLE_OPTIONS = [
   { value: "ADMIN", label: "Admin" },
   { value: "MEMBER", label: "Member" },
 ];
 
-export default function UsersPage() {
-  type Role = "ADMIN" | "MEMBER";
-
-  const [user, setUser] = useState<{
-    name: string;
-    role: Role;
-  } | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+export function UsersClient({ users: initialUsers }: UsersClientProps) {
+  const [users, setUsers] = useState<User[]>(initialUsers);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
 
@@ -79,33 +78,23 @@ export default function UsersPage() {
     address: "",
     role: "MEMBER" as "ADMIN" | "MEMBER",
   };
+
   const [formData, setFormData] = useState(emptyForm);
 
-  useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((d) => setUser(d.user))
-      .catch(() => setUser(null));
-  }, []);
+  // Filter users based on search and role
+  const filteredUsers = users.filter((user) => {
+    const matchesSearch =
+      user.name.toLowerCase().includes(search.toLowerCase()) ||
+      user.email.toLowerCase().includes(search.toLowerCase()) ||
+      user.username.toLowerCase().includes(search.toLowerCase());
+    const matchesRole = roleFilter === "all" || user.role === roleFilter;
+    return matchesSearch && matchesRole;
+  });
 
-  useEffect(() => {
-    if (user) fetchUsers();
-  }, [user, search, roleFilter]);
-
-  const fetchUsers = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (search) params.append("search", search);
-      if (roleFilter !== "all") params.append("role", roleFilter);
-
-      const res = await fetch(`/api/users?${params}`);
-      const data = await res.json();
-      setUsers(data.users || []);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Statistik
+  const totalUsers = users.length;
+  const totalAdmins = users.filter((u) => u.role === "ADMIN").length;
+  const totalMembers = users.filter((u) => u.role === "MEMBER").length;
 
   const resetForm = () => {
     setFormData(emptyForm);
@@ -163,9 +152,11 @@ export default function UsersPage() {
         return;
       }
 
+      // Refresh data
+      const newUser = data.user;
+      setUsers((prev) => [newUser, ...prev]);
       setIsAddOpen(false);
       resetForm();
-      fetchUsers();
     } catch (err) {
       setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
     } finally {
@@ -188,6 +179,7 @@ export default function UsersPage() {
       ...formData,
       phone: formData.phone || null,
       address: formData.address || null,
+      // Jika password kosong, jangan dikirim (server akan abaikan)
       ...(formData.password ? { password: formData.password } : {}),
     };
 
@@ -206,10 +198,13 @@ export default function UsersPage() {
         return;
       }
 
+      // Update state
+      setUsers((prev) =>
+        prev.map((u) => (u.id === selectedUser.id ? data.user : u)),
+      );
       setIsEditOpen(false);
       setSelectedUser(null);
       resetForm();
-      fetchUsers();
     } catch (err) {
       setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
     } finally {
@@ -232,9 +227,9 @@ export default function UsersPage() {
         return;
       }
 
+      setUsers((prev) => prev.filter((u) => u.id !== selectedUser.id));
       setIsDeleteOpen(false);
       setSelectedUser(null);
-      fetchUsers();
     } catch (err) {
       alert("Terjadi kesalahan jaringan");
     } finally {
@@ -262,190 +257,182 @@ export default function UsersPage() {
     setIsAddOpen(true);
   };
 
-  const totalUsers = users.length;
-  const totalAdmins = users.filter((u) => u.role === "ADMIN").length;
-  const totalMembers = users.filter((u) => u.role === "MEMBER").length;
-
-  if (!user) return null;
-
   return (
-    <DashboardLayout userRole={user.role} userName={user.name}>
-      <div className="space-y-6">
-        {/* Stat Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <StatCard
-            icon={<Users className="text-emerald-600" />}
-            label="Total User"
-            value={totalUsers}
-          />
-          <StatCard
-            icon={<Shield className="text-blue-600" />}
-            label="Admin"
-            value={totalAdmins}
-          />
-          <StatCard
-            icon={<UserCircle className="text-amber-600" />}
-            label="Member"
-            value={totalMembers}
-          />
-        </div>
+    <div className="space-y-6">
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatCard
+          icon={<Users className="text-emerald-600" />}
+          label="Total User"
+          value={totalUsers}
+        />
+        <StatCard
+          icon={<Shield className="text-blue-600" />}
+          label="Admin"
+          value={totalAdmins}
+        />
+        <StatCard
+          icon={<UserCircle className="text-amber-600" />}
+          label="Member"
+          value={totalMembers}
+        />
+      </div>
 
-        {/* Filter Bar */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-            <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              <input
-                className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all placeholder:text-gray-400"
-                placeholder="Cari nama, email, atau username..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
+      {/* Filter Bar */}
+      <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+          <div className="relative flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <input
+              className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all placeholder:text-gray-400"
+              placeholder="Cari nama, email, atau username..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
-            <div className="relative">
-              <select
-                value={roleFilter}
-                onChange={(e) => setRoleFilter(e.target.value)}
-                className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all appearance-none cursor-pointer min-w-[140px]"
-              >
-                <option value="all">Semua Role</option>
-                <option value="ADMIN">Admin</option>
-                <option value="MEMBER">Member</option>
-              </select>
-            </div>
-
-            <button
-              onClick={openAdd}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-md whitespace-nowrap"
+          <div className="relative">
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all appearance-none cursor-pointer min-w-[140px]"
             >
-              <Plus className="w-4 h-4" strokeWidth={2.5} />
-              Tambah User
-            </button>
+              <option value="all">Semua Role</option>
+              <option value="ADMIN">Admin</option>
+              <option value="MEMBER">Member</option>
+            </select>
+          </div>
+
+          <button
+            onClick={openAdd}
+            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-md whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4" strokeWidth={2.5} />
+            Tambah User
+          </button>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-semibold text-gray-900">
+              Daftar User
+            </h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {filteredUsers.length} user ditemukan
+            </p>
           </div>
         </div>
 
-        {/* Table */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-semibold text-gray-900">
-                Daftar User
-              </h3>
-              <p className="text-xs text-gray-500 mt-0.5">
-                {loading ? "Memuat..." : `${users.length} user ditemukan`}
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400">
+            <Loader2 size={28} className="animate-spin text-emerald-500" />
+            <p className="text-sm">Memuat data...</p>
+          </div>
+        ) : filteredUsers.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <div className="p-4 bg-gray-100 rounded-2xl">
+              <Users size={32} className="text-gray-300" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-medium text-gray-600">
+                Tidak ada user ditemukan
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Coba ubah kata kunci atau filter
               </p>
             </div>
           </div>
-
-          {loading ? (
-            <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400">
-              <Loader2 size={28} className="animate-spin text-emerald-500" />
-              <p className="text-sm">Memuat data...</p>
-            </div>
-          ) : users.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 gap-3">
-              <div className="p-4 bg-gray-100 rounded-2xl">
-                <Users size={32} className="text-gray-300" />
-              </div>
-              <div className="text-center">
-                <p className="text-sm font-medium text-gray-600">
-                  Tidak ada user ditemukan
-                </p>
-                <p className="text-xs text-gray-400 mt-1">
-                  Coba ubah kata kunci atau filter
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr className="h-14">
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Nama
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Username
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Role
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Telepon
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Alamat
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Terdaftar
-                    </th>
-                    <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Aksi
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {users.map((user) => (
-                    <tr
-                      key={user.id}
-                      className="h-16 hover:bg-gray-50 transition"
-                    >
-                      <td className="px-6 py-3 text-sm font-semibold text-gray-900">
-                        {user.name}
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {user.email}
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {user.username}
-                      </td>
-                      <td className="px-6 py-3">
-                        <span
-                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                            user.role === "ADMIN"
-                              ? "bg-purple-100 text-purple-700"
-                              : "bg-emerald-100 text-emerald-700"
-                          }`}
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr className="h-14">
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Nama
+                  </th>
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Username
+                  </th>
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Role
+                  </th>
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Telepon
+                  </th>
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Alamat
+                  </th>
+                  <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Terdaftar
+                  </th>
+                  <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Aksi
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {filteredUsers.map((user) => (
+                  <tr
+                    key={user.id}
+                    className="h-16 hover:bg-gray-50 transition"
+                  >
+                    <td className="px-6 py-3 text-sm font-semibold text-gray-900">
+                      {user.name}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-700">
+                      {user.email}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-700">
+                      {user.username}
+                    </td>
+                    <td className="px-6 py-3">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                          user.role === "ADMIN"
+                            ? "bg-purple-100 text-purple-700"
+                            : "bg-emerald-100 text-emerald-700"
+                        }`}
+                      >
+                        {user.role === "ADMIN" ? "Admin" : "Member"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-700">
+                      {user.phone || "-"}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-700">
+                      {user.address || "-"}
+                    </td>
+                    <td className="px-6 py-3 text-sm text-gray-700">
+                      {new Date(user.createdAt).toLocaleDateString("id-ID")}
+                    </td>
+                    <td className="px-6 py-3 text-center">
+                      <div className="flex items-center justify-center gap-1.5">
+                        <ActionButton onClick={() => openEdit(user)}>
+                          <Edit size={14} />
+                        </ActionButton>
+                        <ActionButton
+                          danger
+                          onClick={() => {
+                            setSelectedUser(user);
+                            setIsDeleteOpen(true);
+                          }}
                         >
-                          {user.role === "ADMIN" ? "Admin" : "Member"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {user.phone || "-"}
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {user.address || "-"}
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {new Date(user.createdAt).toLocaleDateString("id-ID")}
-                      </td>
-                      <td className="px-6 py-3 text-center">
-                        <div className="flex items-center justify-center gap-1.5">
-                          <ActionButton onClick={() => openEdit(user)}>
-                            <Edit size={14} />
-                          </ActionButton>
-                          <ActionButton
-                            danger
-                            onClick={() => {
-                              setSelectedUser(user);
-                              setIsDeleteOpen(true);
-                            }}
-                          >
-                            <Trash2 size={14} />
-                          </ActionButton>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+                          <Trash2 size={14} />
+                        </ActionButton>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* Add/Edit Dialog */}
@@ -659,7 +646,7 @@ export default function UsersPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </DashboardLayout>
+    </div>
   );
 }
 

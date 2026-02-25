@@ -28,6 +28,7 @@ import {
   CheckCircle,
   AlertCircle,
   Clock,
+  Banknote,
 } from "lucide-react";
 
 interface Book {
@@ -39,11 +40,12 @@ interface Book {
 interface Borrowing {
   id: string;
   dueDate: string;
+  borrowDate: string;
+  returnDate: string | null;
   status: "ACTIVE" | "RETURNED" | "OVERDUE";
-  penaltyType?: "ANALYSIS_TASK" | null;
-  penaltyBook?: { title: string } | null;
-  book: { title: string };
-  user?: { name: string };
+  fine: number;
+  book: { title: string; author?: string };
+  user?: { name: string; kelas?: string };
 }
 
 export default function BorrowingsPage() {
@@ -61,23 +63,26 @@ export default function BorrowingsPage() {
   const [borrowBookId, setBorrowBookId] = useState("");
   const [borrowDate, setBorrowDate] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [penaltyBookId, setPenaltyBookId] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [returnResult, setReturnResult] = useState<{
+    fine: number;
+    message: string;
+  } | null>(null);
 
   const isAdmin = user?.role === "ADMIN";
 
-  // Helper untuk format tanggal
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString("id-ID", {
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString("id-ID", {
       day: "numeric",
       month: "short",
       year: "numeric",
     });
-  };
 
-  // Helper untuk mengambil pesan error dari response
+  const formatCurrency = (amount: number) =>
+    `Rp ${amount.toLocaleString("id-ID")}`;
+
   const getErrorMessage = (data: any, defaultMsg: string): string => {
     if (data?.message) return data.message;
     if (data?.error) return data.error;
@@ -126,7 +131,6 @@ export default function BorrowingsPage() {
     }
   };
 
-  // Validasi form peminjaman
   const validateBorrowForm = () => {
     if (!borrowBookId) return "Pilih buku yang akan dipinjam";
     if (!borrowDate) return "Pilih tanggal peminjaman";
@@ -152,22 +156,19 @@ export default function BorrowingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookId: borrowBookId, borrowDate, dueDate }),
       });
-
       const data = await res.json();
-
       if (!res.ok) {
         setError(getErrorMessage(data, "Gagal meminjam buku"));
         return;
       }
-
       setBorrowOpen(false);
       setBorrowBookId("");
       setBorrowDate("");
       setDueDate("");
       setError("");
       loadBorrowings();
-    } catch (err) {
-      setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
+    } catch {
+      setError("Terjadi kesalahan jaringan");
     } finally {
       setIsSubmitting(false);
     }
@@ -176,51 +177,47 @@ export default function BorrowingsPage() {
   const confirmReturn = async () => {
     if (!selected) return;
     setError("");
-
-    // Validasi untuk admin jika buku terlambat
-    if (isAdmin && isOverdue(selected) && !penaltyBookId) {
-      setError(
-        "Pilih buku untuk tugas analisis sebagai konsekuensi keterlambatan",
-      );
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       const res = await fetch(`/api/borrowings/${selected.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ penaltyBookId: penaltyBookId || null }),
+        body: JSON.stringify({}),
       });
-
       const data = await res.json();
-
       if (!res.ok) {
         setError(getErrorMessage(data, "Gagal mengembalikan buku"));
         return;
       }
 
+      // Show result with fine info
+      setReturnResult({
+        fine: data.fine || 0,
+        message: data.message || "Buku berhasil dikembalikan",
+      });
       setReturnOpen(false);
       setSelected(null);
-      setPenaltyBookId("");
       setError("");
       loadBorrowings();
-    } catch (err) {
-      setError("Terjadi kesalahan jaringan. Periksa koneksi Anda.");
+    } catch {
+      setError("Terjadi kesalahan jaringan");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Hitung statistik
+  // Stats
   const totalBorrowings = borrowings.length;
   const activeCount = borrowings.filter(
     (b) => b.status === "ACTIVE" && !isOverdue(b),
   ).length;
-  const overdueCount = borrowings.filter((b) => isOverdue(b)).length;
+  const overdueCount = borrowings.filter(
+    (b) => isOverdue(b) || b.status === "OVERDUE",
+  ).length;
   const returnedCount = borrowings.filter(
     (b) => b.status === "RETURNED",
   ).length;
+  const totalFines = borrowings.reduce((sum, b) => sum + (b.fine || 0), 0);
 
   if (!user) return null;
 
@@ -228,10 +225,10 @@ export default function BorrowingsPage() {
     <DashboardLayout userRole={user.role} userName={user.name}>
       <div className="space-y-6">
         {/* STAT CARDS */}
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <StatCard
             icon={<BookOpen className="text-emerald-600" />}
-            label="Total Peminjaman"
+            label="Total"
             value={totalBorrowings}
           />
           <StatCard
@@ -249,6 +246,12 @@ export default function BorrowingsPage() {
             label="Dikembalikan"
             value={returnedCount}
           />
+          <StatCard
+            icon={<Banknote className="text-red-600" />}
+            label="Total Denda"
+            value={formatCurrency(totalFines)}
+            isText
+          />
         </div>
 
         {/* FILTER BAR */}
@@ -264,18 +267,16 @@ export default function BorrowingsPage() {
               />
             </div>
 
-            <div className="relative">
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all appearance-none cursor-pointer min-w-[160px]"
-              >
-                <option value="all">Semua Status</option>
-                <option value="ACTIVE">Aktif</option>
-                <option value="OVERDUE">Terlambat</option>
-                <option value="RETURNED">Dikembalikan</option>
-              </select>
-            </div>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all min-w-[160px]"
+            >
+              <option value="all">Semua Status</option>
+              <option value="ACTIVE">Aktif</option>
+              <option value="OVERDUE">Terlambat</option>
+              <option value="RETURNED">Dikembalikan</option>
+            </select>
 
             {user.role === "MEMBER" && (
               <button
@@ -283,7 +284,7 @@ export default function BorrowingsPage() {
                   setBorrowOpen(true);
                   setError("");
                 }}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-md whitespace-nowrap"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-sm font-semibold rounded-xl shadow-sm whitespace-nowrap"
               >
                 <Plus className="w-4 h-4" strokeWidth={2.5} />
                 Pinjam Buku
@@ -294,39 +295,30 @@ export default function BorrowingsPage() {
 
         {/* TABLE */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-semibold text-gray-900">
-                Daftar Peminjaman
-              </h3>
-              <p className="text-xs text-gray-500 mt-0.5">
-                {loading
-                  ? "Memuat..."
-                  : `${borrowings.length} peminjaman ditemukan`}
-              </p>
-            </div>
+          <div className="px-6 py-4 border-b border-gray-100">
+            <h3 className="text-base font-semibold text-gray-900">
+              Daftar Peminjaman
+            </h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {loading
+                ? "Memuat..."
+                : `${borrowings.length} peminjaman ditemukan`}
+            </p>
           </div>
 
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400">
+            <div className="flex flex-col items-center justify-center py-16 gap-3">
               <Loader2 size={28} className="animate-spin text-emerald-500" />
-              <p className="text-sm">Memuat data peminjaman...</p>
+              <p className="text-sm text-gray-400">Memuat data...</p>
             </div>
           ) : borrowings.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 gap-3">
               <div className="p-4 bg-gray-100 rounded-2xl">
                 <BookOpen size={32} className="text-gray-300" />
               </div>
-              <div className="text-center">
-                <p className="text-sm font-medium text-gray-600">
-                  Belum ada data peminjaman
-                </p>
-                {user.role === "MEMBER" && (
-                  <p className="text-xs text-gray-400 mt-1">
-                    Klik tombol "Pinjam Buku" untuk meminjam
-                  </p>
-                )}
-              </div>
+              <p className="text-sm font-medium text-gray-600">
+                Belum ada data peminjaman
+              </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -336,27 +328,20 @@ export default function BorrowingsPage() {
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Buku
                     </th>
-
                     {isAdmin && (
                       <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                         Anggota
                       </th>
                     )}
-
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Jatuh Tempo
                     </th>
-
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
-
-                    {isAdmin && (
-                      <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        Konsekuensi
-                      </th>
-                    )}
-
+                    <th className="px-6 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Denda (Rp)
+                    </th>
                     {isAdmin && (
                       <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
                         Aksi
@@ -375,8 +360,15 @@ export default function BorrowingsPage() {
                       </td>
 
                       {isAdmin && (
-                        <td className="px-6 py-3 text-sm text-gray-700">
-                          {b.user?.name}
+                        <td className="px-6 py-3">
+                          <p className="text-sm text-gray-700">
+                            {b.user?.name}
+                          </p>
+                          {b.user?.kelas && (
+                            <p className="text-xs text-gray-400">
+                              {b.user.kelas}
+                            </p>
+                          )}
                         </td>
                       )}
 
@@ -389,7 +381,7 @@ export default function BorrowingsPage() {
                           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
                             Dikembalikan
                           </span>
-                        ) : isOverdue(b) ? (
+                        ) : isOverdue(b) || b.status === "OVERDUE" ? (
                           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600 border border-red-100">
                             Terlambat
                           </span>
@@ -400,18 +392,15 @@ export default function BorrowingsPage() {
                         )}
                       </td>
 
-                      {isAdmin && (
-                        <td className="px-6 py-3">
-                          {b.penaltyType === "ANALYSIS_TASK" &&
-                          b.penaltyBook ? (
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-100">
-                              Analisis: {b.penaltyBook.title}
-                            </span>
-                          ) : (
-                            <span className="text-sm text-gray-400">-</span>
-                          )}
-                        </td>
-                      )}
+                      <td className="px-6 py-3 text-right">
+                        {b.fine > 0 ? (
+                          <span className="text-sm font-semibold text-red-600">
+                            {formatCurrency(b.fine)}
+                          </span>
+                        ) : (
+                          <span className="text-sm text-gray-400">-</span>
+                        )}
+                      </td>
 
                       {isAdmin && (
                         <td className="px-6 py-3 text-center">
@@ -419,11 +408,10 @@ export default function BorrowingsPage() {
                             <button
                               onClick={() => {
                                 setSelected(b);
-                                setPenaltyBookId("");
                                 setError("");
                                 setReturnOpen(true);
                               }}
-                              className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-all duration-150"
+                              className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition"
                             >
                               Kembalikan
                             </button>
@@ -477,7 +465,7 @@ export default function BorrowingsPage() {
               <select
                 value={borrowBookId}
                 onChange={(e) => setBorrowBookId(e.target.value)}
-                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
               >
                 <option value="">-- Pilih buku --</option>
                 {books
@@ -498,7 +486,7 @@ export default function BorrowingsPage() {
                 type="date"
                 value={borrowDate}
                 onChange={(e) => setBorrowDate(e.target.value)}
-                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
 
@@ -510,14 +498,14 @@ export default function BorrowingsPage() {
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
 
             <button
               onClick={confirmBorrow}
               disabled={isSubmitting}
-              className="w-full mt-2 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 disabled:from-gray-400 disabled:to-gray-400 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-sm shadow-emerald-500/20 flex items-center justify-center gap-2"
+              className="w-full mt-2 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-sm font-semibold rounded-xl shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -533,7 +521,7 @@ export default function BorrowingsPage() {
 
       {/* DIALOG PENGEMBALIAN */}
       <AlertDialog open={returnOpen} onOpenChange={setReturnOpen}>
-        <AlertDialogContent className="rounded-2xl max-w-md max-h-[90vh] overflow-y-auto">
+        <AlertDialogContent className="rounded-2xl max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-lg font-bold text-gray-900">
               Konfirmasi Pengembalian
@@ -550,28 +538,17 @@ export default function BorrowingsPage() {
             </div>
           )}
 
-          {isAdmin && isOverdue(selected) && (
-            <div className="space-y-3 pt-2">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                Buku Analisis <span className="text-red-500">*</span>
-              </label>
-
-              <select
-                value={penaltyBookId}
-                onChange={(e) => setPenaltyBookId(e.target.value)}
-                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
-              >
-                <option value="">-- Pilih buku konsekuensi --</option>
-                {books.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.title}
-                  </option>
-                ))}
-              </select>
-
-              <p className="text-xs text-gray-400">
-                Anggota wajib membuat analisis buku sebagai konsekuensi
-                keterlambatan.
+          {isOverdue(selected) && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-2">
+              <div className="flex items-center gap-2 mb-1">
+                <Banknote className="w-5 h-5 text-amber-600" />
+                <span className="text-sm font-semibold text-amber-800">
+                  Keterlambatan Terdeteksi
+                </span>
+              </div>
+              <p className="text-xs text-amber-700">
+                Denda akan dihitung otomatis: Rp 1.000 × jumlah hari
+                terlambat. Denda akan tercatat di sistem setelah pengembalian.
               </p>
             </div>
           )}
@@ -586,7 +563,7 @@ export default function BorrowingsPage() {
             <AlertDialogAction
               onClick={confirmReturn}
               disabled={isSubmitting}
-              className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm shadow-emerald-500/20 disabled:opacity-50"
+              className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-sm disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -599,6 +576,43 @@ export default function BorrowingsPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* DIALOG HASIL PENGEMBALIAN */}
+      <Dialog
+        open={!!returnResult}
+        onOpenChange={() => setReturnResult(null)}
+      >
+        <DialogContent className="rounded-2xl max-w-sm text-center">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-gray-900">
+              {returnResult && returnResult.fine > 0
+                ? "⚠️ Buku Dikembalikan dengan Denda"
+                : "✅ Buku Berhasil Dikembalikan"}
+            </DialogTitle>
+            <DialogDescription className="text-sm text-gray-600 mt-2">
+              {returnResult?.message}
+            </DialogDescription>
+          </DialogHeader>
+
+          {returnResult && returnResult.fine > 0 && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mt-2">
+              <p className="text-xs text-red-600 uppercase tracking-wide font-semibold">
+                Total Denda
+              </p>
+              <p className="text-2xl font-bold text-red-700 mt-1">
+                {formatCurrency(returnResult.fine)}
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={() => setReturnResult(null)}
+            className="w-full mt-2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl"
+          >
+            Tutup
+          </button>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 }
@@ -608,20 +622,20 @@ function StatCard({
   icon,
   label,
   value,
+  isText,
 }: {
   icon: React.ReactNode;
   label: string;
-  value: number;
+  value: number | string;
+  isText?: boolean;
 }) {
   return (
-    <div className="group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
-      <div className="flex items-start justify-between mb-3">
-        <div className="p-3 bg-gray-50 rounded-xl">{icon}</div>
-      </div>
-      <div className="space-y-1">
-        <p className="text-sm font-medium text-gray-600">{label}</p>
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
-      </div>
+    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+      <div className="p-3 bg-gray-50 rounded-xl w-fit mb-3">{icon}</div>
+      <p className="text-sm font-medium text-gray-600">{label}</p>
+      <p className={`font-bold text-gray-900 ${isText ? "text-lg" : "text-2xl"}`}>
+        {value}
+      </p>
     </div>
   );
 }

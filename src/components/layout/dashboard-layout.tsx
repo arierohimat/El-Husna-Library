@@ -14,6 +14,8 @@ import {
   Home,
   Bell,
   Settings,
+  Library,
+  Eye,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -42,7 +44,7 @@ import { cn } from "@/lib/utils";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  userRole: "ADMIN" | "MEMBER";
+  userRole: "ADMIN" | "MEMBER" | "WALIKELAS";
   userName: string;
 }
 
@@ -61,17 +63,29 @@ export function DashboardLayout({
     router.push("/");
   };
 
+  const getDashboardHref = () => {
+    if (userRole === "ADMIN") return "/dashboard/admin";
+    if (userRole === "WALIKELAS") return "/dashboard/walikelas";
+    return "/dashboard/member";
+  };
+
   const navItems = [
     {
       label: "Dashboard",
-      href: userRole === "ADMIN" ? "/dashboard/admin" : "/dashboard/member",
+      href: getDashboardHref(),
       icon: LayoutDashboard,
-      roles: ["ADMIN", "MEMBER"],
+      roles: ["ADMIN", "MEMBER", "WALIKELAS"],
     },
     {
       label: "Buku",
       href: "/dashboard/books",
       icon: Book,
+      roles: ["ADMIN", "MEMBER"],
+    },
+    {
+      label: "Rak Buku",
+      href: "/dashboard/bookshelves",
+      icon: Library,
       roles: ["ADMIN", "MEMBER"],
     },
     {
@@ -85,6 +99,12 @@ export function DashboardLayout({
       href: "/dashboard/borrowings",
       icon: Bookmark,
       roles: ["ADMIN", "MEMBER"],
+    },
+    {
+      label: "Monitoring",
+      href: "/dashboard/walikelas",
+      icon: Eye,
+      roles: ["WALIKELAS"],
     },
     {
       label: "Laporan",
@@ -109,7 +129,7 @@ export function DashboardLayout({
       {/* Logo Section with Enhanced Styling */}
       <div className="flex items-center justify-between px-5 py-6 border-b border-emerald-600/20">
         <Link
-          href={userRole === "ADMIN" ? "/dashboard/admin" : "/dashboard/member"}
+          href={getDashboardHref()}
           className="flex items-center gap-3 group"
         >
           <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:shadow-emerald-500/50 transition-all duration-300">
@@ -190,7 +210,7 @@ export function DashboardLayout({
                   {userName}
                 </p>
                 <p className="text-xs text-emerald-200 font-medium">
-                  {userRole}
+                  {userRole === "WALIKELAS" ? "Wali Kelas" : userRole}
                 </p>
               </div>
             </div>

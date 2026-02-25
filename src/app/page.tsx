@@ -61,6 +61,8 @@ export default function Home() {
       // Redirect to dashboard based on role
       if (data.user.role === "ADMIN") {
         window.location.href = "/dashboard/admin";
+      } else if (data.user.role === "WALIKELAS") {
+        window.location.href = "/dashboard/walikelas";
       } else {
         window.location.href = "/dashboard/member";
       }

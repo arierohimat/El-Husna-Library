@@ -95,6 +95,12 @@ export default async function MemberDashboard() {
               <p className="text-sm text-gray-500">Username</p>
               <p className="font-medium">{session.username}</p>
             </div>
+            {session.kelas && (
+              <div>
+                <p className="text-sm text-gray-500">Kelas</p>
+                <p className="font-medium">{session.kelas}</p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -241,13 +247,12 @@ export default async function MemberDashboard() {
                     </div>
                     <div className="flex-shrink-0">
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          borrowing.status === "ACTIVE"
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${borrowing.status === "ACTIVE"
                             ? "bg-blue-100 text-blue-700"
                             : borrowing.status === "RETURNED"
                               ? "bg-green-100 text-green-700"
                               : "bg-red-100 text-red-700"
-                        }`}
+                          }`}
                       >
                         {borrowing.status === "ACTIVE"
                           ? "Aktif"

@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || "";
     const category = searchParams.get("category") || "";
+    const bookshelfId = searchParams.get("bookshelfId") || "";
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
 
@@ -31,12 +32,24 @@ export async function GET(request: NextRequest) {
       where.category = category;
     }
 
+    if (bookshelfId) {
+      where.bookshelfId = bookshelfId;
+    }
+
     const [books, total] = await Promise.all([
       db.book.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { createdAt: "desc" },
+        include: {
+          bookshelf: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
       }),
       db.book.count({ where }),
     ]);
@@ -78,6 +91,7 @@ export async function POST(request: NextRequest) {
       category,
       stock,
       coverImage,
+      bookshelfId,
     } = body;
 
     // Validation
@@ -122,6 +136,12 @@ export async function POST(request: NextRequest) {
         category,
         stock,
         coverImage: coverImage || null,
+        bookshelfId: bookshelfId || null,
+      },
+      include: {
+        bookshelf: {
+          select: { id: true, name: true },
+        },
       },
     });
 

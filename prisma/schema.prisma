@@ -13,6 +13,7 @@ datasource db {
 enum Role {
   ADMIN
   MEMBER
+  WALIKELAS
 }
 
 enum BorrowStatus {
@@ -21,72 +22,86 @@ enum BorrowStatus {
   OVERDUE
 }
 
-enum PenaltyType {
-  ANALYSIS_TASK
-  FINE
-}
-
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   username  String   @unique
   password  String
   name      String
+  kelas     String?
   role      Role     @default(MEMBER)
-  phone     String?
-  address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  borrowings Borrowing[]
+  borrowings      Borrowing[]
+  readingProgress ReadingProgress[]
+}
+
+model Bookshelf {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  location    String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  books Book[]
 }
 
 model Book {
-  id         String   @id @default(cuid())
-  isbn       String   @unique
-  title      String
-  author     String
-  publisher  String
-  year       Int
-  category   String
-  stock      Int
-  coverImage String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id          String   @id @default(cuid())
+  isbn        String   @unique
+  title       String
+  author      String
+  publisher   String
+  year        Int
+  category    String
+  stock       Int
+  coverImage  String?
+  bookshelfId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  // relasi buku yang dipinjam
+  bookshelf  Bookshelf?  @relation(fields: [bookshelfId], references: [id])
   borrowings Borrowing[] @relation("BorrowedBook")
-
-  // relasi buku analisis
-  penaltyUsages Borrowing[] @relation("PenaltyBook")
+  readingProgress ReadingProgress[]
 }
 
 model Borrowing {
-  id            String  @id @default(cuid())
-  userId        String
-  bookId        String
-  penaltyBookId String?
+  id     String @id @default(cuid())
+  userId String
+  bookId String
 
-  borrowDate  DateTime     @default(now())
-  dueDate     DateTime
-  returnDate  DateTime?
-  fine        Float        @default(0)
-  status      BorrowStatus @default(ACTIVE)
-  penaltyType PenaltyType?
-  penaltyNote String?
+  borrowDate DateTime     @default(now())
+  dueDate    DateTime
+  returnDate DateTime?
+  fine       Float        @default(0)
+  status     BorrowStatus @default(ACTIVE)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // buku yang dipinjam
   book Book @relation("BorrowedBook", fields: [bookId], references: [id], onDelete: Cascade)
-
-  // buku analisis (konsekuensi)
-  penaltyBook Book? @relation("PenaltyBook", fields: [penaltyBookId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([bookId])
-  @@index([penaltyBookId])
+}
+
+model ReadingProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  bookId      String
+  currentPage Int      @default(0)
+  totalPages  Int      @default(0)
+  notes       String?
+  startedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+  @@index([userId])
+  @@index([bookId])
 }

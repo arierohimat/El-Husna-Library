@@ -15,7 +15,12 @@ export async function GET(
     }
 
     const { id } = await params;
-    const book = await db.book.findUnique({ where: { id } });
+    const book = await db.book.findUnique({
+      where: { id },
+      include: {
+        bookshelf: { select: { id: true, name: true } },
+      },
+    });
 
     if (!book) {
       return NextResponse.json(
@@ -57,6 +62,7 @@ export async function PUT(
       category,
       stock,
       coverImage,
+      bookshelfId,
     } = body;
 
     // Validation
@@ -108,6 +114,10 @@ export async function PUT(
         category,
         stock,
         coverImage: coverImage || null,
+        bookshelfId: bookshelfId || null,
+      },
+      include: {
+        bookshelf: { select: { id: true, name: true } },
       },
     });
 

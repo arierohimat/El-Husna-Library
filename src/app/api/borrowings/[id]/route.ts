@@ -3,6 +3,9 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { BorrowStatus } from "@prisma/client";
 
+// Tarif denda: Rp 1.000 per hari keterlambatan
+const FINE_PER_DAY = 1000;
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -17,21 +20,7 @@ export async function PUT(
 
     /* ================= PARAM ================= */
 
-    // ⚠️ Next.js App Router: params adalah Promise
     const { id } = await params;
-
-    /* ================= BODY ================= */
-
-    let penaltyBookId: string | null = null;
-    let penaltyNote: string | null = null;
-
-    try {
-      const body = await request.json();
-      penaltyBookId = body.penaltyBookId ?? null;
-      penaltyNote = body.penaltyNote ?? null;
-    } catch {
-      // body kosong → valid (MEMBER)
-    }
 
     /* ================= DATA ================= */
 
@@ -69,20 +58,12 @@ export async function PUT(
     const now = new Date();
     const isOverdue = now > borrowing.dueDate;
 
-    // MEMBER tidak boleh mengirim penalty apapun
-    if (session.role === "MEMBER" && (penaltyBookId || penaltyNote)) {
-      return NextResponse.json(
-        { error: "Aksi tidak diizinkan" },
-        { status: 403 },
-      );
-    }
-
-    // ADMIN wajib pilih buku analisis jika terlambat
-    if (isOverdue && session.role === "ADMIN" && !penaltyBookId) {
-      return NextResponse.json(
-        { error: "Buku tugas analisis wajib dipilih" },
-        { status: 400 },
-      );
+    // Hitung denda otomatis (Rp 1.000 per hari keterlambatan)
+    let fineAmount = 0;
+    if (isOverdue) {
+      const diffTime = now.getTime() - borrowing.dueDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      fineAmount = diffDays * FINE_PER_DAY;
     }
 
     /* ================= TRANSACTION ================= */
@@ -94,12 +75,7 @@ export async function PUT(
         data: {
           returnDate: now,
           status: BorrowStatus.RETURNED,
-          penaltyType:
-            isOverdue && session.role === "ADMIN" ? "ANALYSIS_TASK" : null,
-          penaltyBookId:
-            isOverdue && session.role === "ADMIN" ? penaltyBookId : null,
-          penaltyNote:
-            isOverdue && session.role === "ADMIN" ? penaltyNote : null,
+          fine: fineAmount,
         },
       });
 
@@ -114,7 +90,13 @@ export async function PUT(
 
     /* ================= RESPONSE ================= */
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({
+      success: true,
+      fine: fineAmount,
+      message: isOverdue
+        ? `Buku dikembalikan dengan denda Rp ${fineAmount.toLocaleString("id-ID")}`
+        : "Buku berhasil dikembalikan",
+    });
   } catch (error) {
     console.error("Return borrowing error:", error);
     return NextResponse.json(

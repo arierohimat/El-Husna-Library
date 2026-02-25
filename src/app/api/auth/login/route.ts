@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
         email: true,
         username: true,
         name: true,
+        kelas: true,
         role: true,
         password: true,
       },
@@ -54,12 +55,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create session (simplified - in production use proper session management)
+    // Create session
     const sessionData = {
       userId: user.id,
       email: user.email,
       username: user.username,
       name: user.name,
+      kelas: user.kelas,
       role: user.role,
     };
 

@@ -5,7 +5,8 @@ export interface SessionUser {
   email: string;
   username: string;
   name: string;
-  role: "ADMIN" | "MEMBER";
+  kelas: string | null;
+  role: "ADMIN" | "MEMBER" | "WALIKELAS";
 }
 
 export async function getSession(): Promise<SessionUser | null> {
@@ -25,7 +26,7 @@ export async function getSession(): Promise<SessionUser | null> {
 }
 
 export async function requireAuth(
-  role?: "ADMIN" | "MEMBER",
+  role?: "ADMIN" | "MEMBER" | "WALIKELAS",
 ): Promise<SessionUser> {
   const session = await getSession();
 

@@ -54,27 +54,16 @@ export async function GET(request: NextRequest) {
             author: true,
           },
         },
-
-        // ✅ KONSEKUENSI (ADMIN ONLY)
-        penaltyBook:
-          session.role === "ADMIN"
-            ? {
-                select: {
-                  id: true,
-                  title: true,
-                },
-              }
-            : false,
-
         user:
           session.role === "ADMIN"
             ? {
-                select: {
-                  id: true,
-                  name: true,
-                  email: true,
-                },
-              }
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                kelas: true,
+              },
+            }
             : false,
       },
     });

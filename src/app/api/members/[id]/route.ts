@@ -23,8 +23,7 @@ export async function GET(
         email: true,
         username: true,
         name: true,
-        phone: true,
-        address: true,
+        kelas: true,
         role: true,
         createdAt: true,
         _count: {
@@ -66,7 +65,7 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { email, username, name, phone, address, password } = body;
+    const { email, username, name, kelas, password } = body;
 
     // Validation
     if (!email || !username || !name) {
@@ -83,17 +82,6 @@ export async function PUT(
         { error: "Format email tidak valid" },
         { status: 400 },
       );
-    }
-
-    // Phone validation if provided
-    if (phone) {
-      const phoneRegex = /^62\d{8,}$/;
-      if (!phoneRegex.test(phone)) {
-        return NextResponse.json(
-          { error: "Format nomor telepon tidak valid. Gunakan format 62xxx" },
-          { status: 400 },
-        );
-      }
     }
 
     // Check if email or username already exists (excluding current member)
@@ -116,8 +104,7 @@ export async function PUT(
       email,
       username,
       name,
-      phone,
-      address,
+      kelas: kelas || null,
     };
 
     // Hash password if provided
@@ -139,8 +126,7 @@ export async function PUT(
         email: true,
         username: true,
         name: true,
-        phone: true,
-        address: true,
+        kelas: true,
         role: true,
         createdAt: true,
       },

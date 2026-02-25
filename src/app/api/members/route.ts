@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
         { name: { contains: search } },
         { email: { contains: search } },
         { username: { contains: search } },
+        { kelas: { contains: search } },
       ];
     }
 
@@ -37,8 +38,7 @@ export async function GET(request: NextRequest) {
           email: true,
           username: true,
           name: true,
-          phone: true,
-          address: true,
+          kelas: true,
           createdAt: true,
           _count: {
             select: {
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { email, username, password, name, phone, address } = body;
+    const { email, username, password, name, kelas } = body;
 
     // Validation
     if (!email || !username || !password || !name) {
@@ -104,26 +104,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Phone validation if provided
-    if (phone) {
-      const phoneRegex = /^62\d{8,}$/;
-      if (!phoneRegex.test(phone)) {
-        return NextResponse.json(
-          { error: "Format nomor telepon tidak valid. Gunakan format 62xxx" },
-          { status: 400 },
-        );
-      }
-    }
-
     // Check if email or username already exists
     const existingUser = await db.user.findFirst({
       where: {
         OR: [{ email }, { username }],
       },
       select: {
-        id: true, // PENTING: batasi kolom yang diambil
+        id: true,
       },
     });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Email atau username sudah terdaftar" },
+        { status: 400 },
+      );
+    }
 
     // Hash password
     const bcrypt = (await import("bcryptjs")).default;
@@ -135,8 +131,7 @@ export async function POST(request: NextRequest) {
         username,
         password: hashedPassword,
         name,
-        phone,
-        address,
+        kelas: kelas || null,
         role: "MEMBER",
       },
       select: {
@@ -144,8 +139,7 @@ export async function POST(request: NextRequest) {
         email: true,
         username: true,
         name: true,
-        phone: true,
-        address: true,
+        kelas: true,
         role: true,
         createdAt: true,
       },

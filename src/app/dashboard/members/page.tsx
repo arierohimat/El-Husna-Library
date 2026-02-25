@@ -26,20 +26,24 @@ import {
   Trash2,
   User,
   Mail,
-  Phone,
-  MapPin,
   Loader2,
   Users,
   AlertCircle,
+  GraduationCap,
 } from "lucide-react";
+
+const KELAS_OPTIONS = [
+  "VII-A", "VII-B",
+  "VIII-A", "VIII-B",
+  "IX-A", "IX-B",
+];
 
 interface Member {
   id: string;
   email: string;
   username: string;
   name: string;
-  phone?: string | null;
-  address?: string | null;
+  kelas?: string | null;
   role: string;
   createdAt: string;
   _count: { borrowings: number };
@@ -67,8 +71,7 @@ export default function MembersPage() {
     username: "",
     password: "",
     name: "",
-    phone: "",
-    address: "",
+    kelas: "",
   };
 
   const [formData, setFormData] = useState(emptyForm);
@@ -107,19 +110,17 @@ export default function MembersPage() {
     setError("");
   };
 
-  // Validasi client-side
   const validateForm = (isEdit: boolean) => {
     if (!formData.name.trim()) return "Nama lengkap harus diisi";
     if (!formData.email.trim()) return "Email harus diisi";
     if (!/^\S+@\S+\.\S+$/.test(formData.email)) return "Email tidak valid";
     if (!formData.username.trim()) return "Username harus diisi";
-    if (!isEdit && formData.password.length < 6) {
-      return "Password minimal 6 karakter";
+    if (!isEdit && formData.password.length < 8) {
+      return "Password minimal 8 karakter";
     }
     return null;
   };
 
-  // Helper untuk mengambil pesan error dari response
   const getErrorMessage = (data: any, defaultMsg: string): string => {
     if (data?.message) return data.message;
     if (data?.error) return data.error;
@@ -137,14 +138,12 @@ export default function MembersPage() {
       return;
     }
 
-    // Ubah string kosong menjadi null untuk field opsional
     const payload = {
       email: formData.email,
       username: formData.username,
       password: formData.password,
       name: formData.name,
-      phone: formData.phone || null,
-      address: formData.address || null,
+      kelas: formData.kelas || null,
     };
 
     setIsSubmitting(true);
@@ -156,14 +155,12 @@ export default function MembersPage() {
       });
 
       const data = await res.json();
-      console.log("Response add:", { status: res.status, data }); // untuk debugging
 
       if (!res.ok) {
         setError(getErrorMessage(data, "Gagal menambahkan anggota"));
         return;
       }
 
-      // Sukses
       setIsAddOpen(false);
       resetForm();
       fetchMembers();
@@ -189,11 +186,9 @@ export default function MembersPage() {
     const payload = {
       email: formData.email,
       username: formData.username,
-      // password hanya dikirim jika diisi (opsional saat edit)
       ...(formData.password ? { password: formData.password } : {}),
       name: formData.name,
-      phone: formData.phone || null,
-      address: formData.address || null,
+      kelas: formData.kelas || null,
     };
 
     setIsSubmitting(true);
@@ -205,7 +200,6 @@ export default function MembersPage() {
       });
 
       const data = await res.json();
-      console.log("Response edit:", { status: res.status, data });
 
       if (!res.ok) {
         setError(getErrorMessage(data, "Gagal mengupdate anggota"));
@@ -256,8 +250,7 @@ export default function MembersPage() {
       username: member.username,
       password: "",
       name: member.name,
-      phone: member.phone || "",
-      address: member.address || "",
+      kelas: member.kelas || "",
     });
     setError("");
     setIsEditOpen(true);
@@ -299,7 +292,7 @@ export default function MembersPage() {
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
-                placeholder="Cari nama, email, username..."
+                placeholder="Cari nama, email, username, kelas..."
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
@@ -339,13 +332,13 @@ export default function MembersPage() {
                       Nama
                     </th>
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
+                      Kelas
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
                       Email
                     </th>
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
                       Username
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase">
-                      Telepon
                     </th>
                     <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase">
                       Peminjaman
@@ -360,9 +353,18 @@ export default function MembersPage() {
                   {members.map((m) => (
                     <tr key={m.id} className="h-16 hover:bg-gray-50 transition">
                       <td className="px-6 py-3 font-medium">{m.name}</td>
-                      <td className="px-6 py-3">{m.email}</td>
-                      <td className="px-6 py-3">{m.username}</td>
-                      <td className="px-6 py-3">{m.phone || "-"}</td>
+                      <td className="px-6 py-3">
+                        {m.kelas ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+                            <GraduationCap className="w-3 h-3" />
+                            {m.kelas}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-3 text-sm text-gray-600">{m.email}</td>
+                      <td className="px-6 py-3 text-sm text-gray-600">{m.username}</td>
                       <td className="px-6 py-3 text-center font-semibold">
                         {m._count.borrowings}
                       </td>
@@ -424,6 +426,25 @@ export default function MembersPage() {
             {InputField("Nama Lengkap", formData.name, (v) =>
               setFormData({ ...formData, name: v }),
             )}
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Kelas
+              </label>
+              <select
+                value={formData.kelas}
+                onChange={(e) =>
+                  setFormData({ ...formData, kelas: e.target.value })
+                }
+                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+              >
+                <option value="">-- Pilih Kelas --</option>
+                {KELAS_OPTIONS.map((k) => (
+                  <option key={k} value={k}>
+                    {k}
+                  </option>
+                ))}
+              </select>
+            </div>
             {InputField(
               "Email",
               formData.email,
@@ -440,12 +461,6 @@ export default function MembersPage() {
                 (v) => setFormData({ ...formData, password: v }),
                 "password",
               )}
-            {InputField("Nomor Telepon", formData.phone, (v) =>
-              setFormData({ ...formData, phone: v }),
-            )}
-            {InputField("Alamat", formData.address, (v) =>
-              setFormData({ ...formData, address: v }),
-            )}
 
             <button
               type="submit"
@@ -503,11 +518,10 @@ function ActionButton({ children, danger, ...props }: any) {
   return (
     <button
       {...props}
-      className={`w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 transition ${
-        danger
+      className={`w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 transition ${danger
           ? "hover:bg-red-50 hover:text-red-600"
           : "hover:bg-emerald-50 hover:text-emerald-600"
-      }`}
+        }`}
     >
       {children}
     </button>

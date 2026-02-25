@@ -45,6 +45,13 @@ interface Book {
   category: string;
   stock: number;
   coverImage?: string | null;
+  bookshelfId?: string | null;
+  bookshelf?: { id: string; name: string } | null;
+}
+
+interface Bookshelf {
+  id: string;
+  name: string;
 }
 
 const CATEGORIES = [
@@ -66,6 +73,7 @@ interface BookFormProps {
   error: string;
   isSubmitting: boolean;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  bookshelves: Bookshelf[];
 }
 
 function BookForm({
@@ -76,6 +84,7 @@ function BookForm({
   error,
   isSubmitting,
   handleFileChange,
+  bookshelves,
 }: BookFormProps) {
   return (
     <form onSubmit={onSubmit} className="space-y-4 pt-1">
@@ -229,6 +238,26 @@ function BookForm({
         </div>
       </div>
 
+      <div>
+        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+          Rak Buku
+        </label>
+        <select
+          className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all cursor-pointer"
+          value={formData.bookshelfId}
+          onChange={(e) =>
+            setFormData({ ...formData, bookshelfId: e.target.value })
+          }
+        >
+          <option value="">-- Tanpa Rak --</option>
+          {bookshelves.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <button
         type="submit"
         disabled={isSubmitting}
@@ -258,6 +287,8 @@ export default function BooksPage() {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [bookshelves, setBookshelves] = useState<Bookshelf[]>([]);
+  const [bookshelfFilter, setBookshelfFilter] = useState("all");
 
   const emptyForm = {
     isbn: "",
@@ -268,6 +299,7 @@ export default function BooksPage() {
     category: "Fiksi",
     stock: "",
     coverImage: "",
+    bookshelfId: "",
   };
   const [formData, setFormData] = useState(emptyForm);
 
@@ -283,7 +315,11 @@ export default function BooksPage() {
   useEffect(() => {
     const t = setTimeout(fetchBooks, 400);
     return () => clearTimeout(t);
-  }, [search, category]);
+  }, [search, category, bookshelfFilter]);
+
+  useEffect(() => {
+    fetchBookshelves();
+  }, []);
 
   const fetchBooks = async () => {
     setLoading(true);
@@ -291,12 +327,21 @@ export default function BooksPage() {
       const p = new URLSearchParams();
       if (search.trim()) p.append("search", search.trim());
       if (category !== "all") p.append("category", category);
+      if (bookshelfFilter !== "all") p.append("bookshelfId", bookshelfFilter);
       const res = await fetch(`/api/books?${p}`);
       const data = await res.json();
       setBooks(data.books || []);
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchBookshelves = async () => {
+    try {
+      const res = await fetch("/api/bookshelves");
+      const data = await res.json();
+      setBookshelves(data.bookshelves?.map((s: any) => ({ id: s.id, name: s.name })) || []);
+    } catch { }
   };
 
   const resetForm = () => {
@@ -480,6 +525,7 @@ export default function BooksPage() {
       category: book.category,
       stock: book.stock.toString(),
       coverImage: book.coverImage || "",
+      bookshelfId: book.bookshelfId || "",
     });
     setError("");
     setIsEditOpen(true);
@@ -573,6 +619,21 @@ export default function BooksPage() {
               </select>
             </div>
 
+            <div className="relative">
+              <select
+                className="px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all appearance-none cursor-pointer min-w-[180px]"
+                value={bookshelfFilter}
+                onChange={(e) => setBookshelfFilter(e.target.value)}
+              >
+                <option value="all">Semua Rak</option>
+                {bookshelves.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {isAdmin && (
               <button
                 onClick={openAdd}
@@ -634,6 +695,9 @@ export default function BooksPage() {
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider align-middle">
                       Kategori
                     </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider align-middle">
+                      Rak Buku
+                    </th>
                     <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider align-middle">
                       Stok
                     </th>
@@ -687,6 +751,12 @@ export default function BooksPage() {
                       <td className="px-4 py-3">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-600">
                           {book.category}
+                        </span>
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <span className="text-xs text-gray-500">
+                          {book.bookshelf?.name || "-"}
                         </span>
                       </td>
 
@@ -768,6 +838,7 @@ export default function BooksPage() {
             error={error}
             isSubmitting={isSubmitting}
             handleFileChange={handleFileChange}
+            bookshelves={bookshelves}
           />
         </DialogContent>
       </Dialog>
@@ -799,6 +870,7 @@ export default function BooksPage() {
             error={error}
             isSubmitting={isSubmitting}
             handleFileChange={handleFileChange}
+            bookshelves={bookshelves}
           />
         </DialogContent>
       </Dialog>

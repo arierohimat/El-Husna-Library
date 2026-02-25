@@ -64,14 +64,14 @@ export default function WalikelasDashboard() {
     if (!user || user.role !== "WALIKELAS") return null;
 
     // Derived stats
-    const totalBorrowings = data?.students.reduce((sum, s) => sum + s.stats.totalBorrowed, 0) || 0;
-    const totalReturned = data?.students.reduce((sum, s) => sum + s.stats.booksReturned, 0) || 0;
-    const totalActive = data?.students.reduce((sum, s) => sum + s.stats.booksActive, 0) || 0;
-    const totalOverdue = data?.students.reduce((sum, s) => sum + s.stats.booksOverdue, 0) || 0;
-    const totalFines = data?.students.reduce((sum, s) => sum + s.stats.totalFine, 0) || 0;
+    const totalBorrowings = data?.students?.reduce((sum, s) => sum + s.stats.totalBorrowed, 0) || 0;
+    const totalReturned = data?.students?.reduce((sum, s) => sum + s.stats.booksReturned, 0) || 0;
+    const totalActive = data?.students?.reduce((sum, s) => sum + s.stats.booksActive, 0) || 0;
+    const totalOverdue = data?.students?.reduce((sum, s) => sum + s.stats.booksOverdue, 0) || 0;
+    const totalFines = data?.students?.reduce((sum, s) => sum + s.stats.totalFine, 0) || 0;
 
     // Top performers (most returned/read)
-    const topStudents = data ? [...data.students]
+    const topStudents = data?.students ? [...data.students]
         .sort((a, b) => b.stats.booksReturned - a.stats.booksReturned)
         .slice(0, 5) : [];
 

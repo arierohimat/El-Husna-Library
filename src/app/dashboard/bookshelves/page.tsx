@@ -264,7 +264,7 @@ export default function BookshelvesPage() {
                                 <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
                                     <BookOpen className="w-4 h-4 text-gray-400" />
                                     <span className="text-sm font-semibold text-gray-700">
-                                        {shelf._count.books} buku
+                                        {shelf._count?.books || 0} buku
                                     </span>
                                 </div>
                             </div>

@@ -153,11 +153,11 @@ export default function WalikelasMonitoringPage() {
                             <Loader2 size={28} className="animate-spin text-emerald-500" />
                             <p className="text-sm text-gray-400">Memuat data monitoring...</p>
                         </div>
-                    ) : !data || data.students.length === 0 ? (
+                    ) : !data || !data.students || data.students.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-16 gap-3">
                             <Users size={32} className="text-gray-300" />
                             <p className="text-sm text-gray-600">
-                                Belum ada siswa di kelas ini
+                                Belum ada siswa di kelas ini atau data tidak tersedia
                             </p>
                         </div>
                     ) : (

@@ -34,6 +34,7 @@ import {
   AlertCircle,
   Upload,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Book {
   id: string;
@@ -305,12 +306,22 @@ export default function BooksPage() {
 
   const isAdmin = user?.role === "ADMIN";
 
+  const router = useRouter();
+
   useEffect(() => {
     fetch("/api/auth/session")
       .then((r) => r.json())
-      .then((d) => setUser(d.user))
-      .catch(() => setUser(null));
-  }, []);
+      .then((d) => {
+        if (!d.user) {
+          router.push("/");
+        } else if (d.user.role === "WALIKELAS") {
+          router.push("/dashboard/walikelas");
+        } else {
+          setUser(d.user);
+        }
+      })
+      .catch(() => router.push("/"));
+  }, [router]);
 
   useEffect(() => {
     const t = setTimeout(fetchBooks, 400);

@@ -14,6 +14,7 @@ import {
     ChevronDown,
     ChevronUp,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface StudentStats {
     totalBorrowed: number;
@@ -73,12 +74,22 @@ export default function WalikelasMonitoringPage() {
     const [loading, setLoading] = useState(true);
     const [expandedStudent, setExpandedStudent] = useState<string | null>(null);
 
+    const router = useRouter();
+
     useEffect(() => {
         fetch("/api/auth/session")
             .then((r) => r.json())
-            .then((d) => setUser(d.user))
-            .catch(() => setUser(null));
-    }, []);
+            .then((d) => {
+                if (!d.user) {
+                    router.push("/");
+                } else if (d.user.role !== "WALIKELAS") {
+                    router.push("/dashboard/" + d.user.role.toLowerCase());
+                } else {
+                    setUser(d.user);
+                }
+            })
+            .catch(() => router.push("/"));
+    }, [router]);
 
     useEffect(() => {
         if (user?.role === "WALIKELAS") loadData();
@@ -110,7 +121,7 @@ export default function WalikelasMonitoringPage() {
         return Math.min(Math.round((current / total) * 100), 100);
     };
 
-    if (!user || user.role !== "WALIKELAS") return null;
+    if (!user) return null;
 
     return (
         <DashboardLayout userRole={user.role} userName={user.name}>

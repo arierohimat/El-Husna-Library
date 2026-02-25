@@ -20,6 +20,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 interface Book {
     id: string;
@@ -59,12 +60,22 @@ export default function ReadingProgressPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
 
+    const router = useRouter();
+
     useEffect(() => {
         fetch("/api/auth/session")
             .then((r) => r.json())
-            .then((d) => setUser(d.user))
-            .catch(() => setUser(null));
-    }, []);
+            .then((d) => {
+                if (!d.user) {
+                    router.push("/");
+                } else if (d.user.role !== "MEMBER") {
+                    router.push("/dashboard/walikelas");
+                } else {
+                    setUser(d.user);
+                }
+            })
+            .catch(() => router.push("/"));
+    }, [router]);
 
     useEffect(() => {
         if (user?.role === "MEMBER") loadData();
@@ -145,7 +156,7 @@ export default function ReadingProgressPage() {
         }
     };
 
-    if (!user || user.role !== "MEMBER") return null;
+    if (!user) return null;
 
     return (
         <DashboardLayout userRole={user.role} userName={user.name}>

@@ -101,10 +101,16 @@ export function DashboardLayout({
       roles: ["ADMIN", "MEMBER"],
     },
     {
-      label: "Monitoring",
-      href: "/dashboard/walikelas",
+      label: "Monitoring Detail",
+      href: "/dashboard/walikelas/monitoring",
       icon: Eye,
       roles: ["WALIKELAS"],
+    },
+    {
+      label: "Progress Baca",
+      href: "/dashboard/reading-progress",
+      icon: TrendingUp,
+      roles: ["MEMBER"],
     },
     {
       label: "Laporan",

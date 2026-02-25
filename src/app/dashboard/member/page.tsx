@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Bookmark, AlertCircle, Calendar } from "lucide-react";
+import { User, Bookmark, AlertCircle, Calendar, TrendingUp } from "lucide-react";
+import Link from "next/link";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
@@ -62,6 +63,25 @@ export default async function MemberDashboard() {
       dueDate: "asc",
     },
     take: 5,
+  });
+
+  // Get active borrowings details for progress section
+  const activeBorrowingsDetails = await db.borrowing.findMany({
+    where: {
+      userId: session.userId,
+      status: "ACTIVE",
+    },
+    include: {
+      book: true,
+    },
+  });
+
+  // Get reading progress for these books
+  const readingProgress = await db.readingProgress.findMany({
+    where: {
+      userId: session.userId,
+      bookId: { in: activeBorrowingsDetails.map(b => b.bookId) },
+    },
   });
 
   return (
@@ -203,6 +223,63 @@ export default async function MemberDashboard() {
           </Card>
         )}
 
+        {/* Current Reading Progress */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-emerald-500" />
+              Progress Baca Saat Ini
+            </CardTitle>
+            <Link
+              href="/dashboard/reading-progress"
+              className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg transition-all"
+            >
+              Update Progress
+            </Link>
+          </CardHeader>
+          <CardContent>
+            {activeBorrowingsDetails.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-sm text-gray-500">Belum ada buku yang sedang dibaca.</p>
+                <p className="text-xs text-gray-400 mt-1">Pinjam buku di katalog untuk memulai!</p>
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {activeBorrowingsDetails.map((b) => {
+                  const progress = readingProgress.find(rp => rp.bookId === b.bookId);
+                  const percent = progress ? Math.round((progress.currentPage / progress.totalPages) * 100) : 0;
+
+                  return (
+                    <div key={b.id} className="p-4 rounded-xl border border-gray-100 bg-gray-50/50">
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="min-w-0">
+                          <p className="text-sm font-bold text-gray-900 truncate">{b.book.title}</p>
+                          <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{b.book.author}</p>
+                        </div>
+                        <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
+                          {percent}%
+                        </span>
+                      </div>
+
+                      <div className="relative w-full h-1.5 bg-gray-200 rounded-full overflow-hidden mb-2">
+                        <div
+                          className="absolute top-0 left-0 h-full bg-emerald-500 rounded-full transition-all duration-500"
+                          style={{ width: `${percent}%` }}
+                        />
+                      </div>
+
+                      <div className="flex justify-between text-[10px] text-gray-500">
+                        <span>{progress ? `Hal ${progress.currentPage} dari ${progress.totalPages}` : "Belum dimulai"}</span>
+                        <span>{progress ? `Update: ${new Date(progress.updatedAt).toLocaleDateString("id-ID")}` : "Baru"}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Recent Borrowings */}
         <Card>
           <CardHeader>
@@ -248,10 +325,10 @@ export default async function MemberDashboard() {
                     <div className="flex-shrink-0">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${borrowing.status === "ACTIVE"
-                            ? "bg-blue-100 text-blue-700"
-                            : borrowing.status === "RETURNED"
-                              ? "bg-green-100 text-green-700"
-                              : "bg-red-100 text-red-700"
+                          ? "bg-blue-100 text-blue-700"
+                          : borrowing.status === "RETURNED"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
                           }`}
                       >
                         {borrowing.status === "ACTIVE"

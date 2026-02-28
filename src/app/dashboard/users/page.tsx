@@ -40,8 +40,6 @@ interface User {
   email: string;
   username: string;
   name: string;
-  phone?: string | null;
-  address?: string | null;
   role: "ADMIN" | "MEMBER";
   createdAt: string;
 }
@@ -75,8 +73,6 @@ export default function UsersPage() {
     username: "",
     password: "",
     name: "",
-    phone: "",
-    address: "",
     role: "MEMBER" as "ADMIN" | "MEMBER",
   };
   const [formData, setFormData] = useState(emptyForm);
@@ -144,8 +140,6 @@ export default function UsersPage() {
 
     const payload = {
       ...formData,
-      phone: formData.phone || null,
-      address: formData.address || null,
     };
 
     setIsSubmitting(true);
@@ -186,8 +180,6 @@ export default function UsersPage() {
 
     const payload = {
       ...formData,
-      phone: formData.phone || null,
-      address: formData.address || null,
       ...(formData.password ? { password: formData.password } : {}),
     };
 
@@ -249,8 +241,6 @@ export default function UsersPage() {
       username: user.username,
       password: "",
       name: user.name,
-      phone: user.phone || "",
-      address: user.address || "",
       role: user.role,
     });
     setError("");
@@ -375,12 +365,6 @@ export default function UsersPage() {
                       Role
                     </th>
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Telepon
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      Alamat
-                    </th>
-                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Terdaftar
                     </th>
                     <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -405,20 +389,13 @@ export default function UsersPage() {
                       </td>
                       <td className="px-6 py-3">
                         <span
-                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                            user.role === "ADMIN"
-                              ? "bg-purple-100 text-purple-700"
-                              : "bg-emerald-100 text-emerald-700"
-                          }`}
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${user.role === "ADMIN"
+                            ? "bg-purple-100 text-purple-700"
+                            : "bg-emerald-100 text-emerald-700"
+                            }`}
                         >
                           {user.role === "ADMIN" ? "Admin" : "Member"}
                         </span>
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {user.phone || "-"}
-                      </td>
-                      <td className="px-6 py-3 text-sm text-gray-700">
-                        {user.address || "-"}
                       </td>
                       <td className="px-6 py-3 text-sm text-gray-700">
                         {new Date(user.createdAt).toLocaleDateString("id-ID")}
@@ -581,32 +558,6 @@ export default function UsersPage() {
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Nomor Telepon
-                </label>
-                <input
-                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Alamat
-                </label>
-                <input
-                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
-                  value={formData.address}
-                  onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })
-                  }
-                />
-              </div>
-            </div>
 
             <button
               type="submit"
@@ -690,11 +641,10 @@ function ActionButton({ children, danger, ...props }: any) {
   return (
     <button
       {...props}
-      className={`w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition-all duration-150 ${
-        danger
-          ? "hover:text-red-600 hover:border-red-200 hover:bg-red-50"
-          : "hover:text-emerald-600 hover:border-emerald-300 hover:bg-emerald-50"
-      }`}
+      className={`w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition-all duration-150 ${danger
+        ? "hover:text-red-600 hover:border-red-200 hover:bg-red-50"
+        : "hover:text-emerald-600 hover:border-emerald-300 hover:bg-emerald-50"
+        }`}
     >
       {children}
     </button>

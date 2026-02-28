@@ -25,8 +25,6 @@ export async function PUT(
       email: body.email,
       username: body.username,
       role: body.role,
-      phone: body.phone ?? null,
-      address: body.address ?? null,
     };
 
     if (body.password) {

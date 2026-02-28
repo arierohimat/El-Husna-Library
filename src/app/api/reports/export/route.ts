@@ -57,12 +57,11 @@ export async function GET(request: NextRequest) {
         Nama: member.name,
         Email: member.email,
         Username: member.username,
-        Telepon: member.phone || "-",
-        Alamat: member.address || "-",
+        Kelas: member.kelas || "-",
         Terdaftar: new Date(member.createdAt).toLocaleDateString("id-ID"),
       }));
       filename = "data-anggota";
-      headers = ["Nama", "Email", "Username", "Telepon", "Alamat", "Terdaftar"];
+      headers = ["Nama", "Email", "Username", "Kelas", "Terdaftar"];
     } else if (type === "borrowings") {
       const where: any = {};
 

@@ -184,12 +184,7 @@ export default function BookshelvesPage() {
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Rak Buku</h1>
-                        <p className="text-sm text-gray-500 mt-1">
-                            Kelola rak buku perpustakaan
-                        </p>
-                    </div>
+
                     {isAdmin && (
                         <button
                             onClick={() => {

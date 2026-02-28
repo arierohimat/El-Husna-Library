@@ -18,8 +18,6 @@ export async function GET() {
       email: true,
       username: true,
       role: true,
-      phone: true,
-      address: true,
       createdAt: true,
     },
   });
@@ -74,8 +72,6 @@ export async function POST(req: Request) {
         username: body.username,
         password: hashed,
         role: body.role,
-        phone: body.phone ?? null,
-        address: body.address ?? null,
       },
       select: {
         id: true,
@@ -83,8 +79,6 @@ export async function POST(req: Request) {
         email: true,
         username: true,
         role: true,
-        phone: true,
-        address: true,
         createdAt: true,
       },
     });

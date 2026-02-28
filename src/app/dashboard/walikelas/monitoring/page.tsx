@@ -126,17 +126,6 @@ export default function WalikelasMonitoringPage() {
     return (
         <DashboardLayout userRole={user.role} userName={user.name}>
             <div className="space-y-6">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900">
-                            Monitoring Detail Siswa
-                        </h1>
-                        <p className="text-sm text-gray-500 mt-1">
-                            Laporan lengkap aktivitas literasi siswa kelas <span className="font-semibold text-emerald-600">{data?.kelas || user.kelas}</span>
-                        </p>
-                    </div>
-                </div>
 
                 {/* Student List */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

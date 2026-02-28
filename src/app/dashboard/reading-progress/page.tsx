@@ -161,13 +161,6 @@ export default function ReadingProgressPage() {
     return (
         <DashboardLayout userRole={user.role} userName={user.name}>
             <div className="space-y-6">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Progress Baca Saya</h1>
-                    <p className="text-sm text-gray-500 mt-1">
-                        Catat sejauh mana Anda telah membaca buku yang Anda pinjam
-                    </p>
-                </div>
-
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
                         <Loader2 size={32} className="animate-spin text-emerald-500" />

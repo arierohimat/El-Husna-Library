@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/reading-progress - Get reading progress
 export async function GET(request: NextRequest) {
     try {

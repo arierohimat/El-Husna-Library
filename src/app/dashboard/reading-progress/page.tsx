@@ -85,12 +85,12 @@ export default function ReadingProgressPage() {
         setLoading(true);
         try {
             // Fetch active borrowings
-            const bRes = await fetch("/api/borrowings?status=ACTIVE");
+            const bRes = await fetch("/api/borrowings?status=ACTIVE", { cache: "no-store" });
             const bData = await bRes.json();
             setBorrowings(bData.borrowings || []);
 
             // Fetch current progress
-            const pRes = await fetch("/api/reading-progress");
+            const pRes = await fetch("/api/reading-progress", { cache: "no-store" });
             const pData = await pRes.json();
             setProgressList(pData.progress || []);
         } finally {

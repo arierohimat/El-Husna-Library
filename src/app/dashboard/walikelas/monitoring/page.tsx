@@ -98,7 +98,7 @@ export default function WalikelasMonitoringPage() {
     const loadData = async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/monitoring");
+            const res = await fetch("/api/monitoring", { cache: "no-store" });
             const d = await res.json();
             setData(d);
         } finally {

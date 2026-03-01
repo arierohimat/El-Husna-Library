@@ -24,6 +24,7 @@ export async function PUT(
       name: body.name,
       email: body.email,
       username: body.username,
+      kelas: body.kelas || null,
       role: body.role,
     };
 

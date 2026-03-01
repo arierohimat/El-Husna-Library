@@ -33,6 +33,7 @@ import {
   AlertCircle,
   Shield,
   UserCircle,
+  GraduationCap,
 } from "lucide-react";
 
 interface User {
@@ -40,17 +41,20 @@ interface User {
   email: string;
   username: string;
   name: string;
-  role: "ADMIN" | "MEMBER";
+  phone?: string | null;
+  address?: string | null;
+  role: "ADMIN" | "MEMBER" | "WALIKELAS";
   createdAt: string;
 }
 
 const ROLE_OPTIONS = [
   { value: "ADMIN", label: "Admin" },
   { value: "MEMBER", label: "Member" },
+  { value: "WALIKELAS", label: "Wali Kelas" },
 ];
 
 export default function UsersPage() {
-  type Role = "ADMIN" | "MEMBER";
+  type Role = "ADMIN" | "MEMBER" | "WALIKELAS";
 
   const [user, setUser] = useState<{
     name: string;
@@ -73,7 +77,9 @@ export default function UsersPage() {
     username: "",
     password: "",
     name: "",
-    role: "MEMBER" as "ADMIN" | "MEMBER",
+    phone: "",
+    address: "",
+    role: "MEMBER" as "ADMIN" | "MEMBER" | "WALIKELAS",
   };
   const [formData, setFormData] = useState(emptyForm);
 
@@ -140,6 +146,8 @@ export default function UsersPage() {
 
     const payload = {
       ...formData,
+      phone: formData.phone || null,
+      address: formData.address || null,
     };
 
     setIsSubmitting(true);
@@ -180,6 +188,8 @@ export default function UsersPage() {
 
     const payload = {
       ...formData,
+      phone: formData.phone || null,
+      address: formData.address || null,
       ...(formData.password ? { password: formData.password } : {}),
     };
 
@@ -241,6 +251,8 @@ export default function UsersPage() {
       username: user.username,
       password: "",
       name: user.name,
+      phone: user.phone || "",
+      address: user.address || "",
       role: user.role,
     });
     setError("");
@@ -255,6 +267,7 @@ export default function UsersPage() {
   const totalUsers = users.length;
   const totalAdmins = users.filter((u) => u.role === "ADMIN").length;
   const totalMembers = users.filter((u) => u.role === "MEMBER").length;
+  const totalWalikelas = users.filter((u) => u.role === "WALIKELAS").length;
 
   if (!user) return null;
 
@@ -262,7 +275,7 @@ export default function UsersPage() {
     <DashboardLayout userRole={user.role} userName={user.name}>
       <div className="space-y-6">
         {/* Stat Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           <StatCard
             icon={<Users className="text-emerald-600" />}
             label="Total User"
@@ -277,6 +290,11 @@ export default function UsersPage() {
             icon={<UserCircle className="text-amber-600" />}
             label="Member"
             value={totalMembers}
+          />
+          <StatCard
+            icon={<GraduationCap className="text-indigo-600" />}
+            label="Wali Kelas"
+            value={totalWalikelas}
           />
         </div>
 
@@ -302,6 +320,7 @@ export default function UsersPage() {
                 <option value="all">Semua Role</option>
                 <option value="ADMIN">Admin</option>
                 <option value="MEMBER">Member</option>
+                <option value="WALIKELAS">Wali Kelas</option>
               </select>
             </div>
 
@@ -365,6 +384,12 @@ export default function UsersPage() {
                       Role
                     </th>
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Telepon
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Alamat
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Terdaftar
                     </th>
                     <th className="px-6 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -391,11 +416,19 @@ export default function UsersPage() {
                         <span
                           className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${user.role === "ADMIN"
                             ? "bg-purple-100 text-purple-700"
-                            : "bg-emerald-100 text-emerald-700"
+                            : user.role === "WALIKELAS"
+                              ? "bg-indigo-100 text-indigo-700"
+                              : "bg-emerald-100 text-emerald-700"
                             }`}
                         >
-                          {user.role === "ADMIN" ? "Admin" : "Member"}
+                          {user.role === "ADMIN" ? "Admin" : user.role === "WALIKELAS" ? "Wali Kelas" : "Member"}
                         </span>
+                      </td>
+                      <td className="px-6 py-3 text-sm text-gray-700">
+                        {user.phone || "-"}
+                      </td>
+                      <td className="px-6 py-3 text-sm text-gray-700">
+                        {user.address || "-"}
                       </td>
                       <td className="px-6 py-3 text-sm text-gray-700">
                         {new Date(user.createdAt).toLocaleDateString("id-ID")}
@@ -511,7 +544,7 @@ export default function UsersPage() {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      role: e.target.value as "ADMIN" | "MEMBER",
+                      role: e.target.value as "ADMIN" | "MEMBER" | "WALIKELAS",
                     })
                   }
                 >
@@ -558,6 +591,32 @@ export default function UsersPage() {
               </div>
             )}
 
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Nomor Telepon
+                </label>
+                <input
+                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Alamat
+                </label>
+                <input
+                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+                  value={formData.address}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                />
+              </div>
+            </div>
 
             <button
               type="submit"

@@ -41,6 +41,7 @@ interface User {
   email: string;
   username: string;
   name: string;
+  kelas?: string | null;
   phone?: string | null;
   address?: string | null;
   role: "ADMIN" | "MEMBER" | "WALIKELAS";
@@ -51,6 +52,12 @@ const ROLE_OPTIONS = [
   { value: "ADMIN", label: "Admin" },
   { value: "MEMBER", label: "Member" },
   { value: "WALIKELAS", label: "Wali Kelas" },
+];
+
+const KELAS_OPTIONS = [
+  "VII-A", "VII-B", "VII-C",
+  "VIII-A", "VIII-B", "VIII-C",
+  "IX-A", "IX-B", "IX-C",
 ];
 
 export default function UsersPage() {
@@ -77,6 +84,7 @@ export default function UsersPage() {
     username: "",
     password: "",
     name: "",
+    kelas: "",
     phone: "",
     address: "",
     role: "MEMBER" as "ADMIN" | "MEMBER" | "WALIKELAS",
@@ -123,6 +131,9 @@ export default function UsersPage() {
     if (!isEdit && formData.password.length < 6) {
       return "Password minimal 6 karakter";
     }
+    if (formData.role === "WALIKELAS" && !formData.kelas) {
+      return "Kelas harus dipilih untuk Wali Kelas";
+    }
     return null;
   };
 
@@ -146,6 +157,7 @@ export default function UsersPage() {
 
     const payload = {
       ...formData,
+      kelas: formData.role === "WALIKELAS" ? formData.kelas || null : null,
       phone: formData.phone || null,
       address: formData.address || null,
     };
@@ -188,6 +200,7 @@ export default function UsersPage() {
 
     const payload = {
       ...formData,
+      kelas: formData.role === "WALIKELAS" ? formData.kelas || null : null,
       phone: formData.phone || null,
       address: formData.address || null,
       ...(formData.password ? { password: formData.password } : {}),
@@ -251,6 +264,7 @@ export default function UsersPage() {
       username: user.username,
       password: "",
       name: user.name,
+      kelas: user.kelas || "",
       phone: user.phone || "",
       address: user.address || "",
       role: user.role,
@@ -384,6 +398,9 @@ export default function UsersPage() {
                       Role
                     </th>
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      Kelas
+                    </th>
+                    <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Telepon
                     </th>
                     <th className="px-6 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -423,6 +440,9 @@ export default function UsersPage() {
                         >
                           {user.role === "ADMIN" ? "Admin" : user.role === "WALIKELAS" ? "Wali Kelas" : "Member"}
                         </span>
+                      </td>
+                      <td className="px-6 py-3 text-sm text-gray-700">
+                        {user.kelas || "-"}
                       </td>
                       <td className="px-6 py-3 text-sm text-gray-700">
                         {user.phone || "-"}
@@ -556,6 +576,30 @@ export default function UsersPage() {
                 </select>
               </div>
             </div>
+
+            {formData.role === "WALIKELAS" && (
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  Kelas yang Dimonitoring
+                </label>
+                <select
+                  required
+                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all cursor-pointer"
+                  value={formData.kelas}
+                  onChange={(e) =>
+                    setFormData({ ...formData, kelas: e.target.value })
+                  }
+                >
+                  <option value="">Pilih Kelas</option>
+                  {KELAS_OPTIONS.map((k) => (
+                    <option key={k} value={k}>
+                      {k}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-400 mt-1">Wali Kelas hanya bisa memonitoring siswa di kelas ini</p>
+              </div>
+            )}
 
             {!isEditOpen && (
               <div>

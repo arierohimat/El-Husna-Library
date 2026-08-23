@@ -127,6 +127,10 @@ export default function EbooksPage() {
       setError("Pilih berkas PDF terlebih dahulu.");
       return;
     }
+    if (file && file.size > 4 * 1024 * 1024) {
+      setError(`Ukuran berkas (${(file.size / (1024 * 1024)).toFixed(1)} MB) melebihi batas maksimal Vercel (4 MB). Silakan kompres PDF Anda terlebih dahulu.`);
+      return;
+    }
     setSubmitting(true);
     setError("");
 
@@ -399,8 +403,8 @@ export default function EbooksPage() {
                   accept="application/pdf,.pdf"
                   onChange={(e) => {
                     const picked = e.target.files?.[0] || null;
-                    if (picked && picked.size > 4.5 * 1024 * 1024) {
-                      setError("Ukuran berkas PDF melebihi 4.5 MB (Batas Serverless Vercel).");
+                    if (picked && picked.size > 4 * 1024 * 1024) {
+                      setError(`Ukuran berkas (${(picked.size / (1024 * 1024)).toFixed(1)} MB) melebihi batas maksimal Vercel (4 MB). Silakan kompres berkas PDF terlebih dahulu.`);
                       setFile(null);
                       e.target.value = "";
                     } else {

@@ -405,9 +405,10 @@ export default function BooksPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validasi ukuran (maks 2MB)
-    if (file.size > 2 * 1024 * 1024) {
-      setError("Ukuran gambar maksimal 2MB");
+    // Validasi ukuran (maks 500KB)
+    if (file.size > 500 * 1024) {
+      setError("Ukuran gambar cover maksimal 500 KB");
+      e.target.value = "";
       return;
     }
 

@@ -9,7 +9,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
-  const ebook = await db.eBook.findUnique({ where: { id } });
+  const ebook = await db.eBook.findUnique({
+    where: { id },
+    omit: { coverImage: true },
+  });
   if (!ebook) return NextResponse.json({ error: "E-Book tidak ditemukan" }, { status: 404 });
 
   try {

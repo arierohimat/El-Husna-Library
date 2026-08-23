@@ -60,6 +60,7 @@ async function generateBooksReport() {
         select: { name: true },
       },
     },
+    omit: { coverImage: true },
   });
 
   return {

@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
     if (type === "books") {
       const books = await db.book.findMany({
         orderBy: { title: "asc" },
+        omit: { coverImage: true },
       });
       data = books.map((book) => ({
         ISBN: book.isbn,
@@ -81,7 +82,7 @@ export async function GET(request: NextRequest) {
       const borrowings = await db.borrowing.findMany({
         where,
         include: {
-          book: true,
+          book: { select: { title: true, author: true } },
           user:
             session.role === "ADMIN"
               ? { select: { name: true, email: true } }

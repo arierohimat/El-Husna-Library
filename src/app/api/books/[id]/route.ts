@@ -20,6 +20,7 @@ export async function GET(
       include: {
         bookshelf: { select: { id: true, name: true } },
       },
+      omit: { coverImage: true },
     });
 
     if (!book) {
@@ -29,12 +30,7 @@ export async function GET(
       );
     }
 
-    const sanitized = {
-      ...book,
-      coverImage: book.coverImage && book.coverImage.length > 2048 ? null : book.coverImage,
-    };
-
-    return NextResponse.json({ book: sanitized });
+    return NextResponse.json({ book });
   } catch (error) {
     console.error("Get book error:", error);
     return NextResponse.json(

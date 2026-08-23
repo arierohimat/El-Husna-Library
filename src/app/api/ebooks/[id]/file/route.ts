@@ -1,5 +1,3 @@
-import { readFile } from "fs/promises";
-import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
@@ -15,10 +13,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   if (!ebook) return NextResponse.json({ error: "E-Book tidak ditemukan" }, { status: 404 });
 
   try {
-    const cleanPath = ebook.filePath.replace(/^\//, "");
-    const fullPath = path.join(process.cwd(), "public", cleanPath);
-    const file = await readFile(fullPath);
-
     try {
       await db.eBookAccess.upsert({
         where: { ebookId_userId: { ebookId: ebook.id, userId: session.userId } },
@@ -29,16 +23,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       console.error("Failed to update eBookAccess:", dbErr);
     }
 
-    return new NextResponse(file, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `inline; filename*=UTF-8''${encodeURIComponent(ebook.fileName)}`,
-        "Cache-Control": "private, no-store",
-      },
-    });
+    // Redirect to static CDN asset so Vercel CDN streams the PDF directly without 4.5MB Serverless Function payload limits
+    const cleanPath = ebook.filePath.startsWith("/") ? ebook.filePath : `/${ebook.filePath}`;
+    const targetUrl = new URL(cleanPath, request.url);
+    return NextResponse.redirect(targetUrl, 307);
   } catch (err) {
     console.error("Read eBook file error:", err);
-    return NextResponse.json({ error: "Berkas PDF tidak ditemukan di server" }, { status: 404 });
+    return NextResponse.json({ error: "Gagal memproses tautan E-Book" }, { status: 500 });
   }
 }
 

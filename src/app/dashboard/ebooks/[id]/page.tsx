@@ -46,7 +46,7 @@ export default function EBookReader() {
 
   if (!user) return null;
 
-  const fileUrl = `/api/ebooks/${id}/file`;
+  const fileUrl = ebook?.filePath ? (ebook.filePath.startsWith("/") ? ebook.filePath : `/${ebook.filePath}`) : `/api/ebooks/${id}/file`;
 
   return (
     <DashboardLayout userRole={user.role} userName={user.name}>

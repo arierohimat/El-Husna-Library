@@ -57,8 +57,13 @@ export default function EbooksPage() {
       if (query) params.set("search", query);
       if (category) params.set("category", category);
       const result = await fetch(`/api/ebooks?${params}`, { cache: "no-store" });
+      if (!result.ok) {
+        const text = await result.text();
+        let msg = "Gagal memuat E-Book";
+        try { msg = JSON.parse(text)?.error || msg; } catch { msg = text || msg; }
+        throw new Error(msg);
+      }
       const data = await result.json();
-      if (!result.ok) throw new Error(data.error || "Gagal memuat E-Book");
       setEbooks(data.ebooks || []);
       setTotalPages(data.pagination?.totalPages || 1);
       setTotalCount(data.pagination?.total || data.ebooks?.length || 0);

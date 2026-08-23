@@ -26,12 +26,23 @@ export async function GET(request: NextRequest) {
     const page = Math.max(1, parseInt(searchParams.get("page") || "1") || 1);
     const limit = Math.max(1, parseInt(searchParams.get("limit") || "10") || 10);
 
-    const [rawEbooks, total] = await Promise.all([
+    const [ebooks, total] = await Promise.all([
       db.eBook.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
-        include: {
+        select: {
+          id: true,
+          title: true,
+          author: true,
+          publisher: true,
+          year: true,
+          category: true,
+          description: true,
+          coverImage: true,
+          fileSize: true,
+          fileName: true,
+          createdAt: true,
           uploadedBy: { select: { name: true } },
           accesses: { where: { userId: session.userId }, select: { id: true, lastReadAt: true } },
         },
@@ -40,14 +51,14 @@ export async function GET(request: NextRequest) {
       db.eBook.count({ where }),
     ]);
 
-    // Sanitize coverImage to prevent giant base64 payloads from exceeding Vercel 4.5MB limit
-    const ebooks = rawEbooks.map((eb) => ({
+    // Strip coverImage if it's a huge base64 string to keep payload small
+    const sanitized = ebooks.map((eb) => ({
       ...eb,
-      coverImage: eb.coverImage && eb.coverImage.length > 50000 ? null : eb.coverImage,
+      coverImage: eb.coverImage && eb.coverImage.length > 2048 ? null : eb.coverImage,
     }));
 
     return NextResponse.json({
-      ebooks,
+      ebooks: sanitized,
       pagination: {
         page,
         limit,

@@ -31,6 +31,3 @@ dist/
 *.sqlite
 *.sqlite3
 
-# uploads
-public/uploads/ebooks/*
-!public/uploads/ebooks/.gitkeep

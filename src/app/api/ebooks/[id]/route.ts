@@ -1,5 +1,6 @@
 import { mkdir, unlink, writeFile } from "fs/promises";
 import path from "path";
+import os from "os";
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
@@ -54,9 +55,22 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       }
 
       const uploadDir = path.join(process.cwd(), "public", "uploads", "ebooks");
-      await mkdir(uploadDir, { recursive: true });
+      const tmpUploadDir = path.join(os.tmpdir(), "uploads", "ebooks");
       const storedName = `${randomUUID()}.pdf`;
-      await writeFile(path.join(uploadDir, storedName), Buffer.from(await file.arrayBuffer()));
+      const buffer = Buffer.from(await file.arrayBuffer());
+
+      try {
+        await mkdir(uploadDir, { recursive: true });
+        await writeFile(path.join(uploadDir, storedName), buffer);
+      } catch (fsErr: any) {
+        console.warn("Public upload dir read-only, falling back to tmpdir:", fsErr.message);
+        try {
+          await mkdir(tmpUploadDir, { recursive: true });
+          await writeFile(path.join(tmpUploadDir, storedName), buffer);
+        } catch (tmpErr: any) {
+          console.error("Tmpdir write error:", tmpErr);
+        }
+      }
 
       try {
         await unlink(path.join(process.cwd(), "public", existing.filePath.replace(/^\//, "")));

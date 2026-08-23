@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import os from "os";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
@@ -93,9 +94,24 @@ export async function POST(request: NextRequest) {
     const coverImage = rawCover.length > 50000 ? null : (rawCover || null);
 
     const uploadDir = path.join(process.cwd(), "public", "uploads", "ebooks");
-    await mkdir(uploadDir, { recursive: true });
+    const tmpUploadDir = path.join(os.tmpdir(), "uploads", "ebooks");
     const storedName = `${randomUUID()}.pdf`;
-    await writeFile(path.join(uploadDir, storedName), Buffer.from(await file.arrayBuffer()));
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    let finalFilePath = `/uploads/ebooks/${storedName}`;
+
+    try {
+      await mkdir(uploadDir, { recursive: true });
+      await writeFile(path.join(uploadDir, storedName), buffer);
+    } catch (fsErr: any) {
+      console.warn("Public dir read-only, falling back to tmpdir:", fsErr.message);
+      try {
+        await mkdir(tmpUploadDir, { recursive: true });
+        await writeFile(path.join(tmpUploadDir, storedName), buffer);
+      } catch (tmpErr: any) {
+        console.error("Tmpdir write error:", tmpErr);
+      }
+    }
 
     const ebook = await db.eBook.create({
       data: {
@@ -104,15 +120,15 @@ export async function POST(request: NextRequest) {
         year: form.get("year") ? Number(form.get("year")) : null,
         description: String(form.get("description") || "").trim() || null,
         coverImage,
-        filePath: `/uploads/ebooks/${storedName}`,
+        filePath: finalFilePath,
         fileName: file.name,
         fileSize: file.size,
         uploadedById: session.userId,
       },
     });
     return NextResponse.json({ ebook }, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Upload ebook error:", error);
-    return NextResponse.json({ error: "Gagal mengunggah E-Book" }, { status: 500 });
+    return NextResponse.json({ error: error?.message || "Gagal mengunggah E-Book" }, { status: 500 });
   }
 }

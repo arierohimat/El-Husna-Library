@@ -21,9 +21,12 @@ export async function getSession(): Promise<SessionUser | null> {
     }
 
     return JSON.parse(sessionCookie.value) as SessionUser;
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.digest === "DYNAMIC_SERVER_USAGE" || error?.message?.includes("Dynamic server usage")) {
+      throw error;
+    }
     console.error("getSession error:", error);
-    return null; // ❗ jangan throw
+    return null;
   }
 }
 

@@ -331,7 +331,7 @@ export default function EbooksPage() {
                 <p className="mt-1 text-sm text-gray-500">
                   {editingBook
                     ? "Ubah informasi E-Book atau ganti berkas PDF (opsional)."
-                    : "Hanya PDF hingga 15 MB yang didukung."}
+                    : "Hanya PDF hingga 4.5 MB yang didukung (Serverless)."}
                 </p>
               </div>
               <button type="button" onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-600">
@@ -401,7 +401,17 @@ export default function EbooksPage() {
                   required={!editingBook}
                   type="file"
                   accept="application/pdf,.pdf"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  onChange={(e) => {
+                    const picked = e.target.files?.[0] || null;
+                    if (picked && picked.size > 4.5 * 1024 * 1024) {
+                      setError("Ukuran berkas PDF melebihi 4.5 MB (Batas Serverless Vercel).");
+                      setFile(null);
+                      e.target.value = "";
+                    } else {
+                      setError("");
+                      setFile(picked);
+                    }
+                  }}
                   className="hidden"
                 />
               </label>

@@ -48,8 +48,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       if (file.type !== "application/pdf" || !file.name.toLowerCase().endsWith(".pdf")) {
         return NextResponse.json({ error: "Berkas E-Book harus berformat PDF" }, { status: 400 });
       }
-      if (file.size > 15 * 1024 * 1024) {
-        return NextResponse.json({ error: "Ukuran PDF maksimal 15 MB" }, { status: 400 });
+      if (file.size > 4.5 * 1024 * 1024) {
+        return NextResponse.json({ error: "Ukuran PDF maksimal 4.5 MB untuk lingkungan serverless" }, { status: 413 });
       }
 
       const uploadDir = path.join(process.cwd(), "public", "uploads", "ebooks");
@@ -68,6 +68,9 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       fileSize = file.size;
     }
 
+    const rawCover = String(form.get("coverImage") || "").trim();
+    const coverImage = rawCover.length > 50000 ? null : (rawCover || null);
+
     const ebook = await db.eBook.update({
       where: { id },
       data: {
@@ -77,7 +80,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         publisher: String(form.get("publisher") || "").trim() || null,
         year: form.get("year") ? Number(form.get("year")) : null,
         description: String(form.get("description") || "").trim() || null,
-        coverImage: String(form.get("coverImage") || "").trim() || null,
+        coverImage,
         filePath,
         fileName,
         fileSize,

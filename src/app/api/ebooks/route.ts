@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     const page = Math.max(1, parseInt(searchParams.get("page") || "1") || 1);
     const limit = Math.max(1, parseInt(searchParams.get("limit") || "10") || 10);
 
-    const [ebooks, total] = await Promise.all([
+    const [rawEbooks, total] = await Promise.all([
       db.eBook.findMany({
         where,
         skip: (page - 1) * limit,
@@ -39,6 +39,12 @@ export async function GET(request: NextRequest) {
       }),
       db.eBook.count({ where }),
     ]);
+
+    // Sanitize coverImage to prevent giant base64 payloads from exceeding Vercel 4.5MB limit
+    const ebooks = rawEbooks.map((eb) => ({
+      ...eb,
+      coverImage: eb.coverImage && eb.coverImage.length > 50000 ? null : eb.coverImage,
+    }));
 
     return NextResponse.json({
       ebooks,
@@ -73,9 +79,12 @@ export async function POST(request: NextRequest) {
     if (file.type !== "application/pdf" || !file.name.toLowerCase().endsWith(".pdf")) {
       return NextResponse.json({ error: "Berkas E-Book harus berformat PDF" }, { status: 400 });
     }
-    if (file.size > 15 * 1024 * 1024) {
-      return NextResponse.json({ error: "Ukuran PDF maksimal 15 MB" }, { status: 400 });
+    if (file.size > 4.5 * 1024 * 1024) {
+      return NextResponse.json({ error: "Ukuran PDF maksimal 4.5 MB untuk lingkungan serverless" }, { status: 413 });
     }
+
+    const rawCover = String(form.get("coverImage") || "").trim();
+    const coverImage = rawCover.length > 50000 ? null : (rawCover || null);
 
     const uploadDir = path.join(process.cwd(), "public", "uploads", "ebooks");
     await mkdir(uploadDir, { recursive: true });
@@ -88,7 +97,7 @@ export async function POST(request: NextRequest) {
         publisher: String(form.get("publisher") || "").trim() || null,
         year: form.get("year") ? Number(form.get("year")) : null,
         description: String(form.get("description") || "").trim() || null,
-        coverImage: String(form.get("coverImage") || "").trim() || null,
+        coverImage,
         filePath: `/uploads/ebooks/${storedName}`,
         fileName: file.name,
         fileSize: file.size,

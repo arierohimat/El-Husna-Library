@@ -1,0 +1,1939 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.0" pages="19">
+  <diagram id="seq1" name="1. Login">
+    <mxGraphModel dx="969" dy="526" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="585" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq1_p0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="User" vertex="1">
+          <mxGeometry height="40" width="150" x="100" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_p1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Halaman Login" vertex="1">
+          <mxGeometry height="40" width="150" x="300" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_p2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Server" vertex="1">
+          <mxGeometry height="40" width="150" x="500" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_p3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Database" vertex="1">
+          <mxGeometry height="40" width="150" x="700" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_ll0" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#000000;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_ll1" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#000000;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_ll2" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#000000;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_ll3" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#000000;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_act0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="331" width="12" x="169" y="122" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_act1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="331" width="12" x="369" y="122" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_act2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="241" width="12" x="569" y="167" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_act3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="61" width="12" x="769" y="212" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_m0" edge="1" parent="1" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="1: Input username &amp; password">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m1" edge="1" parent="1" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="2: POST /api/auth/login">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m2" edge="1" parent="1" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="3: Query user by username">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m3" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="4: Data user">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m4" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="5a: Session &amp; redirect">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m5" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="6a: Tampilkan dashboard">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m6" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="5b: Error kredensial salah">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="400" as="sourcePoint" />
+            <mxPoint x="381" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_m7" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="6b: Tampilkan pesan error">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="445" as="sourcePoint" />
+            <mxPoint x="181" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_alt" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;fontSize=10;fillColor=none;strokeColor=#000000;fontStyle=1;width=30;height=15;" value="alt" vertex="1">
+          <mxGeometry height="185" width="580" x="85" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_sep" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=8 8;strokeColor=#000000;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="378" as="sourcePoint" />
+            <mxPoint x="665" y="378" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq1_g1" parent="1" style="text;html=1;fontSize=9;fontStyle=2;align=left;verticalAlign=top;strokeColor=none;" value="[kredensial valid]" vertex="1">
+          <mxGeometry height="20" width="200" x="90" y="303" as="geometry" />
+        </mxCell>
+        <mxCell id="seq1_g2" parent="1" style="text;html=1;fontSize=9;fontStyle=2;align=left;verticalAlign=top;strokeColor=none;" value="[kredensial tidak valid]" vertex="1">
+          <mxGeometry height="20" width="200" x="90" y="381" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq2" name="2. Logout">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="405" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq2_p0" value="User" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq2_p1" value="Halaman" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq2_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq2_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq2_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq2_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq2_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq2_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq2_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq2_m0" value="1: Klik tombol logout" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq2_m1" value="2: POST /api/auth/logout" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq2_m2" value="3: Hapus session" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="220" as="sourcePoint" />
+            <mxPoint x="381" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq2_m3" value="4: Redirect halaman login" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="265" as="sourcePoint" />
+            <mxPoint x="181" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq3" name="3. Register">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="630" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq3_p0" value="Member (Siswa)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_p1" value="Halaman Register" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_m0" value="1: Input data registrasi" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m1" value="2: POST /api/auth/register" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m2" value="3: Cek email/username" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m3" value="4: Hasil pengecekan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m4" value="5a: Simpan user baru" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="310" as="sourcePoint" />
+            <mxPoint x="769" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m5" value="6a: Konfirmasi tersimpan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="355" as="sourcePoint" />
+            <mxPoint x="581" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m6" value="7a: Redirect ke login" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="400" as="sourcePoint" />
+            <mxPoint x="381" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m7" value="5b: Error duplikat/invalid" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="445" as="sourcePoint" />
+            <mxPoint x="381" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_m8" value="6b: Tampilkan error" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="490" as="sourcePoint" />
+            <mxPoint x="181" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_alt" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;fontSize=10;fillColor=none;strokeColor=#666666;fontStyle=1;width=30;height=15;" vertex="1" parent="1">
+          <mxGeometry x="85" y="285" width="780" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_sep" value="" style="endArrow=none;dashed=1;dashPattern=8 8;strokeColor=#666666;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="423" as="sourcePoint" />
+            <mxPoint x="865" y="423" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq3_g1" value="[data valid &amp; unik]" style="text;html=1;fontSize=9;fontStyle=2;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="90" y="303" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="seq3_g2" value="[data duplikat/invalid]" style="text;html=1;fontSize=9;fontStyle=2;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="90" y="426" width="200" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq4" name="4. Lihat Dashboard">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq4_p0" value="User" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_p1" value="Halaman Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq4_m0" value="1: Akses dashboard" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_m1" value="2: GET /api/dashboard" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_m2" value="3: Query statistik" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_m3" value="4: Data statistik" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_m4" value="5: Data dashboard" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq4_m5" value="6: Tampilkan dashboard" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq5" name="5. Kelola Buku">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="675" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq5_p0" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_p1" value="Halaman Kelola Buku" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="421" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq5_m0" value="1: Buka halaman kelola buku" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m1" value="2: GET /api/books" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m2" value="3: Query daftar buku" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m3" value="4: Data buku" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m4" value="5: Tampilkan daftar buku" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m5" value="6: Input/pilih data buku" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="355" as="sourcePoint" />
+            <mxPoint x="369" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m6" value="7: POST/PUT/DELETE /api/books" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="400" as="sourcePoint" />
+            <mxPoint x="569" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m7" value="8: Simpan/hapus data" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="445" as="sourcePoint" />
+            <mxPoint x="769" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m8" value="9: Konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="490" as="sourcePoint" />
+            <mxPoint x="581" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq5_m9" value="10: Refresh daftar buku" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="535" as="sourcePoint" />
+            <mxPoint x="381" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq6" name="6. Kelola Rak Buku">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="675" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq6_p0" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_p1" value="Halaman Kelola Rak" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="421" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq6_m0" value="1: Buka halaman kelola rak" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m1" value="2: GET /api/bookshelves" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m2" value="3: Query daftar rak" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m3" value="4: Data rak" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m4" value="5: Tampilkan daftar rak" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m5" value="6: Input/pilih data rak" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="355" as="sourcePoint" />
+            <mxPoint x="369" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m6" value="7: POST/PUT/DELETE /api/bookshelves" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="400" as="sourcePoint" />
+            <mxPoint x="569" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m7" value="8: Simpan/hapus data" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="445" as="sourcePoint" />
+            <mxPoint x="769" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m8" value="9: Konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="490" as="sourcePoint" />
+            <mxPoint x="581" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq6_m9" value="10: Refresh daftar rak" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="535" as="sourcePoint" />
+            <mxPoint x="381" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq7" name="7. Kelola User">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="675" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq7_p0" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_p1" value="Halaman Kelola User" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="421" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq7_m0" value="1: Buka halaman kelola user" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m1" value="2: GET /api/users" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m2" value="3: Query daftar user" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m3" value="4: Data user" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m4" value="5: Tampilkan daftar user" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m5" value="6: Input/pilih data user" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="355" as="sourcePoint" />
+            <mxPoint x="369" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m6" value="7: POST/PUT/DELETE /api/users" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="400" as="sourcePoint" />
+            <mxPoint x="569" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m7" value="8: Simpan/hapus data" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="445" as="sourcePoint" />
+            <mxPoint x="769" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m8" value="9: Konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="490" as="sourcePoint" />
+            <mxPoint x="581" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq7_m9" value="10: Refresh daftar user" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="535" as="sourcePoint" />
+            <mxPoint x="381" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq8" name="8. Kelola Anggota">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="675" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq8_p0" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_p1" value="Halaman Kelola Anggota" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="421" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq8_m0" value="1: Buka halaman kelola anggota" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m1" value="2: GET /api/members" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m2" value="3: Query daftar anggota" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m3" value="4: Data anggota" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m4" value="5: Tampilkan daftar anggota" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m5" value="6: Input/pilih data anggota" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="355" as="sourcePoint" />
+            <mxPoint x="369" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m6" value="7: POST/PUT/DELETE /api/members" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="400" as="sourcePoint" />
+            <mxPoint x="569" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m7" value="8: Simpan/hapus data" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="445" as="sourcePoint" />
+            <mxPoint x="769" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m8" value="9: Konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="490" as="sourcePoint" />
+            <mxPoint x="581" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq8_m9" value="10: Refresh daftar anggota" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="535" as="sourcePoint" />
+            <mxPoint x="381" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq9" name="9. Kelola Peminjaman">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="675" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq9_p0" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_p1" value="Halaman Peminjaman" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="421" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq9_m0" value="1: Buka halaman peminjaman" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m1" value="2: GET /api/borrowings" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m2" value="3: Query peminjaman" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m3" value="4: Data peminjaman" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m4" value="5: Tampilkan daftar" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m5" value="6: Pilih &amp; proses pengembalian" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="355" as="sourcePoint" />
+            <mxPoint x="369" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m6" value="7: PUT /api/borrowings (return)" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="400" as="sourcePoint" />
+            <mxPoint x="569" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m7" value="8: Update status &amp; stok buku" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="445" as="sourcePoint" />
+            <mxPoint x="769" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m8" value="9: Konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="490" as="sourcePoint" />
+            <mxPoint x="581" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq9_m9" value="10: Tampilkan konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="535" as="sourcePoint" />
+            <mxPoint x="381" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq10" name="10. Pinjam Buku">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="630" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq10_p0" value="Member (Siswa)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_p1" value="Halaman Pinjam" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="376" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="286" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_m0" value="1: Pilih buku untuk dipinjam" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m1" value="2: POST /api/borrowings" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m2" value="3: Cek stok &amp; status member" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m3" value="4: Hasil pengecekan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m4" value="5a: Buat record peminjaman" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="310" as="sourcePoint" />
+            <mxPoint x="769" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m5" value="6a: Konfirmasi tersimpan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="355" as="sourcePoint" />
+            <mxPoint x="581" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m6" value="7a: Peminjaman berhasil" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="400" as="sourcePoint" />
+            <mxPoint x="381" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m7" value="5b: Error (stok habis)" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="445" as="sourcePoint" />
+            <mxPoint x="381" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_m8" value="6b: Tampilkan pesan error" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="490" as="sourcePoint" />
+            <mxPoint x="181" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_alt" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;fontSize=10;fillColor=none;strokeColor=#666666;fontStyle=1;width=30;height=15;" vertex="1" parent="1">
+          <mxGeometry x="85" y="285" width="780" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_sep" value="" style="endArrow=none;dashed=1;dashPattern=8 8;strokeColor=#666666;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="423" as="sourcePoint" />
+            <mxPoint x="865" y="423" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq10_g1" value="[stok tersedia]" style="text;html=1;fontSize=9;fontStyle=2;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="90" y="303" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="seq10_g2" value="[stok habis / masih pinjam]" style="text;html=1;fontSize=9;fontStyle=2;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="90" y="426" width="200" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq11" name="11. Lihat Katalog Buku">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq11_p0" value="Member (Siswa)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_p1" value="Halaman Katalog" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq11_m0" value="1: Buka katalog buku" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_m1" value="2: GET /api/books" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_m2" value="3: Query daftar buku" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_m3" value="4: Data buku" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_m4" value="5: Daftar katalog buku" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq11_m5" value="6: Tampilkan katalog" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq12" name="12. Lihat Riwayat Peminjaman">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq12_p0" value="Member (Siswa)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_p1" value="Halaman Riwayat" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq12_m0" value="1: Buka riwayat peminjaman" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_m1" value="2: GET /api/borrowings?userId" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_m2" value="3: Query peminjaman user" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_m3" value="4: Data riwayat" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_m4" value="5: Daftar riwayat" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq12_m5" value="6: Tampilkan riwayat" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq13" name="13. Input Progress Membaca">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq13_p0" value="Member (Siswa)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_p1" value="Halaman Progress" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq13_m0" value="1: Input progress (halaman/bab)" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_m1" value="2: POST /api/reading-progress" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_m2" value="3: Simpan/update progress" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_m3" value="4: Konfirmasi tersimpan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_m4" value="5: Progress berhasil disimpan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq13_m5" value="6: Tampilkan konfirmasi" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq14" name="14. Lihat Progress Membaca">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq14_p0" value="Member (Siswa)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_p1" value="Halaman Progress" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq14_m0" value="1: Akses halaman progress" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_m1" value="2: GET /api/reading-progress" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_m2" value="3: Query progress membaca" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_m3" value="4: Data progress" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_m4" value="5: Statistik progress" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq14_m5" value="6: Tampilkan grafik &amp; statistik" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq15" name="15. Lihat Laporan">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq15_p0" value="Admin" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_p1" value="Halaman Laporan" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq15_m0" value="1: Akses halaman laporan" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_m1" value="2: GET /api/reports" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_m2" value="3: Query data laporan" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_m3" value="4: Data laporan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_m4" value="5: Data laporan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq15_m5" value="6: Tampilkan laporan" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq16" name="16. Export Data">
+    <mxGraphModel dx="872" dy="473" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq16_p0" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Admin" vertex="1">
+          <mxGeometry height="40" width="150" x="100" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_p1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Halaman Export" vertex="1">
+          <mxGeometry height="40" width="150" x="300" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_p2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Server" vertex="1">
+          <mxGeometry height="40" width="150" x="500" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_p3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" value="Database" vertex="1">
+          <mxGeometry height="40" width="150" x="700" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_ll0" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_ll1" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_ll2" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_ll3" edge="1" parent="1" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_act0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="241" width="12" x="169" y="122" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_act1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="241" width="12" x="369" y="122" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_act2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="151" width="12" x="569" y="167" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_act3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="61" width="12" x="769" y="212" as="geometry" />
+        </mxCell>
+        <mxCell id="seq16_m0" edge="1" parent="1" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="1: Pilih data &amp; format export">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_m1" edge="1" parent="1" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="2: GET /api/export?format">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_m2" edge="1" parent="1" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="3: Query data untuk export">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_m3" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="4: Data hasil query">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_m4" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="5: Generate &amp; kirim file">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq16_m5" edge="1" parent="1" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" value="6: Download file (PDF/Excel)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq17" name="17. Monitoring Aktivitas Siswa">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq17_p0" value="Wali Kelas" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_p1" value="Halaman Monitoring" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq17_m0" value="1: Akses halaman monitoring" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_m1" value="2: GET /api/monitoring" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_m2" value="3: Query siswa &amp; aktivitas" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_m3" value="4: Data monitoring" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_m4" value="5: Data dashboard monitoring" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq17_m5" value="6: Tampilkan monitoring" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq18" name="18. Lihat Peminjaman Siswa">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq18_p0" value="Wali Kelas" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_p1" value="Halaman Monitoring" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq18_m0" value="1: Pilih siswa tertentu" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_m1" value="2: GET /api/monitoring?siswa" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_m2" value="3: Query peminjaman siswa" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_m3" value="4: Data peminjaman" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_m4" value="5: Riwayat &amp; status buku" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq18_m5" value="6: Tampilkan riwayat" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="seq19" name="19. Lihat Progress Baca Siswa">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="495" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq19_p0" value="Wali Kelas" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_p1" value="Halaman Monitoring" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_p2" value="Server" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_p3" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_ll0" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="80" as="sourcePoint" />
+            <mxPoint x="175" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_ll1" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="80" as="sourcePoint" />
+            <mxPoint x="375" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_ll2" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="575" y="80" as="sourcePoint" />
+            <mxPoint x="575" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_ll3" value="" style="endArrow=none;dashed=1;dashPattern=4 4;strokeColor=#999999;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="775" y="80" as="sourcePoint" />
+            <mxPoint x="775" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_act0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="169" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="369" y="122" width="12" height="241" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="569" y="167" width="12" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="769" y="212" width="12" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="seq19_m0" value="1: Buka detail progress siswa" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181" y="130" as="sourcePoint" />
+            <mxPoint x="369" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_m1" value="2: GET /api/monitoring?progress" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="175" as="sourcePoint" />
+            <mxPoint x="569" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_m2" value="3: Query progress membaca" style="endArrow=block;endFill=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="581" y="220" as="sourcePoint" />
+            <mxPoint x="769" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_m3" value="4: Data progress" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="769" y="265" as="sourcePoint" />
+            <mxPoint x="581" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_m4" value="5: Statistik &amp; grafik progress" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="569" y="310" as="sourcePoint" />
+            <mxPoint x="381" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="seq19_m5" value="6: Tampilkan progress siswa" style="endArrow=open;endSize=8;dashed=1;strokeColor=#000000;fontSize=10;html=1;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369" y="355" as="sourcePoint" />
+            <mxPoint x="181" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,222 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" version="29.6.0">
+  <diagram id="class_diagram" name="Class Diagram">
+    <mxGraphModel dx="1400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Role Enum -->
+        <mxCell id="role" parent="1" style="swimlane;fontStyle=1;align=center;startSize=36;html=1;fillColor=none;strokeColor=#000000;" value="&lt;&lt;enumeration&gt;&gt;&#xa;Role" vertex="1">
+          <mxGeometry height="104" width="180" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="role_a" parent="role" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="ADMIN&#xa;MEMBER&#xa;WALIKELAS" vertex="1">
+          <mxGeometry height="52" width="180" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="role_s" parent="role" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="180" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="role_m" parent="role" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="" vertex="1">
+          <mxGeometry height="8" width="180" y="96" as="geometry" />
+        </mxCell>
+
+        <!-- BorrowStatus Enum -->
+        <mxCell id="bstatus" parent="1" style="swimlane;fontStyle=1;align=center;startSize=36;html=1;fillColor=none;strokeColor=#000000;" value="&lt;&lt;enumeration&gt;&gt;&#xa;BorrowStatus" vertex="1">
+          <mxGeometry height="104" width="180" x="230" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bstatus_a" parent="bstatus" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="ACTIVE&#xa;RETURNED&#xa;OVERDUE" vertex="1">
+          <mxGeometry height="52" width="180" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="bstatus_s" parent="bstatus" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="180" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="bstatus_m" parent="bstatus" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="" vertex="1">
+          <mxGeometry height="8" width="180" y="96" as="geometry" />
+        </mxCell>
+
+        <!-- User Class -->
+        <mxCell id="user" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="User" vertex="1">
+          <mxGeometry height="270" width="260" x="30" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="user_a" parent="user" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- email: String&#xa;- username: String&#xa;- password: String&#xa;- name: String&#xa;- kelas: String&#xa;- role: Role&#xa;- createdAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="160" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="user_s" parent="user" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="186" as="geometry" />
+        </mxCell>
+        <mxCell id="user_m" parent="user" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ login(credentials): Session&#xa;+ logout(): void&#xa;+ register(data): User&#xa;+ updateProfile(data): User" vertex="1">
+          <mxGeometry height="68" width="260" y="194" as="geometry" />
+        </mxCell>
+
+        <!-- Bookshelf Class -->
+        <mxCell id="shelf" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="Bookshelf" vertex="1">
+          <mxGeometry height="186" width="240" x="900" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="shelf_a" parent="shelf" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- name: String&#xa;- location: String&#xa;- description: String&#xa;- createdAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="100" width="240" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="shelf_s" parent="shelf" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="240" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="shelf_m" parent="shelf" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ create(data): Bookshelf&#xa;+ update(data): Bookshelf&#xa;+ delete(): void" vertex="1">
+          <mxGeometry height="52" width="240" y="134" as="geometry" />
+        </mxCell>
+
+        <!-- Book Class -->
+        <mxCell id="book" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="Book" vertex="1">
+          <mxGeometry height="300" width="260" x="900" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="book_a" parent="book" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- isbn: String&#xa;- title: String&#xa;- author: String&#xa;- publisher: String&#xa;- year: Int&#xa;- category: String&#xa;- stock: Int&#xa;- coverImage: String&#xa;- bookshelfId: String&#xa;- createdAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="196" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="book_s" parent="book" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="222" as="geometry" />
+        </mxCell>
+        <mxCell id="book_m" parent="book" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ create(data): Book&#xa;+ update(data): Book&#xa;+ delete(): void&#xa;+ search(keyword): Book[]" vertex="1">
+          <mxGeometry height="68" width="260" y="230" as="geometry" />
+        </mxCell>
+
+        <!-- Borrowing Class -->
+        <mxCell id="borrow" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="Borrowing" vertex="1">
+          <mxGeometry height="260" width="260" x="480" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="borrow_a" parent="borrow" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- userId: String&#xa;- bookId: String&#xa;- borrowDate: DateTime&#xa;- dueDate: DateTime&#xa;- returnDate: DateTime&#xa;- fine: Float&#xa;- status: BorrowStatus&#xa;- createdAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="164" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="borrow_s" parent="borrow" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="borrow_m" parent="borrow" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ create(data): Borrowing&#xa;+ returnBook(): Borrowing&#xa;+ calculateFine(): Float" vertex="1">
+          <mxGeometry height="56" width="260" y="198" as="geometry" />
+        </mxCell>
+
+        <!-- ReadingProgress Class -->
+        <mxCell id="progress" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="ReadingProgress" vertex="1">
+          <mxGeometry height="210" width="260" x="480" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="progress_a" parent="progress" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- userId: String&#xa;- bookId: String&#xa;- currentPage: Int&#xa;- totalPages: Int&#xa;- notes: String&#xa;- startedAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="132" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="progress_s" parent="progress" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="progress_m" parent="progress" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ updateProgress(page): void&#xa;+ getPercentage(): Float" vertex="1">
+          <mxGeometry height="36" width="260" y="166" as="geometry" />
+        </mxCell>
+
+        <!-- EBook Class -->
+        <mxCell id="ebook" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="EBook" vertex="1">
+          <mxGeometry height="320" width="260" x="900" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_a" parent="ebook" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- title: String&#xa;- author: String&#xa;- publisher: String&#xa;- year: Int&#xa;- category: String&#xa;- description: String&#xa;- coverImage: String&#xa;- filePath: String&#xa;- fileName: String&#xa;- fileSize: Int&#xa;- uploadedById: String&#xa;- createdAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="226" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_s" parent="ebook" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="252" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_m" parent="ebook" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ upload(data): EBook&#xa;+ update(data): EBook&#xa;+ delete(): void&#xa;+ read(): void" vertex="1">
+          <mxGeometry height="60" width="260" y="260" as="geometry" />
+        </mxCell>
+
+        <!-- EBookAccess Class -->
+        <mxCell id="ebook_access" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="EBookAccess" vertex="1">
+          <mxGeometry height="200" width="260" x="480" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_access_a" parent="ebook_access" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- ebookId: String&#xa;- userId: String&#xa;- accessCount: Int&#xa;- lastReadAt: DateTime&#xa;- createdAt: DateTime&#xa;- updatedAt: DateTime" vertex="1">
+          <mxGeometry height="116" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_access_s" parent="ebook_access" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_access_m" parent="ebook_access" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ recordAccess(): EBookAccess&#xa;+ getStats(): Object" vertex="1">
+          <mxGeometry height="44" width="260" y="150" as="geometry" />
+        </mxCell>
+
+        <!-- ClusteringRun Class -->
+        <mxCell id="cluster_run" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="ClusteringRun" vertex="1">
+          <mxGeometry height="190" width="260" x="30" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="cluster_run_a" parent="cluster_run" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- totalProcessed: Int&#xa;- iterations: Int&#xa;- centroids: Json&#xa;- createdAt: DateTime" vertex="1">
+          <mxGeometry height="100" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="cluster_run_s" parent="cluster_run" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="cluster_run_m" parent="cluster_run" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ runKMeans(k): ClusteringRun&#xa;+ getCentroids(): Json" vertex="1">
+          <mxGeometry height="50" width="260" y="134" as="geometry" />
+        </mxCell>
+
+        <!-- ClusteringResult Class -->
+        <mxCell id="cluster_result" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=none;strokeColor=#000000;" value="ClusteringResult" vertex="1">
+          <mxGeometry height="240" width="260" x="30" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="cluster_result_a" parent="cluster_result" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="- id: String&#xa;- clusteringRunId: String&#xa;- userId: String&#xa;- totalBorrow: Int&#xa;- totalReturn: Int&#xa;- totalEbook: Int&#xa;- clusterLabel: String&#xa;- clusterIndex: Int&#xa;- createdAt: DateTime" vertex="1">
+          <mxGeometry height="148" width="260" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="cluster_result_s" parent="cluster_result" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=10;rotatable=0;labelPosition=left;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="260" y="174" as="geometry" />
+        </mxCell>
+        <mxCell id="cluster_result_m" parent="cluster_result" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=0;" value="+ getClusterDetails(): Object" vertex="1">
+          <mxGeometry height="52" width="260" y="182" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships -->
+        <!-- Bookshelf to Book -->
+        <mxCell id="rel_shelf_book" edge="1" parent="1" source="shelf" target="book" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_shelf_book_lbl1" connectable="0" parent="rel_shelf_book" style="edgeLabel;html=1;align=left;verticalAlign=bottom;fontSize=10;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry"><mxPoint y="-5" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="rel_shelf_book_lbl2" connectable="0" parent="rel_shelf_book" style="edgeLabel;html=1;align=right;verticalAlign=bottom;fontSize=10;" value="0..*" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry"><mxPoint y="15" as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- User to Borrowing -->
+        <mxCell id="rel_user_borrow" edge="1" parent="1" source="user" target="borrow" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=1;exitY=0.3;entryX=0;entryY=0.3;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Book to Borrowing -->
+        <mxCell id="rel_book_borrow" edge="1" parent="1" source="book" target="borrow" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0;exitY=0.3;entryX=1;entryY=0.6;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to ReadingProgress -->
+        <mxCell id="rel_user_progress" edge="1" parent="1" source="user" target="progress" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=1;exitY=0.8;entryX=0;entryY=0.2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Book to ReadingProgress -->
+        <mxCell id="rel_book_progress" edge="1" parent="1" source="book" target="progress" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0;exitY=0.8;entryX=1;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to EBook -->
+        <mxCell id="rel_user_ebook" edge="1" parent="1" source="user" target="ebook" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- EBook to EBookAccess -->
+        <mxCell id="rel_ebook_access" edge="1" parent="1" source="ebook" target="ebook_access" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0;exitY=0.6;entryX=1;entryY=0.3;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to EBookAccess -->
+        <mxCell id="rel_user_access" edge="1" parent="1" source="user" target="ebook_access" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=1;exitY=0.95;entryX=0;entryY=0.1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ClusteringRun to ClusteringResult -->
+        <mxCell id="rel_run_result" edge="1" parent="1" source="cluster_run" target="cluster_result" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to ClusteringResult -->
+        <mxCell id="rel_user_result" edge="1" parent="1" source="user" target="cluster_result" style="endArrow=open;endFill=0;strokeColor=#000000;fontSize=10;html=1;exitX=0.1;exitY=1;entryX=0.1;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

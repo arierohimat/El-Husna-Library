@@ -1,0 +1,134 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)" version="29.6.0">
+  <diagram id="erd_diagram" name="Entity Relationship Diagram">
+    <mxGraphModel dx="1400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- User Entity -->
+        <mxCell id="ent_user" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;" value="User" vertex="1">
+          <mxGeometry height="220" width="240" x="40" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="user_fields" parent="ent_user" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;   email : VARCHAR(255)&#xa;   username : VARCHAR(100)&#xa;   password : VARCHAR(255)&#xa;   name : VARCHAR(255)&#xa;   kelas : VARCHAR(50) [Null]&#xa;   role : ENUM('ADMIN',...)&#xa;   createdAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="180" width="240" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- Bookshelf Entity -->
+        <mxCell id="ent_shelf" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#f3e5f5;strokeColor=#7b1fa2;" value="Bookshelf" vertex="1">
+          <mxGeometry height="170" width="240" x="920" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="shelf_fields" parent="ent_shelf" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;   name : VARCHAR(100)&#xa;   location : VARCHAR(255) [Null]&#xa;   description : TEXT [Null]&#xa;   createdAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="130" width="240" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- Book Entity -->
+        <mxCell id="ent_book" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#fff3e0;strokeColor=#e65100;" value="Book" vertex="1">
+          <mxGeometry height="270" width="250" x="920" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="book_fields" parent="ent_book" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;   isbn : VARCHAR(50)&#xa;   title : VARCHAR(255)&#xa;   author : VARCHAR(255)&#xa;   publisher : VARCHAR(255)&#xa;   year : INT&#xa;   category : VARCHAR(100)&#xa;   stock : INT&#xa;   coverImage : VARCHAR(255) [Null]&#xa;FK bookshelfId : VARCHAR(30) [Null]&#xa;   createdAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="230" width="250" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- Borrowing Entity -->
+        <mxCell id="ent_borrow" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;" value="Borrowing" vertex="1">
+          <mxGeometry height="240" width="260" x="480" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="borrow_fields" parent="ent_borrow" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;FK userId : VARCHAR(30)&#xa;FK bookId : VARCHAR(30)&#xa;   borrowDate : DATETIME&#xa;   dueDate : DATETIME&#xa;   returnDate : DATETIME [Null]&#xa;   fine : FLOAT&#xa;   status : ENUM('ACTIVE',...)&#xa;   createdAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="200" width="260" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- ReadingProgress Entity -->
+        <mxCell id="ent_progress" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#fffde7;strokeColor=#fbc02d;" value="ReadingProgress" vertex="1">
+          <mxGeometry height="200" width="260" x="480" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="progress_fields" parent="ent_progress" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;FK userId : VARCHAR(30)&#xa;FK bookId : VARCHAR(30)&#xa;   currentPage : INT&#xa;   totalPages : INT&#xa;   notes : TEXT [Null]&#xa;   startedAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="160" width="260" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- EBook Entity -->
+        <mxCell id="ent_ebook" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#fbe9e7;strokeColor=#d84315;" value="EBook" vertex="1">
+          <mxGeometry height="300" width="250" x="920" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="ebook_fields" parent="ent_ebook" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;   title : VARCHAR(255)&#xa;   author : VARCHAR(255)&#xa;   publisher : VARCHAR(255) [Null]&#xa;   year : INT [Null]&#xa;   category : VARCHAR(100)&#xa;   description : TEXT [Null]&#xa;   coverImage : VARCHAR(255) [Null]&#xa;   filePath : VARCHAR(255)&#xa;   fileName : VARCHAR(255)&#xa;   fileSize : INT&#xa;FK uploadedById : VARCHAR(30)&#xa;   createdAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="260" width="250" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- EBookAccess Entity -->
+        <mxCell id="ent_ebook_access" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#f0f4c3;strokeColor=#afb42b;" value="EBookAccess" vertex="1">
+          <mxGeometry height="180" width="260" x="480" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="access_fields" parent="ent_ebook_access" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;FK ebookId : VARCHAR(30)&#xa;FK userId : VARCHAR(30)&#xa;   accessCount : INT&#xa;   lastReadAt : DATETIME&#xa;   createdAt : DATETIME&#xa;   updatedAt : DATETIME" vertex="1">
+          <mxGeometry height="140" width="260" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- ClusteringRun Entity -->
+        <mxCell id="ent_cluster_run" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#efebe9;strokeColor=#4e342e;" value="ClusteringRun" vertex="1">
+          <mxGeometry height="150" width="240" x="40" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="run_fields" parent="ent_cluster_run" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;   totalProcessed : INT&#xa;   iterations : INT&#xa;   centroids : JSON&#xa;   createdAt : DATETIME" vertex="1">
+          <mxGeometry height="110" width="240" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- ClusteringResult Entity -->
+        <mxCell id="ent_cluster_result" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;html=1;fillColor=#eceff1;strokeColor=#37474f;" value="ClusteringResult" vertex="1">
+          <mxGeometry height="220" width="240" x="40" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="result_fields" parent="ent_cluster_result" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;html=1;" value="PK id : VARCHAR(30)&#xa;FK clusteringRunId : VARCHAR(30)&#xa;FK userId : VARCHAR(30)&#xa;   totalBorrow : INT&#xa;   totalReturn : INT&#xa;   totalEbook : INT&#xa;   clusterLabel : VARCHAR(20)&#xa;   clusterIndex : INT&#xa;   createdAt : DATETIME" vertex="1">
+          <mxGeometry height="180" width="240" y="30" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships with ERD notation -->
+        <!-- Bookshelf to Book -->
+        <mxCell id="rel_shelf_book" edge="1" parent="1" source="ent_shelf" target="ent_book" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to Borrowing -->
+        <mxCell id="rel_user_borrow" edge="1" parent="1" source="ent_user" target="ent_borrow" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=1;exitY=0.3;entryX=0;entryY=0.3;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Book to Borrowing -->
+        <mxCell id="rel_book_borrow" edge="1" parent="1" source="ent_book" target="ent_borrow" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0;exitY=0.3;entryX=1;entryY=0.5;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to ReadingProgress -->
+        <mxCell id="rel_user_progress" edge="1" parent="1" source="ent_user" target="ent_progress" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=1;exitY=0.8;entryX=0;entryY=0.3;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Book to ReadingProgress -->
+        <mxCell id="rel_book_progress" edge="1" parent="1" source="ent_book" target="ent_progress" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0;exitY=0.7;entryX=1;entryY=0.4;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to EBook -->
+        <mxCell id="rel_user_ebook" edge="1" parent="1" source="ent_user" target="ent_ebook" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- EBook to EBookAccess -->
+        <mxCell id="rel_ebook_access" edge="1" parent="1" source="ent_ebook" target="ent_ebook_access" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0;exitY=0.6;entryX=1;entryY=0.4;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to EBookAccess -->
+        <mxCell id="rel_user_access" edge="1" parent="1" source="ent_user" target="ent_ebook_access" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=1;exitY=0.95;entryX=0;entryY=0.2;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ClusteringRun to ClusteringResult -->
+        <mxCell id="rel_run_result" edge="1" parent="1" source="ent_cluster_run" target="ent_cluster_result" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- User to ClusteringResult -->
+        <mxCell id="rel_user_result" edge="1" parent="1" source="ent_user" target="ent_cluster_result" style="endArrow=ERmany;endFill=0;startArrow=ERone;startFill=0;strokeColor=#000000;fontSize=11;html=1;exitX=0.2;exitY=1;entryX=0.2;entryY=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

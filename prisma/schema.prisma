@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SISWA
+  GURU
+}
+
+
+
+
+
+enum BorrowStatus {
+  ACTIVE
+  RETURNED
+  OVERDUE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String
+  kelas     String?
+  role      Role     @default(SISWA)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  borrowings      Borrowing[]
+  readingProgress ReadingProgress[]
+  clusteringResults ClusteringResult[]
+  uploadedEbooks EBook[] @relation("EBookUploader")
+  ebookAccesses   EBookAccess[]
+}
+
+model Bookshelf {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  location    String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  books Book[]
+}
+
+model Book {
+  id          String   @id @default(cuid())
+  isbn        String   @unique
+  title       String
+  author      String
+  publisher   String
+  year        Int
+  category    String
+  stock       Int
+  coverImage  String?
+  bookshelfId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bookshelf  Bookshelf?  @relation(fields: [bookshelfId], references: [id])
+  borrowings Borrowing[] @relation("BorrowedBook")
+  readingProgress ReadingProgress[]
+}
+
+model Borrowing {
+  id     String @id @default(cuid())
+  userId String
+  bookId String
+
+  borrowDate DateTime     @default(now())
+  dueDate    DateTime
+  returnDate DateTime?
+  fine       Float        @default(0)
+  status     BorrowStatus @default(ACTIVE)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book Book @relation("BorrowedBook", fields: [bookId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([bookId])
+}
+
+model ReadingProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  bookId      String
+  currentPage Int      @default(0)
+  totalPages  Int      @default(0)
+  notes       String?
+  startedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+  @@index([userId])
+  @@index([bookId])
+}
+
+model EBook {
+  id           String   @id @default(cuid())
+  title        String
+  author       String
+  publisher    String?
+  year         Int?
+  category     String
+  description  String?
+  coverImage   String?
+  filePath     String
+  fileName     String
+  fileSize     Int
+  uploadedById String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  uploadedBy User          @relation("EBookUploader", fields: [uploadedById], references: [id], onDelete: Restrict)
+  accesses   EBookAccess[]
+
+  @@index([category])
+  @@index([uploadedById])
+}
+
+model EBookAccess {
+  id          String   @id @default(cuid())
+  ebookId     String
+  userId      String
+  accessCount Int      @default(1)
+  lastReadAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ebook EBook @relation(fields: [ebookId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([ebookId, userId])
+  @@index([userId])
+}
+
+model ClusteringRun {
+  id             String   @id @default(cuid())
+  totalProcessed Int
+  iterations     Int
+  centroids      Json?
+  createdAt      DateTime @default(now())
+
+  results ClusteringResult[]
+}
+
+model ClusteringResult {
+  id              String   @id @default(cuid())
+  clusteringRunId String
+  userId          String
+  totalBorrow     Int
+  totalReturn     Int
+  totalEbook      Int
+  clusterLabel    String   // "Tinggi" | "Sedang" | "Rendah"
+  clusterIndex    Int      // 0, 1, 2
+  createdAt       DateTime @default(now())
+
+  clusteringRun ClusteringRun @relation(fields: [clusteringRunId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([clusteringRunId])
+  @@index([userId])
+}

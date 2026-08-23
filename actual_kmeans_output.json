@@ -1,0 +1,2080 @@
+{
+  "totalSiswa": 102,
+  "datasetRaw": [
+    {
+      "userId": "cmsq6tys8000jfto4u2x69ist",
+      "name": "ADE AHMAD PAUZI",
+      "email": "siswa_0104591172@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 10,
+      "totalReturn": 9,
+      "totalEbook": 34
+    },
+    {
+      "userId": "cmsq6ubra002lfto4n1y28ncm",
+      "name": "ADE AJRIL RAMDANI",
+      "email": "siswa_0121177466@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 13,
+      "totalReturn": 13,
+      "totalEbook": 25
+    },
+    {
+      "userId": "cmsq6uc66002ofto4cpyo5mt4",
+      "name": "ADE ERNI NURAENI",
+      "email": "siswa_3138647679@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 24
+    },
+    {
+      "userId": "cmsq6u106001bfto4w5b947qm",
+      "name": "ADE PIKA APRILIANI",
+      "email": "siswa_0113154384@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 21
+    },
+    {
+      "userId": "cmsq6tyv6000kfto4f3fd237p",
+      "name": "ADE SILVIA AGUSTINA",
+      "email": "siswa_0104111173@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 19
+    },
+    {
+      "userId": "cmsq6u9t6002afto4s91373ct",
+      "name": "ADITIA SAFUTRA",
+      "email": "siswa_3136585300@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 11,
+      "totalReturn": 10,
+      "totalEbook": 22
+    },
+    {
+      "userId": "cmsq6u0ye001afto47f0od720",
+      "name": "AGUSTIAN MUHAMAD RAMDAN",
+      "email": "siswa_0118243081@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 10,
+      "totalReturn": 9,
+      "totalEbook": 36
+    },
+    {
+      "userId": "cmsq6uch9002pfto4l4trj510",
+      "name": "AI DESTI RAHMAWATI",
+      "email": "siswa_3128347070@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 13,
+      "totalReturn": 12,
+      "totalEbook": 28
+    },
+    {
+      "userId": "cmsq6ucki002qfto4f849khkk",
+      "name": "AI IRMA RISMAWATI",
+      "email": "siswa_3121117574@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 32
+    },
+    {
+      "userId": "cmsq6u0s20017fto4ufb78rer",
+      "name": "AI SIPA NURAENI",
+      "email": "siswa_0112050250@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 22
+    },
+    {
+      "userId": "cmsq6u97l0024fto425jzw058",
+      "name": "AISYA SAIS SYARIFAH ABDUL HADI",
+      "email": "siswa_3139953974@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 13,
+      "totalReturn": 13,
+      "totalEbook": 24
+    },
+    {
+      "userId": "cmsq6ucoe002rfto4t9jd37pt",
+      "name": "ALDIANSYAH",
+      "email": "siswa_3124855826@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 22
+    },
+    {
+      "userId": "cmsq6ucqz002sfto4hwdob05q",
+      "name": "ALIYA ALFATUNNISA",
+      "email": "siswa_3121242425@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 11,
+      "totalReturn": 10,
+      "totalEbook": 30
+    },
+    {
+      "userId": "cmsq6u127001cfto41jl159v1",
+      "name": "ALIYA NOER ARIFAH",
+      "email": "siswa_0125407159@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 12,
+      "totalReturn": 12,
+      "totalEbook": 25
+    },
+    {
+      "userId": "cmsq6tznv000xfto43qv1nlg9",
+      "name": "AMELIA",
+      "email": "siswa_0105581784@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 12,
+      "totalReturn": 12,
+      "totalEbook": 25
+    },
+    {
+      "userId": "cmsq6tzvk0010fto47ilwlhcw",
+      "name": "ANDRIYANA",
+      "email": "siswa_0116840472@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 22
+    },
+    {
+      "userId": "cmsq6ucu9002tfto4b06swm49",
+      "name": "ARIA SUKMA APRILIANA",
+      "email": "siswa_3122091364@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 11,
+      "totalReturn": 10,
+      "totalEbook": 22
+    },
+    {
+      "userId": "cmsq6tyqh000ifto42oprxp4y",
+      "name": "ASYIFA AULIA",
+      "email": "siswa_3111643593@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 13,
+      "totalReturn": 13,
+      "totalEbook": 26
+    },
+    {
+      "userId": "cmsq6u1ic001gfto4g4100302",
+      "name": "AZKIYA TAOPIK RAMDAN",
+      "email": "siswa_0112096145@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 30
+    },
+    {
+      "userId": "cmm23km0u0008uqtgvoq15a9a",
+      "name": "Ahmad Santoso",
+      "email": "siswa1@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 13,
+      "totalReturn": 13,
+      "totalEbook": 31
+    },
+    {
+      "userId": "cmsq6u6m6001rfto4s9p44lxs",
+      "name": "DANI ARDIANSYAH",
+      "email": "siswa_0113642639@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 28
+    },
+    {
+      "userId": "cmsq6tyxh000lfto4hpjpv389",
+      "name": "DESY PATRIA",
+      "email": "siswa_0109075249@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 12,
+      "totalReturn": 12,
+      "totalEbook": 16
+    },
+    {
+      "userId": "cmsq6u8k70020fto4ytwvy85u",
+      "name": "DEVINA SESILIA YUNIARTI",
+      "email": "siswa_0111823023@elhusna.com",
+      "kelas": "VIII-B",
+      "totalBorrow": 10,
+      "totalReturn": 9,
+      "totalEbook": 29
+    },
+    {
+      "userId": "cmsq6u91r0023fto4fmrad7m7",
+      "name": "DINA NUR PERMATASARI",
+      "email": "siswa_3129803963@elhusna.com",
+      "kelas": "VIII-B",
+      "totalBorrow": 12,
+      "totalReturn": 12,
+      "totalEbook": 27
+    },
+    {
+      "userId": "cmsq6tz9n000rfto4rq0gzs0l",
+      "name": "ELSA PEBRIANTI",
+      "email": "siswa_0119915409@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 12,
+      "totalReturn": 12,
+      "totalEbook": 32
+    },
+    {
+      "userId": "cmsq6tyzn000mfto4ozk0afxs",
+      "name": "ERIKS SETIAWAN",
+      "email": "siswa_0111097921@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 9,
+      "totalReturn": 9,
+      "totalEbook": 30
+    },
+    {
+      "userId": "cmsq6u63a001pfto4trs4hz9q",
+      "name": "FAHMI MAULANA",
+      "email": "siswa_0101210666@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 12,
+      "totalReturn": 12,
+      "totalEbook": 26
+    },
+    {
+      "userId": "cmsq6uak7002gfto4unloudup",
+      "name": "FAJRI MUHAMMAD FAKHRIZ",
+      "email": "siswa_3124395795@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 27
+    },
+    {
+      "userId": "cmsq6u9i60026fto4r5ch7nr4",
+      "name": "FAUZAN RAMDANI",
+      "email": "siswa_3125518567@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 31
+    },
+    {
+      "userId": "cmsq6u204001ifto43qsnegj6",
+      "name": "FIKRI SAEFULOH",
+      "email": "siswa_3110093634@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 21
+    },
+    {
+      "userId": "cmsq6u7ga001vfto44gr5lsp0",
+      "name": "GALUH MUHAMMAD FADILLAH",
+      "email": "siswa_0118730537@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 9,
+      "totalReturn": 9,
+      "totalEbook": 23
+    },
+    {
+      "userId": "cmsq6u0fe0014fto4436sfsof",
+      "name": "HAIKAL BINTANG HERYANTO",
+      "email": "siswa_0108244700@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 13,
+      "totalReturn": 12,
+      "totalEbook": 19
+    },
+    {
+      "userId": "cmsq6u509001lfto4930djjc7",
+      "name": "HASNA AWALI KAMILAH",
+      "email": "siswa_0115462193@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 10,
+      "totalReturn": 9,
+      "totalEbook": 20
+    },
+    {
+      "userId": "cmsq6tz1h000nfto40blhcizw",
+      "name": "ICA CHOEROTUNISA",
+      "email": "siswa_0105867038@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 6,
+      "totalReturn": 5,
+      "totalEbook": 9
+    },
+    {
+      "userId": "cmsq6u9kp0027fto4ajabke60",
+      "name": "ILHAM KHOERUDIN",
+      "email": "siswa_3123097762@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 9,
+      "totalReturn": 9,
+      "totalEbook": 18
+    },
+    {
+      "userId": "cmsq6ucxe002ufto4l9plzlbo",
+      "name": "IMAN MAULANA",
+      "email": "siswa_3125849930@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 19
+    },
+    {
+      "userId": "cmsq6u19r001efto4wl9e46ja",
+      "name": "INA NURHIDAYAH",
+      "email": "siswa_0119396656@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 13,
+      "totalReturn": 12,
+      "totalEbook": 34
+    },
+    {
+      "userId": "cmsq6u583001mfto4mu6067vi",
+      "name": "IRMA NURHASANAH",
+      "email": "siswa_0111340525@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 29
+    },
+    {
+      "userId": "cmsq6u09f0013fto4dqbn5bkp",
+      "name": "ISKANDAR",
+      "email": "siswa_0116614746@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 10
+    },
+    {
+      "userId": "cmnjte8h00000l404esjtc6i7",
+      "name": "Ira",
+      "email": "ira@gmail.com",
+      "kelas": "VII-A",
+      "totalBorrow": 9,
+      "totalReturn": 9,
+      "totalEbook": 30
+    },
+    {
+      "userId": "cmsq6u0u50018fto4xl7v1b60",
+      "name": "JAMALUDIN",
+      "email": "siswa_3126910144@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 4,
+      "totalReturn": 3,
+      "totalEbook": 8
+    },
+    {
+      "userId": "cmsq6uczs002vfto4ucynf5g6",
+      "name": "JASKIA NUR FADILAH",
+      "email": "siswa_3127102680@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 4,
+      "totalReturn": 4,
+      "totalEbook": 10
+    },
+    {
+      "userId": "cmsq6ud2e002wfto4jwxs9y5m",
+      "name": "LINTANG PRATAMA BUDIMAN",
+      "email": "siswa_3132643808@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 6,
+      "totalReturn": 5,
+      "totalEbook": 8
+    },
+    {
+      "userId": "cmsq6uar9002hfto48ik4ql2c",
+      "name": "LULU LUTFIAH",
+      "email": "siswa_0139234871@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 10,
+      "totalReturn": 10,
+      "totalEbook": 26
+    },
+    {
+      "userId": "cmsq6u0pq0016fto4tnjdcxvb",
+      "name": "LUTFY NURPADILAH",
+      "email": "siswa_0119813007@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 5
+    },
+    {
+      "userId": "cmsq6tz52000pfto4cyajjywx",
+      "name": "MILA AGUSTIANI",
+      "email": "siswa_0109592031@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 6,
+      "totalReturn": 5,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6tz33000ofto4tzmzueje",
+      "name": "MOH AKBAR RIYANDI",
+      "email": "siswa_0103552866@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 5,
+      "totalReturn": 4,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6u8yv0022fto4umzk6kew",
+      "name": "MUHAMAD ARYA NOVA PRATAMA",
+      "email": "siswa_0114717373@elhusna.com",
+      "kelas": "VIII-B",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 6
+    },
+    {
+      "userId": "cmsq6ub9m002jfto43xqlh7e6",
+      "name": "MUHAMAD FADLI PRATAMA NUGRAHA",
+      "email": "siswa_3131624570@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 11,
+      "totalReturn": 11,
+      "totalEbook": 26
+    },
+    {
+      "userId": "cmsq6u7t5001xfto4ibys1wwl",
+      "name": "MUHAMAD REVAN APRIANSYAH",
+      "email": "siswa_0114249491@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 5
+    },
+    {
+      "userId": "cmsq6ua60002dfto4dbjsfgtk",
+      "name": "MUHAMAD REZKI SOBARI",
+      "email": "siswa_3129734698@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 7
+    },
+    {
+      "userId": "cmsq6tzzw0011fto409togtmm",
+      "name": "MUHAMMAD FARID",
+      "email": "siswa_0108383304@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6uayp002ifto46wjlmn6d",
+      "name": "Muhamad Zidan Muazam",
+      "email": "siswa_0124998259@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 10
+    },
+    {
+      "userId": "cmm23km7h000auqtg7n7c7dns",
+      "name": "Muhammad Rizki",
+      "email": "siswa3@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 11
+    },
+    {
+      "userId": "cmsq6ud7j002xfto4y42rcf54",
+      "name": "NADIA MUJAHIDAH",
+      "email": "siswa_3123228941@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 9
+    },
+    {
+      "userId": "cmsq6ubvp002mfto4897gtw1x",
+      "name": "NADILA ROBIATUL ADAWIYAH",
+      "email": "siswa_0128142967@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 6
+    },
+    {
+      "userId": "cmsq6ud9w002yfto4oduqc4t6",
+      "name": "NASWA ROSALINDA PUTRI",
+      "email": "siswa_3122444445@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 4,
+      "totalReturn": 3,
+      "totalEbook": 11
+    },
+    {
+      "userId": "cmsq6u9dv0025fto4d8iskt4s",
+      "name": "NAYLA RAMADANI",
+      "email": "siswa_3120439947@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 4,
+      "totalReturn": 4,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6ubyx002nfto4216mo5pc",
+      "name": "NENG FEBY ADIVA FARHANA",
+      "email": "siswa_3134116307@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6u0mw0015fto4htep05il",
+      "name": "NENG TASYA AMAROTUL HUSNA",
+      "email": "siswa_0115235029@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 6,
+      "totalReturn": 5,
+      "totalEbook": 11
+    },
+    {
+      "userId": "cmsq6tzlq000wfto4w8a1ngz2",
+      "name": "OPI",
+      "email": "siswa_0102411710@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 4,
+      "totalReturn": 4,
+      "totalEbook": 8
+    },
+    {
+      "userId": "cmsq6u04o0012fto46814cvun",
+      "name": "PADIL AHMAD PAUJAN",
+      "email": "siswa_0103652300@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 11
+    },
+    {
+      "userId": "cmsq6u14d001dfto41il3hikr",
+      "name": "PUTRA FADILAH RIZKI",
+      "email": "siswa_0117284312@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 4,
+      "totalReturn": 3,
+      "totalEbook": 8
+    },
+    {
+      "userId": "cmsq6udbu002zfto4uomy3nfx",
+      "name": "PUTRI ARDIANA RESTY",
+      "email": "siswa_0122620894@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 9
+    },
+    {
+      "userId": "cmsq6u5jv001nfto4hh9i7d9q",
+      "name": "RAFFA ARDIANSYAH SAPUTRA",
+      "email": "siswa_0114484985@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6udda0030fto4zyrtwoih",
+      "name": "RAFI QUINERA KURNIAWAN",
+      "email": "siswa_0121569348@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6u8sr0021fto4gnnih0i3",
+      "name": "RANIA SHOPIATULHUDA",
+      "email": "siswa_0127829044@elhusna.com",
+      "kelas": "VIII-B",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6u9nr0028fto4org3se89",
+      "name": "REFAN SETIAWAN",
+      "email": "siswa_3128676834@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 6,
+      "totalReturn": 6,
+      "totalEbook": 11
+    },
+    {
+      "userId": "cmsq6udff0031fto4vnda1eum",
+      "name": "REIHAN MUHAMMAD RAMDHANI",
+      "email": "siswa_3121856198@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 1,
+      "totalReturn": 1,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6udhn0032fto4j2ho024x",
+      "name": "RENA RATNA DILA",
+      "email": "siswa_3129399232@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6ubju002kfto4se7n11xf",
+      "name": "RENAL ALAMSYAH",
+      "email": "siswa_3129914771@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6udjp0033fto4yi0w7m12",
+      "name": "RENDI SEPTIAN",
+      "email": "siswa_3126924136@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u76y001tfto47ctrqrsq",
+      "name": "RESTU AHMAD MAULANA",
+      "email": "siswa_0114861932@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 4,
+      "totalReturn": 4,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6u5v7001ofto4illth9js",
+      "name": "REVAN RADITYA SUJANA",
+      "email": "siswa_0115854954@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 5,
+      "totalReturn": 5,
+      "totalEbook": 10
+    },
+    {
+      "userId": "cmsq6tz83000qfto4wf5l7tvo",
+      "name": "REZKY NUGRAHA PRATAMA",
+      "email": "siswa_0107932856@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 5,
+      "totalReturn": 4,
+      "totalEbook": 12
+    },
+    {
+      "userId": "cmsq6uag1002ffto4pf98cqbe",
+      "name": "RIFA AZKA MAULIDA",
+      "email": "siswa_3123661165@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6tzqf000yfto4n728fdgq",
+      "name": "RIFKI HERYANA",
+      "email": "siswa_0103235429@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6u9q30029fto4ufv13hsa",
+      "name": "RISKA MAULANI",
+      "email": "siswa_0122525031@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 1,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6tzcq000sfto43plw5phh",
+      "name": "RISMAN FEBRIAN",
+      "email": "siswa_0106453558@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 1,
+      "totalReturn": 1,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u1br001ffto4pueieufu",
+      "name": "RIZKI RAMADAN",
+      "email": "siswa_0118338575@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 5,
+      "totalReturn": 4,
+      "totalEbook": 9
+    },
+    {
+      "userId": "cmsq6u9w8002bfto429mxz1dr",
+      "name": "RIZKY ARDIYANSYAH",
+      "email": "siswa_3128199227@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmlwezf890002ftv0yi6ynrcm",
+      "name": "Rosee",
+      "email": "Rose18@gmail.com",
+      "kelas": "VII-A",
+      "totalBorrow": 1,
+      "totalReturn": 1,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6tzes000tfto4i6pfhi8o",
+      "name": "SANTI OKTAVIA",
+      "email": "siswa_0101198413@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6uab6002efto413rcmrni",
+      "name": "SEPTIAN LESMANA",
+      "email": "siswa_0125704653@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u2kl001jfto4gxq4i9hw",
+      "name": "SHIFA LISPIANTI OKTAVIANI",
+      "email": "siswa_0117058252@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u808001yfto485zg462a",
+      "name": "SILVI MARYANTI",
+      "email": "siswa_0126840394@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6tzh5000ufto47zx6iyjq",
+      "name": "SIPA SILVIA",
+      "email": "siswa_0106168005@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 2
+    },
+    {
+      "userId": "cmsq6ua0a002cfto4m27l5nmh",
+      "name": "SISKA ARDIANTI SUGANDA",
+      "email": "siswa_3121887181@elhusna.com",
+      "kelas": "VII-B",
+      "totalBorrow": 1,
+      "totalReturn": 1,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u6uw001sfto4fgq0bfx2",
+      "name": "SISMA NURMALA",
+      "email": "siswa_0113961023@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 1,
+      "totalReturn": 0,
+      "totalEbook": 2
+    },
+    {
+      "userId": "cmsq6u6hi001qfto46zdmvbap",
+      "name": "SITI KHODIJAH",
+      "email": "siswa_0119019560@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6u8aq001zfto48524rtd8",
+      "name": "SITI NAZWA",
+      "email": "siswa_0115828417@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6udlh0034fto4wslq121e",
+      "name": "SITI NURHASANAH",
+      "email": "siswa_3123552289@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u2ti001kfto4jdbwme3z",
+      "name": "SYAHRUL KURNIAWAN",
+      "email": "siswa_0114373278@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 1,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmm23km460009uqtgsutq8x7q",
+      "name": "Siti Aisyah",
+      "email": "siswa2@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6u0wb0019fto4z0srklhd",
+      "name": "TASYA AULIA NURULAINI",
+      "email": "siswa_0113338807@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u1q6001hfto431bofeme",
+      "name": "VANIA NUR ASYIFA",
+      "email": "siswa_0115501421@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6tym8000hfto4pu8xg3lh",
+      "name": "WIDIA RATNA LESTARI",
+      "email": "siswa_3116904262@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 1,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u7ma001wfto4t699nmhc",
+      "name": "WIDIAWATI",
+      "email": "siswa_3116844494@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 1,
+      "totalReturn": 1,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6tzse000zfto4dgwxlqwj",
+      "name": "WILDAN AINUNAJIB",
+      "email": "siswa_0106411753@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 1
+    },
+    {
+      "userId": "cmsq6u7a4001ufto4q9jumnon",
+      "name": "YASMIN NURIL SHIDQI",
+      "email": "siswa_0119218519@elhusna.com",
+      "kelas": "VIII-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6tzjf000vfto4vx718v4l",
+      "name": "YAYAN SOPIAN",
+      "email": "siswa_0117664706@elhusna.com",
+      "kelas": "IX-A",
+      "totalBorrow": 0,
+      "totalReturn": 0,
+      "totalEbook": 0
+    },
+    {
+      "userId": "cmsq6udoa0035fto4f8zkev3d",
+      "name": "ZAMZAM PUTRA PRATAMA",
+      "email": "siswa_3123236523@elhusna.com",
+      "kelas": "VII-A",
+      "totalBorrow": 1,
+      "totalReturn": 1,
+      "totalEbook": 1
+    }
+  ],
+  "clusteringResult": {
+    "totalProcessed": 102,
+    "iterations": 4,
+    "centroids": [
+      {
+        "label": "Tinggi",
+        "vector": [
+          11,
+          10.75,
+          25.77
+        ],
+        "count": 40
+      },
+      {
+        "label": "Sedang",
+        "vector": [
+          5.17,
+          4.83,
+          9.6
+        ],
+        "count": 30
+      },
+      {
+        "label": "Rendah",
+        "vector": [
+          0.31,
+          0.19,
+          0.66
+        ],
+        "count": 32
+      }
+    ],
+    "studentResults": [
+      {
+        "userId": "cmsq6tys8000jfto4u2x69ist",
+        "name": "ADE AHMAD PAUZI",
+        "kelas": "IX-A",
+        "totalBorrow": 10,
+        "totalReturn": 9,
+        "totalEbook": 34,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 8.4732
+      },
+      {
+        "userId": "cmsq6ubra002lfto4n1y28ncm",
+        "name": "ADE AJRIL RAMDANI",
+        "kelas": "VII-A",
+        "totalBorrow": 13,
+        "totalReturn": 13,
+        "totalEbook": 25,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.1073
+      },
+      {
+        "userId": "cmsq6uc66002ofto4cpyo5mt4",
+        "name": "ADE ERNI NURAENI",
+        "kelas": "VII-A",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 24,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 1.7876
+      },
+      {
+        "userId": "cmsq6u106001bfto4w5b947qm",
+        "name": "ADE PIKA APRILIANI",
+        "kelas": "VIII-A",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 21,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 4.7765
+      },
+      {
+        "userId": "cmsq6tyv6000kfto4f3fd237p",
+        "name": "ADE SILVIA AGUSTINA",
+        "kelas": "IX-A",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 19,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 6.7746
+      },
+      {
+        "userId": "cmsq6u9t6002afto4s91373ct",
+        "name": "ADITIA SAFUTRA",
+        "kelas": "VII-B",
+        "totalBorrow": 11,
+        "totalReturn": 10,
+        "totalEbook": 22,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.8439
+      },
+      {
+        "userId": "cmsq6u0ye001afto47f0od720",
+        "name": "AGUSTIAN MUHAMAD RAMDAN",
+        "kelas": "VIII-A",
+        "totalBorrow": 10,
+        "totalReturn": 9,
+        "totalEbook": 36,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 10.4267
+      },
+      {
+        "userId": "cmsq6uch9002pfto4l4trj510",
+        "name": "AI DESTI RAHMAWATI",
+        "kelas": "VII-A",
+        "totalBorrow": 13,
+        "totalReturn": 12,
+        "totalEbook": 28,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.2458
+      },
+      {
+        "userId": "cmsq6ucki002qfto4f849khkk",
+        "name": "AI IRMA RISMAWATI",
+        "kelas": "VII-A",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 32,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 6.3542
+      },
+      {
+        "userId": "cmsq6u0s20017fto4ufb78rer",
+        "name": "AI SIPA NURAENI",
+        "kelas": "VIII-A",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 22,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.7783
+      },
+      {
+        "userId": "cmsq6u97l0024fto425jzw058",
+        "name": "AISYA SAIS SYARIFAH ABDUL HADI",
+        "kelas": "VII-B",
+        "totalBorrow": 13,
+        "totalReturn": 13,
+        "totalEbook": 24,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.4922
+      },
+      {
+        "userId": "cmsq6ucoe002rfto4t9jd37pt",
+        "name": "ALDIANSYAH",
+        "kelas": "VII-A",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 22,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.9718
+      },
+      {
+        "userId": "cmsq6ucqz002sfto4hwdob05q",
+        "name": "ALIYA ALFATUNNISA",
+        "kelas": "VII-A",
+        "totalBorrow": 11,
+        "totalReturn": 10,
+        "totalEbook": 30,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 4.296
+      },
+      {
+        "userId": "cmsq6u127001cfto41jl159v1",
+        "name": "ALIYA NOER ARIFAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 12,
+        "totalReturn": 12,
+        "totalEbook": 25,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 1.7763
+      },
+      {
+        "userId": "cmsq6tznv000xfto43qv1nlg9",
+        "name": "AMELIA",
+        "kelas": "IX-A",
+        "totalBorrow": 12,
+        "totalReturn": 12,
+        "totalEbook": 25,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 1.7763
+      },
+      {
+        "userId": "cmsq6tzvk0010fto47ilwlhcw",
+        "name": "ANDRIYANA",
+        "kelas": "IX-A",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 22,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.7783
+      },
+      {
+        "userId": "cmsq6ucu9002tfto4b06swm49",
+        "name": "ARIA SUKMA APRILIANA",
+        "kelas": "VII-A",
+        "totalBorrow": 11,
+        "totalReturn": 10,
+        "totalEbook": 22,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.8439
+      },
+      {
+        "userId": "cmsq6tyqh000ifto42oprxp4y",
+        "name": "ASYIFA AULIA",
+        "kelas": "IX-A",
+        "totalBorrow": 13,
+        "totalReturn": 13,
+        "totalEbook": 26,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.0192
+      },
+      {
+        "userId": "cmsq6u1ic001gfto4g4100302",
+        "name": "AZKIYA TAOPIK RAMDAN",
+        "kelas": "VIII-A",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 30,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 4.2374
+      },
+      {
+        "userId": "cmm23km0u0008uqtgvoq15a9a",
+        "name": "Ahmad Santoso",
+        "kelas": "VII-A",
+        "totalBorrow": 13,
+        "totalReturn": 13,
+        "totalEbook": 31,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 6.0345
+      },
+      {
+        "userId": "cmsq6u6m6001rfto4s9p44lxs",
+        "name": "DANI ARDIANSYAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 28,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 2.5564
+      },
+      {
+        "userId": "cmsq6tyxh000lfto4hpjpv389",
+        "name": "DESY PATRIA",
+        "kelas": "IX-A",
+        "totalBorrow": 12,
+        "totalReturn": 12,
+        "totalEbook": 16,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 9.9003
+      },
+      {
+        "userId": "cmsq6u8k70020fto4ytwvy85u",
+        "name": "DEVINA SESILIA YUNIARTI",
+        "kelas": "VIII-B",
+        "totalBorrow": 10,
+        "totalReturn": 9,
+        "totalEbook": 29,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.8073
+      },
+      {
+        "userId": "cmsq6u91r0023fto4fmrad7m7",
+        "name": "DINA NUR PERMATASARI",
+        "kelas": "VIII-B",
+        "totalBorrow": 12,
+        "totalReturn": 12,
+        "totalEbook": 27,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 2.0188
+      },
+      {
+        "userId": "cmsq6tz9n000rfto4rq0gzs0l",
+        "name": "ELSA PEBRIANTI",
+        "kelas": "IX-A",
+        "totalBorrow": 12,
+        "totalReturn": 12,
+        "totalEbook": 32,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 6.4324
+      },
+      {
+        "userId": "cmsq6tyzn000mfto4ozk0afxs",
+        "name": "ERIKS SETIAWAN",
+        "kelas": "IX-A",
+        "totalBorrow": 9,
+        "totalReturn": 9,
+        "totalEbook": 30,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 4.9955
+      },
+      {
+        "userId": "cmsq6u63a001pfto4trs4hz9q",
+        "name": "FAHMI MAULANA",
+        "kelas": "VIII-A",
+        "totalBorrow": 12,
+        "totalReturn": 12,
+        "totalEbook": 26,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 1.6172
+      },
+      {
+        "userId": "cmsq6uak7002gfto4unloudup",
+        "name": "FAJRI MUHAMMAD FAKHRIZ",
+        "kelas": "VII-B",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 27,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 1.2551
+      },
+      {
+        "userId": "cmsq6u9i60026fto4r5ch7nr4",
+        "name": "FAUZAN RAMDANI",
+        "kelas": "VII-B",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 31,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 5.3773
+      },
+      {
+        "userId": "cmsq6u204001ifto43qsnegj6",
+        "name": "FIKRI SAEFULOH",
+        "kelas": "VIII-A",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 21,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 4.9311
+      },
+      {
+        "userId": "cmsq6u7ga001vfto44gr5lsp0",
+        "name": "GALUH MUHAMMAD FADILLAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 9,
+        "totalReturn": 9,
+        "totalEbook": 23,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.8387
+      },
+      {
+        "userId": "cmsq6u0fe0014fto4436sfsof",
+        "name": "HAIKAL BINTANG HERYANTO",
+        "kelas": "IX-A",
+        "totalBorrow": 13,
+        "totalReturn": 12,
+        "totalEbook": 19,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 7.1691
+      },
+      {
+        "userId": "cmsq6u509001lfto4930djjc7",
+        "name": "HASNA AWALI KAMILAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 10,
+        "totalReturn": 9,
+        "totalEbook": 20,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 6.1119
+      },
+      {
+        "userId": "cmsq6tz1h000nfto40blhcizw",
+        "name": "ICA CHOEROTUNISA",
+        "kelas": "IX-A",
+        "totalBorrow": 6,
+        "totalReturn": 5,
+        "totalEbook": 9,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 1.0382
+      },
+      {
+        "userId": "cmsq6u9kp0027fto4ajabke60",
+        "name": "ILHAM KHOERUDIN",
+        "kelas": "VII-B",
+        "totalBorrow": 9,
+        "totalReturn": 9,
+        "totalEbook": 18,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 8.2119
+      },
+      {
+        "userId": "cmsq6ucxe002ufto4l9plzlbo",
+        "name": "IMAN MAULANA",
+        "kelas": "VII-A",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 19,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 6.8844
+      },
+      {
+        "userId": "cmsq6u19r001efto4wl9e46ja",
+        "name": "INA NURHIDAYAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 13,
+        "totalReturn": 12,
+        "totalEbook": 34,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 8.5613
+      },
+      {
+        "userId": "cmsq6u583001mfto4mu6067vi",
+        "name": "IRMA NURHASANAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 29,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 3.4634
+      },
+      {
+        "userId": "cmsq6u09f0013fto4dqbn5bkp",
+        "name": "ISKANDAR",
+        "kelas": "IX-A",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 10,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 0.4667
+      },
+      {
+        "userId": "cmnjte8h00000l404esjtc6i7",
+        "name": "Ira",
+        "kelas": "VII-A",
+        "totalBorrow": 9,
+        "totalReturn": 9,
+        "totalEbook": 30,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 4.9955
+      },
+      {
+        "userId": "cmsq6u0u50018fto4xl7v1b60",
+        "name": "JAMALUDIN",
+        "kelas": "VIII-A",
+        "totalBorrow": 4,
+        "totalReturn": 3,
+        "totalEbook": 8,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.6977
+      },
+      {
+        "userId": "cmsq6uczs002vfto4ucynf5g6",
+        "name": "JASKIA NUR FADILAH",
+        "kelas": "VII-A",
+        "totalBorrow": 4,
+        "totalReturn": 4,
+        "totalEbook": 10,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 1.4892
+      },
+      {
+        "userId": "cmsq6ud2e002wfto4jwxs9y5m",
+        "name": "LINTANG PRATAMA BUDIMAN",
+        "kelas": "VII-A",
+        "totalBorrow": 6,
+        "totalReturn": 5,
+        "totalEbook": 8,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 1.8105
+      },
+      {
+        "userId": "cmsq6uar9002hfto48ik4ql2c",
+        "name": "LULU LUTFIAH",
+        "kelas": "VII-B",
+        "totalBorrow": 10,
+        "totalReturn": 10,
+        "totalEbook": 26,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 1.271
+      },
+      {
+        "userId": "cmsq6u0pq0016fto4tnjdcxvb",
+        "name": "LUTFY NURPADILAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 5,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 4.8185
+      },
+      {
+        "userId": "cmsq6tz52000pfto4cyajjywx",
+        "name": "MILA AGUSTIANI",
+        "kelas": "IX-A",
+        "totalBorrow": 6,
+        "totalReturn": 5,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.5452
+      },
+      {
+        "userId": "cmsq6tz33000ofto4tzmzueje",
+        "name": "MOH AKBAR RIYANDI",
+        "kelas": "IX-A",
+        "totalBorrow": 5,
+        "totalReturn": 4,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.5452
+      },
+      {
+        "userId": "cmsq6u8yv0022fto4umzk6kew",
+        "name": "MUHAMAD ARYA NOVA PRATAMA",
+        "kelas": "VIII-B",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 6,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 3.608
+      },
+      {
+        "userId": "cmsq6ub9m002jfto43xqlh7e6",
+        "name": "MUHAMAD FADLI PRATAMA NUGRAHA",
+        "kelas": "VII-B",
+        "totalBorrow": 11,
+        "totalReturn": 11,
+        "totalEbook": 26,
+        "clusterIndex": 2,
+        "clusterLabel": "Tinggi",
+        "distanceToCentroid": 0.3397
+      },
+      {
+        "userId": "cmsq6u7t5001xfto4ibys1wwl",
+        "name": "MUHAMAD REVAN APRIANSYAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 5,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 4.6063
+      },
+      {
+        "userId": "cmsq6ua60002dfto4dbjsfgtk",
+        "name": "MUHAMAD REZKI SOBARI",
+        "kelas": "VII-B",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 7,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.9695
+      },
+      {
+        "userId": "cmsq6tzzw0011fto409togtmm",
+        "name": "MUHAMMAD FARID",
+        "kelas": "IX-A",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.796
+      },
+      {
+        "userId": "cmsq6uayp002ifto46wjlmn6d",
+        "name": "Muhamad Zidan Muazam",
+        "kelas": "VII-B",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 10,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 0.4667
+      },
+      {
+        "userId": "cmm23km7h000auqtg7n7c7dns",
+        "name": "Muhammad Rizki",
+        "kelas": "VII-B",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 11,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.0044
+      },
+      {
+        "userId": "cmsq6ud7j002xfto4y42rcf54",
+        "name": "NADIA MUJAHIDAH",
+        "kelas": "VII-A",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 9,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 0.6464
+      },
+      {
+        "userId": "cmsq6ubvp002mfto4897gtw1x",
+        "name": "NADILA ROBIATUL ADAWIYAH",
+        "kelas": "VII-A",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 6,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 3.608
+      },
+      {
+        "userId": "cmsq6ud9w002yfto4oduqc4t6",
+        "name": "NASWA ROSALINDA PUTRI",
+        "kelas": "VII-A",
+        "totalBorrow": 4,
+        "totalReturn": 3,
+        "totalEbook": 11,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.5841
+      },
+      {
+        "userId": "cmsq6u9dv0025fto4d8iskt4s",
+        "name": "NAYLA RAMADANI",
+        "kelas": "VII-B",
+        "totalBorrow": 4,
+        "totalReturn": 4,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.796
+      },
+      {
+        "userId": "cmsq6ubyx002nfto4216mo5pc",
+        "name": "NENG FEBY ADIVA FARHANA",
+        "kelas": "VII-A",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.796
+      },
+      {
+        "userId": "cmsq6u0mw0015fto4htep05il",
+        "name": "NENG TASYA AMAROTUL HUSNA",
+        "kelas": "VIII-A",
+        "totalBorrow": 6,
+        "totalReturn": 5,
+        "totalEbook": 11,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 1.6364
+      },
+      {
+        "userId": "cmsq6tzlq000wfto4w8a1ngz2",
+        "name": "OPI",
+        "kelas": "IX-A",
+        "totalBorrow": 4,
+        "totalReturn": 4,
+        "totalEbook": 8,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.1489
+      },
+      {
+        "userId": "cmsq6u04o0012fto46814cvun",
+        "name": "PADIL AHMAD PAUJAN",
+        "kelas": "IX-A",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 11,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.0044
+      },
+      {
+        "userId": "cmsq6u14d001dfto41il3hikr",
+        "name": "PUTRA FADILAH RIZKI",
+        "kelas": "VIII-A",
+        "totalBorrow": 4,
+        "totalReturn": 3,
+        "totalEbook": 8,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.6977
+      },
+      {
+        "userId": "cmsq6udbu002zfto4uomy3nfx",
+        "name": "PUTRI ARDIANA RESTY",
+        "kelas": "VII-A",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 9,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 0.6464
+      },
+      {
+        "userId": "cmsq6u5jv001nfto4hh9i7d9q",
+        "name": "RAFFA ARDIANSYAH SAPUTRA",
+        "kelas": "VIII-A",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.796
+      },
+      {
+        "userId": "cmsq6udda0030fto4zyrtwoih",
+        "name": "RAFI QUINERA KURNIAWAN",
+        "kelas": "VII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6u8sr0021fto4gnnih0i3",
+        "name": "RANIA SHOPIATULHUDA",
+        "kelas": "VIII-B",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6u9nr0028fto4org3se89",
+        "name": "REFAN SETIAWAN",
+        "kelas": "VII-B",
+        "totalBorrow": 6,
+        "totalReturn": 6,
+        "totalEbook": 11,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.0044
+      },
+      {
+        "userId": "cmsq6udff0031fto4vnda1eum",
+        "name": "REIHAN MUHAMMAD RAMDHANI",
+        "kelas": "VII-A",
+        "totalBorrow": 1,
+        "totalReturn": 1,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.117
+      },
+      {
+        "userId": "cmsq6udhn0032fto4j2ho024x",
+        "name": "RENA RATNA DILA",
+        "kelas": "VII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6ubju002kfto4se7n11xf",
+        "name": "RENAL ALAMSYAH",
+        "kelas": "VII-B",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6udjp0033fto4yi0w7m12",
+        "name": "RENDI SEPTIAN",
+        "kelas": "VII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6u76y001tfto47ctrqrsq",
+        "name": "RESTU AHMAD MAULANA",
+        "kelas": "VIII-A",
+        "totalBorrow": 4,
+        "totalReturn": 4,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.796
+      },
+      {
+        "userId": "cmsq6u5v7001ofto4illth9js",
+        "name": "REVAN RADITYA SUJANA",
+        "kelas": "VIII-A",
+        "totalBorrow": 5,
+        "totalReturn": 5,
+        "totalEbook": 10,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 0.4667
+      },
+      {
+        "userId": "cmsq6tz83000qfto4wf5l7tvo",
+        "name": "REZKY NUGRAHA PRATAMA",
+        "kelas": "IX-A",
+        "totalBorrow": 5,
+        "totalReturn": 4,
+        "totalEbook": 12,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 2.5452
+      },
+      {
+        "userId": "cmsq6uag1002ffto4pf98cqbe",
+        "name": "RIFA AZKA MAULIDA",
+        "kelas": "VII-B",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6tzqf000yfto4n728fdgq",
+        "name": "RIFKI HERYANA",
+        "kelas": "IX-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6u9q30029fto4ufv13hsa",
+        "name": "RISKA MAULANI",
+        "kelas": "VII-B",
+        "totalBorrow": 1,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.9736
+      },
+      {
+        "userId": "cmsq6tzcq000sfto43plw5phh",
+        "name": "RISMAN FEBRIAN",
+        "kelas": "IX-A",
+        "totalBorrow": 1,
+        "totalReturn": 1,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.117
+      },
+      {
+        "userId": "cmsq6u1br001ffto4pueieufu",
+        "name": "RIZKI RAMADAN",
+        "kelas": "VIII-A",
+        "totalBorrow": 5,
+        "totalReturn": 4,
+        "totalEbook": 9,
+        "clusterIndex": 1,
+        "clusterLabel": "Sedang",
+        "distanceToCentroid": 1.0382
+      },
+      {
+        "userId": "cmsq6u9w8002bfto429mxz1dr",
+        "name": "RIZKY ARDIYANSYAH",
+        "kelas": "VII-B",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmlwezf890002ftv0yi6ynrcm",
+        "name": "Rosee",
+        "kelas": "VII-A",
+        "totalBorrow": 1,
+        "totalReturn": 1,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.117
+      },
+      {
+        "userId": "cmsq6tzes000tfto4i6pfhi8o",
+        "name": "SANTI OKTAVIA",
+        "kelas": "IX-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6uab6002efto413rcmrni",
+        "name": "SEPTIAN LESMANA",
+        "kelas": "VII-B",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6u2kl001jfto4gxq4i9hw",
+        "name": "SHIFA LISPIANTI OKTAVIANI",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6u808001yfto485zg462a",
+        "name": "SILVI MARYANTI",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6tzh5000ufto47zx6iyjq",
+        "name": "SIPA SILVIA",
+        "kelas": "IX-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 2,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.3885
+      },
+      {
+        "userId": "cmsq6ua0a002cfto4m27l5nmh",
+        "name": "SISKA ARDIANTI SUGANDA",
+        "kelas": "VII-B",
+        "totalBorrow": 1,
+        "totalReturn": 1,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.117
+      },
+      {
+        "userId": "cmsq6u6uw001sfto4fgq0bfx2",
+        "name": "SISMA NURMALA",
+        "kelas": "VIII-A",
+        "totalBorrow": 1,
+        "totalReturn": 0,
+        "totalEbook": 2,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.5191
+      },
+      {
+        "userId": "cmsq6u6hi001qfto46zdmvbap",
+        "name": "SITI KHODIJAH",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6u8aq001zfto48524rtd8",
+        "name": "SITI NAZWA",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6udlh0034fto4wslq121e",
+        "name": "SITI NURHASANAH",
+        "kelas": "VII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6u2ti001kfto4jdbwme3z",
+        "name": "SYAHRUL KURNIAWAN",
+        "kelas": "VIII-A",
+        "totalBorrow": 1,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.9736
+      },
+      {
+        "userId": "cmm23km460009uqtgsutq8x7q",
+        "name": "Siti Aisyah",
+        "kelas": "VII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6u0wb0019fto4z0srklhd",
+        "name": "TASYA AULIA NURULAINI",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6u1q6001hfto431bofeme",
+        "name": "VANIA NUR ASYIFA",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6tym8000hfto4pu8xg3lh",
+        "name": "WIDIA RATNA LESTARI",
+        "kelas": "IX-A",
+        "totalBorrow": 1,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7923
+      },
+      {
+        "userId": "cmsq6u7ma001wfto4t699nmhc",
+        "name": "WIDIAWATI",
+        "kelas": "VIII-A",
+        "totalBorrow": 1,
+        "totalReturn": 1,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.117
+      },
+      {
+        "userId": "cmsq6tzse000zfto4dgwxlqwj",
+        "name": "WILDAN AINUNAJIB",
+        "kelas": "IX-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.4978
+      },
+      {
+        "userId": "cmsq6u7a4001ufto4q9jumnon",
+        "name": "YASMIN NURIL SHIDQI",
+        "kelas": "VIII-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6tzjf000vfto4vx718v4l",
+        "name": "YAYAN SOPIAN",
+        "kelas": "IX-A",
+        "totalBorrow": 0,
+        "totalReturn": 0,
+        "totalEbook": 0,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 0.7535
+      },
+      {
+        "userId": "cmsq6udoa0035fto4f8zkev3d",
+        "name": "ZAMZAM PUTRA PRATAMA",
+        "kelas": "VII-A",
+        "totalBorrow": 1,
+        "totalReturn": 1,
+        "totalEbook": 1,
+        "clusterIndex": 0,
+        "clusterLabel": "Rendah",
+        "distanceToCentroid": 1.117
+      }
+    ]
+  }
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BookOpen, Edit, FileText, Loader2, Plus, Search, Trash2, Upload, X } from "lucide-react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PaginationControls } from "@/components/ui/pagination-controls";
+import { safeFetch } from "@/lib/safe-fetch";
 
 type EBook = {
   id: string;
@@ -56,14 +57,8 @@ export default function EbooksPage() {
       });
       if (query) params.set("search", query);
       if (category) params.set("category", category);
-      const result = await fetch(`/api/ebooks?${params}`, { cache: "no-store" });
-      if (!result.ok) {
-        const text = await result.text();
-        let msg = "Gagal memuat E-Book";
-        try { msg = JSON.parse(text)?.error || msg; } catch { msg = text || msg; }
-        throw new Error(msg);
-      }
-      const data = await result.json();
+      const { ok, data } = await safeFetch(`/api/ebooks?${params}`);
+      if (!ok) throw new Error(data.error || "Gagal memuat E-Book");
       setEbooks(data.ebooks || []);
       setTotalPages(data.pagination?.totalPages || 1);
       setTotalCount(data.pagination?.total || data.ebooks?.length || 0);
@@ -75,12 +70,10 @@ export default function EbooksPage() {
   };
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.user) setUser(data.user);
-        else window.location.href = "/";
-      });
+    safeFetch("/api/auth/session").then(({ data }) => {
+      if (data.user) setUser(data.user);
+      else window.location.href = "/";
+    });
   }, []);
 
   useEffect(() => {
@@ -146,10 +139,9 @@ export default function EbooksPage() {
     try {
       const url = editingBook ? `/api/ebooks/${editingBook.id}` : "/api/ebooks";
       const method = editingBook ? "PUT" : "POST";
-      const result = await fetch(url, { method, body: data });
-      const body = await result.json();
+      const { ok, data: body } = await safeFetch(url, { method, body: data });
 
-      if (!result.ok) throw new Error(body.error || "Proses simpan E-Book gagal");
+      if (!ok) throw new Error(body.error || "Proses simpan E-Book gagal");
 
       setShowForm(false);
       setEditingBook(null);
@@ -173,9 +165,8 @@ export default function EbooksPage() {
 
   const remove = async (id: string) => {
     if (!confirm("Hapus E-Book ini? Berkas PDF juga akan dihapus.")) return;
-    const result = await fetch(`/api/ebooks/${id}`, { method: "DELETE" });
-    const data = await result.json();
-    if (!result.ok) {
+    const { ok, data } = await safeFetch(`/api/ebooks/${id}`, { method: "DELETE" });
+    if (!ok) {
       setError(data.error || "Gagal menghapus E-Book");
       return;
     }

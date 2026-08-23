@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, BookOpen, Download, ExternalLink, FileText, Loader2, RefreshCw } from "lucide-react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 
 export default function EBookReader() {
   const routeParams = useParams();
@@ -16,10 +17,9 @@ export default function EBookReader() {
   const [iframeError, setIframeError] = useState(false);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.user) setUser(d.user);
+    safeFetch("/api/auth/session")
+      .then(({ data }) => {
+        if (data.user) setUser(data.user);
         else window.location.href = "/";
       })
       .catch(() => {
@@ -31,17 +31,10 @@ export default function EBookReader() {
     if (!id) return;
     setLoading(true);
     setError("");
-    fetch(`/api/ebooks/${id}`)
-      .then(async (r) => {
-        if (!r.ok) {
-          const text = await r.text();
-          let msg = "E-Book tidak ditemukan";
-          try { msg = JSON.parse(text)?.error || msg; } catch { msg = text || msg; }
-          setError(msg);
-          return;
-        }
-        const d = await r.json();
-        setEbook(d.ebook);
+    safeFetch(`/api/ebooks/${id}`)
+      .then(({ ok, data }) => {
+        if (!ok) setError(data.error || "E-Book tidak ditemukan");
+        else setEbook(data.ebook);
       })
       .catch(() => setError("Gagal memuat detail E-Book"))
       .finally(() => setLoading(false));

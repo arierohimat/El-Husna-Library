@@ -33,11 +33,17 @@ export default function EBookReader() {
     setError("");
     fetch(`/api/ebooks/${id}`)
       .then(async (r) => {
+        if (!r.ok) {
+          const text = await r.text();
+          let msg = "E-Book tidak ditemukan";
+          try { msg = JSON.parse(text)?.error || msg; } catch { msg = text || msg; }
+          setError(msg);
+          return;
+        }
         const d = await r.json();
-        if (!r.ok) setError(d.error || "E-Book tidak ditemukan");
-        else setEbook(d.ebook);
+        setEbook(d.ebook);
       })
-      .catch((err) => setError("Gagal memuat detail E-Book"))
+      .catch(() => setError("Gagal memuat detail E-Book"))
       .finally(() => setLoading(false));
   };
 

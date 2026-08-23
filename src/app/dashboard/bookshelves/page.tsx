@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
     Dialog,
     DialogContent,
@@ -30,7 +32,6 @@ import {
     BookOpen,
     AlertCircle,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 
 interface Bookshelf {
@@ -65,14 +66,12 @@ export default function BookshelvesPage() {
     const router = useRouter();
 
     useEffect(() => {
-        fetch("/api/auth/session")
-            .then((r) => r.json())
-            .then((d) => {
+        safeFetch("/api/auth/session")
+            .then(({ data: d }) => {
                 if (!d.user) {
                     router.push("/");
                 } else if (d.user.role === "GURU") {
                     router.push("/dashboard/guru");
-
                 } else {
                     setUser(d.user);
                 }
@@ -92,8 +91,7 @@ export default function BookshelvesPage() {
                 limit: "10",
             });
             if (search) params.append("search", search);
-            const res = await fetch(`/api/bookshelves?${params}`);
-            const data = await res.json();
+            const { data } = await safeFetch(`/api/bookshelves?${params}`);
             setBookshelves(data.bookshelves || []);
             setTotalPages(data.pagination?.totalPages || 1);
             setTotalCount(data.pagination?.total || data.bookshelves?.length || 0);
@@ -117,13 +115,12 @@ export default function BookshelvesPage() {
 
         setIsSubmitting(true);
         try {
-            const res = await fetch("/api/bookshelves", {
+            const { ok, data } = await safeFetch("/api/bookshelves", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-            const data = await res.json();
-            if (!res.ok) {
+            if (!ok) {
                 setError(data.error || "Gagal menambahkan rak buku");
                 return;
             }
@@ -148,13 +145,12 @@ export default function BookshelvesPage() {
 
         setIsSubmitting(true);
         try {
-            const res = await fetch(`/api/bookshelves/${selected.id}`, {
+            const { ok, data } = await safeFetch(`/api/bookshelves/${selected.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-            const data = await res.json();
-            if (!res.ok) {
+            if (!ok) {
                 setError(data.error || "Gagal mengupdate rak buku");
                 return;
             }
@@ -173,11 +169,10 @@ export default function BookshelvesPage() {
         if (!selected) return;
         setIsSubmitting(true);
         try {
-            const res = await fetch(`/api/bookshelves/${selected.id}`, {
+            const { ok, data } = await safeFetch(`/api/bookshelves/${selected.id}`, {
                 method: "DELETE",
             });
-            const data = await res.json();
-            if (!res.ok) {
+            if (!ok) {
                 alert(data.error || "Gagal menghapus rak buku");
                 return;
             }

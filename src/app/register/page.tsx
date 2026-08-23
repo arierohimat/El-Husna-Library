@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { safeFetch } from "@/lib/safe-fetch";
 
 const KELAS_OPTIONS = [
   "VII-A", "VII-B",
@@ -14,10 +16,12 @@ export default function RegisterPage() {
 
   const [form, setForm] = useState({
     name: "",
-    kelas: "",
-    email: "",
     username: "",
+    email: "",
     password: "",
+    confirmPassword: "",
+    role: "SISWA",
+    kelas: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -35,20 +39,24 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
+
+    if (form.password !== form.confirmPassword) {
+      setError("Konfirmasi password tidak cocok");
+      return;
+    }
+
+    setLoading(true);
     setSuccess("");
 
     try {
-      const res = await fetch("/api/auth/register", {
+      const { ok, data } = await safeFetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         setError(data.error || "Terjadi kesalahan");
       } else {
         setSuccess("Registrasi berhasil! Mengarahkan ke login...");

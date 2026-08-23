@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
   Dialog,
   DialogContent,
@@ -98,9 +99,8 @@ export default function BorrowingsPage() {
     !!b && b.status !== "RETURNED" && new Date(b.dueDate) < new Date();
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((d) => setUser(d.user))
+    safeFetch("/api/auth/session")
+      .then(({ data: d }) => setUser(d.user))
       .catch(() => setUser(null));
   }, []);
 
@@ -120,8 +120,7 @@ export default function BorrowingsPage() {
       if (search) p.append("search", search);
       if (status !== "all") p.append("status", status);
 
-      const r = await fetch(`/api/borrowings?${p}`);
-      const d = await r.json();
+      const { data: d } = await safeFetch(`/api/borrowings?${p}`);
       setBorrowings(d.borrowings || []);
       setTotalPages(d.pagination?.totalPages || 1);
       setTotalCount(d.pagination?.total || d.borrowings?.length || 0);
@@ -132,8 +131,7 @@ export default function BorrowingsPage() {
 
   const loadBooks = async () => {
     try {
-      const r = await fetch("/api/books?limit=100");
-      const d = await r.json();
+      const { data: d } = await safeFetch("/api/books?limit=100");
       setBooks(d.books || []);
     } catch (err) {
       console.error("Gagal memuat buku:", err);
@@ -160,13 +158,12 @@ export default function BorrowingsPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/borrowings", {
+      const { ok, data } = await safeFetch("/api/borrowings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookId: borrowBookId, borrowDate, dueDate }),
       });
-      const data = await res.json();
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal meminjam buku"));
         return;
       }
@@ -188,13 +185,12 @@ export default function BorrowingsPage() {
     setError("");
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/borrowings/${selected.id}`, {
+      const { ok, data } = await safeFetch(`/api/borrowings/${selected.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
       });
-      const data = await res.json();
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal mengembalikan buku"));
         return;
       }

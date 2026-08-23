@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
   Dialog,
   DialogContent,
@@ -96,9 +97,8 @@ export default function UsersPage() {
   const [formData, setFormData] = useState(emptyForm);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((d) => setUser(d.user))
+    safeFetch("/api/auth/session")
+      .then(({ data: d }) => setUser(d.user))
       .catch(() => setUser(null));
   }, []);
 
@@ -116,8 +116,7 @@ export default function UsersPage() {
       if (search) params.append("search", search);
       if (roleFilter !== "all") params.append("role", roleFilter);
 
-      const res = await fetch(`/api/users?${params}`);
-      const data = await res.json();
+      const { data } = await safeFetch(`/api/users?${params}`);
       setUsers(data.users || []);
       setTotalPages(data.pagination?.totalPages || 1);
       setTotalCount(data.pagination?.total || data.users?.length || 0);
@@ -173,15 +172,13 @@ export default function UsersPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/users", {
+      const { ok, data } = await safeFetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal menambahkan user"));
         return;
       }
@@ -217,15 +214,13 @@ export default function UsersPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/users/${selectedUser.id}`, {
+      const { ok, data } = await safeFetch(`/api/users/${selectedUser.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal mengupdate user"));
         return;
       }
@@ -245,13 +240,11 @@ export default function UsersPage() {
     if (!selectedUser) return;
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/users/${selectedUser.id}`, {
+      const { ok, data } = await safeFetch(`/api/users/${selectedUser.id}`, {
         method: "DELETE",
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         alert(getErrorMessage(data, "Gagal menghapus user"));
         return;
       }

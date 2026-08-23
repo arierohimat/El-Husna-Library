@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
   Card,
   CardContent,
@@ -90,9 +91,8 @@ export default function ClusteringPage() {
 
   // Fetch session user
   useEffect(() => {
-    fetch("/api/auth/me")
-      .then((res) => res.json())
-      .then((data) => {
+    safeFetch("/api/auth/session")
+      .then(({ data }) => {
         if (data.user) {
           setUserSession({ name: data.user.name, role: data.user.role });
         }
@@ -103,9 +103,8 @@ export default function ClusteringPage() {
   // Fetch clustering history
   const fetchHistory = useCallback(async () => {
     try {
-      const res = await fetch("/api/clustering/history");
-      if (res.ok) {
-        const data = await res.json();
+      const { ok, data } = await safeFetch("/api/clustering/history");
+      if (ok) {
         setHistory(data.runs || []);
       }
     } catch (error) {
@@ -118,10 +117,9 @@ export default function ClusteringPage() {
     setLoading(true);
     try {
       const url = runId ? `/api/clustering?runId=${runId}` : "/api/clustering";
-      const res = await fetch(url);
-      const data = await res.json();
+      const { ok, data } = await safeFetch(url);
 
-      if (res.ok) {
+      if (ok) {
         setAvailableCount(data.availableCount || 0);
         setCurrentRun(data.run || null);
         if (data.run?.runId) {
@@ -157,13 +155,11 @@ export default function ClusteringPage() {
 
     setProcessing(true);
     try {
-      const res = await fetch("/api/clustering", {
+      const { ok, data } = await safeFetch("/api/clustering", {
         method: "POST",
       });
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
+      if (ok && data.success) {
         toast.success(data.message || "Proses clustering K-Means berhasil dijalankan!");
         setCurrentRun(data.summary);
         setSelectedRunId(data.summary.runId);

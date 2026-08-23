@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
   Card,
   CardContent,
@@ -128,9 +129,8 @@ export default function ReportsPage() {
   }, [reportType, startDate, endDate, user]);
 
   const fetchUser = () => {
-    fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data) => {
+    safeFetch("/api/auth/session")
+      .then(({ data }) => {
         setUser(data.user);
       })
       .catch(() => {
@@ -150,11 +150,10 @@ export default function ReportsPage() {
       if (startDate) params.append("startDate", startDate);
       if (endDate) params.append("endDate", endDate);
 
-      const response = await fetch(`/api/reports?${params}`);
-      const result = await response.json();
+      const { ok, data: result } = await safeFetch(`/api/reports?${params}`);
 
-      if (!response.ok) {
-        throw new Error(result.message || "Gagal mengambil laporan");
+      if (!ok) {
+        throw new Error(result.error || result.message || "Gagal mengambil laporan");
       }
 
       setData(result.data);

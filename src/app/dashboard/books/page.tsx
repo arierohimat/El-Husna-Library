@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
   Dialog,
   DialogContent,
@@ -314,14 +315,12 @@ export default function BooksPage() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((d) => {
+    safeFetch("/api/auth/session")
+      .then(({ data: d }) => {
         if (!d.user) {
           router.push("/");
         } else if (d.user.role === "GURU") {
           router.push("/dashboard/guru");
-
         } else {
           setUser(d.user);
         }
@@ -348,8 +347,7 @@ export default function BooksPage() {
       if (search.trim()) p.append("search", search.trim());
       if (category !== "all") p.append("category", category);
       if (bookshelfFilter !== "all") p.append("bookshelfId", bookshelfFilter);
-      const res = await fetch(`/api/books?${p}`);
-      const data = await res.json();
+      const { data } = await safeFetch(`/api/books?${p}`);
       setBooks(data.books || []);
       setTotalPages(data.pagination?.totalPages || 1);
       setTotalCount(data.pagination?.total || data.books?.length || 0);
@@ -360,8 +358,7 @@ export default function BooksPage() {
 
   const fetchBookshelves = async () => {
     try {
-      const res = await fetch("/api/bookshelves");
-      const data = await res.json();
+      const { data } = await safeFetch("/api/bookshelves");
       setBookshelves(data.bookshelves?.map((s: any) => ({ id: s.id, name: s.name })) || []);
     } catch { }
   };
@@ -440,16 +437,13 @@ export default function BooksPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/books", {
+      const { ok, data } = await safeFetch("/api/books", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      console.log("Response add:", { status: res.status, data });
-
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal menambahkan buku"));
         return;
       }
@@ -485,16 +479,13 @@ export default function BooksPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/books/${selectedBook.id}`, {
+      const { ok, data } = await safeFetch(`/api/books/${selectedBook.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      console.log("Response edit:", { status: res.status, data });
-
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal mengupdate buku"));
         return;
       }
@@ -515,13 +506,11 @@ export default function BooksPage() {
     if (!selectedBook) return;
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/books/${selectedBook.id}`, {
+      const { ok, data } = await safeFetch(`/api/books/${selectedBook.id}`, {
         method: "DELETE",
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         alert(getErrorMessage(data, "Gagal menghapus buku"));
         return;
       }

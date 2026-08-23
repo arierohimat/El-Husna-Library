@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
     BookOpen,
     TrendingUp,
@@ -20,7 +22,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 
 interface Book {
@@ -65,14 +66,12 @@ export default function ReadingProgressPage() {
     const router = useRouter();
 
     useEffect(() => {
-        fetch("/api/auth/session")
-            .then((r) => r.json())
-            .then((d) => {
+        safeFetch("/api/auth/session")
+            .then(({ data: d }) => {
                 if (!d.user) {
                     router.push("/");
                 } else if (d.user.role !== "SISWA") {
                     router.push("/dashboard/guru");
-
                 } else {
                     setUser(d.user);
                 }
@@ -89,13 +88,11 @@ export default function ReadingProgressPage() {
         setLoading(true);
         try {
             // Fetch active borrowings
-            const bRes = await fetch("/api/borrowings?status=ACTIVE", { cache: "no-store" });
-            const bData = await bRes.json();
+            const { data: bData } = await safeFetch("/api/borrowings?status=ACTIVE");
             setBorrowings(bData.borrowings || []);
 
             // Fetch current progress
-            const pRes = await fetch("/api/reading-progress", { cache: "no-store" });
-            const pData = await pRes.json();
+            const { data: pData } = await safeFetch("/api/reading-progress");
             setProgressList(pData.progress || []);
         } finally {
             setLoading(false);
@@ -135,7 +132,7 @@ export default function ReadingProgressPage() {
         setError("");
 
         try {
-            const res = await fetch("/api/reading-progress", {
+            const { ok, data: d } = await safeFetch("/api/reading-progress", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -146,8 +143,7 @@ export default function ReadingProgressPage() {
                 }),
             });
 
-            if (!res.ok) {
-                const d = await res.json();
+            if (!ok) {
                 throw new Error(d.error || "Gagal mengupdate progress");
             }
 

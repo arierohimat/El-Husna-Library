@@ -14,6 +14,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { BookOpen, Lock, User, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { safeFetch } from "@/lib/safe-fetch";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +46,7 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const { ok, data } = await safeFetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,9 +54,7 @@ export default function Home() {
         body: JSON.stringify({ email: cleanEmail, password: cleanPassword }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (!ok) {
         setError(data.error || "Login gagal. Silakan coba lagi.");
         setIsLoading(false);
         return;

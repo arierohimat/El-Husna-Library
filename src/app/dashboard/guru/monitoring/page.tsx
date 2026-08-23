@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
     BookOpen,
     Users,
@@ -14,7 +16,6 @@ import {
     ChevronDown,
     ChevronUp,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface StudentStats {
     totalBorrowed: number;
@@ -91,9 +92,8 @@ export default function GuruMonitoringPage() {
     const router = useRouter();
 
     useEffect(() => {
-        fetch("/api/auth/session")
-            .then((r) => r.json())
-            .then((d) => {
+        safeFetch("/api/auth/session")
+            .then(({ data: d }) => {
                 if (!d.user) {
                     router.push("/");
                 } else if (d.user.role !== "GURU") {
@@ -113,8 +113,7 @@ export default function GuruMonitoringPage() {
     const loadData = async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/monitoring", { cache: "no-store" });
-            const d = await res.json();
+            const { data: d } = await safeFetch("/api/monitoring");
             setData(d);
         } finally {
             setLoading(false);

@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
 
-        const progress = await db.readingProgress.findMany({
+        const rawProgress = await db.readingProgress.findMany({
             where: { userId },
             include: {
                 book: {
@@ -35,6 +35,19 @@ export async function GET(request: NextRequest) {
             },
             orderBy: { updatedAt: "desc" },
         });
+
+        const progress = rawProgress.map((p) => ({
+            ...p,
+            book: p.book
+                ? {
+                    ...p.book,
+                    coverImage:
+                        p.book.coverImage && p.book.coverImage.length > 2048
+                            ? null
+                            : p.book.coverImage,
+                }
+                : null,
+        }));
 
         return NextResponse.json({ progress });
     } catch (error) {

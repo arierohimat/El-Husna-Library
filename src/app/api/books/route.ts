@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
       where.bookshelfId = bookshelfId;
     }
 
-    const [books, total] = await Promise.all([
+    const [rawBooks, total] = await Promise.all([
       db.book.findMany({
         where,
         skip: (page - 1) * limit,
@@ -54,13 +54,18 @@ export async function GET(request: NextRequest) {
       db.book.count({ where }),
     ]);
 
+    const books = rawBooks.map((b) => ({
+      ...b,
+      coverImage: b.coverImage && b.coverImage.length > 2048 ? null : b.coverImage,
+    }));
+
     return NextResponse.json({
       books,
       pagination: {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit),
+        totalPages: Math.ceil(total / limit) || 1,
       },
     });
   } catch (error) {

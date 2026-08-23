@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { safeFetch } from "@/lib/safe-fetch";
 import {
   Dialog,
   DialogContent,
@@ -78,9 +79,8 @@ export default function MembersPage() {
   const [formData, setFormData] = useState(emptyForm);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((d) => setUser(d.user))
+    safeFetch("/api/auth/session")
+      .then(({ data: d }) => setUser(d.user))
       .catch(() => setUser(null));
   }, []);
 
@@ -99,8 +99,7 @@ export default function MembersPage() {
       });
       if (search) params.append("search", search);
 
-      const res = await fetch(`/api/members?${params}`);
-      const data = await res.json();
+      const { data } = await safeFetch(`/api/members?${params}`);
       setSiswaList(data.members || []);
       setTotalPages(data.pagination?.totalPages || 1);
       setTotalCount(data.pagination?.total || data.members?.length || 0);
@@ -152,15 +151,13 @@ export default function MembersPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/members", {
+      const { ok, data } = await safeFetch("/api/members", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal menambahkan anggota"));
         return;
       }
@@ -197,15 +194,13 @@ export default function MembersPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/members/${selectedSiswa.id}`, {
+      const { ok, data } = await safeFetch(`/api/members/${selectedSiswa.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         setError(getErrorMessage(data, "Gagal mengupdate anggota"));
         return;
       }
@@ -226,13 +221,11 @@ export default function MembersPage() {
     if (!selectedSiswa) return;
     setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/members/${selectedSiswa.id}`, {
+      const { ok, data } = await safeFetch(`/api/members/${selectedSiswa.id}`, {
         method: "DELETE",
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!ok) {
         alert(getErrorMessage(data, "Gagal menghapus anggota"));
         return;
       }

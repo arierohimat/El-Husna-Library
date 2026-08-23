@@ -55,8 +55,8 @@ export default async function AdminDashboard() {
         dueDate: { lt: new Date() },
       },
       include: {
-        user: true,
-        book: true,
+        user: { select: { id: true, name: true } },
+        book: { select: { id: true, title: true } },
       },
       take: 5,
       orderBy: {
@@ -75,6 +75,7 @@ export default async function AdminDashboard() {
 
   const topUsers = await db.user.findMany({
     where: { id: { in: topUserIds } },
+    select: { id: true, name: true },
   });
 
   const topBorrowers = topBorrowGroups.map((item) => {

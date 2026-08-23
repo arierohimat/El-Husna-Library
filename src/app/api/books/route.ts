@@ -50,14 +50,12 @@ export async function GET(request: NextRequest) {
             },
           },
         },
+        omit: { coverImage: true },
       }),
       db.book.count({ where }),
     ]);
 
-    const books = rawBooks.map((b) => ({
-      ...b,
-      coverImage: b.coverImage && b.coverImage.length > 2048 ? null : b.coverImage,
-    }));
+    const books = rawBooks;
 
     return NextResponse.json({
       books,

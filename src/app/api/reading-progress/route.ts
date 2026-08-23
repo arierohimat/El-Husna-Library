@@ -29,25 +29,13 @@ export async function GET(request: NextRequest) {
                         id: true,
                         title: true,
                         author: true,
-                        coverImage: true,
                     },
                 },
             },
             orderBy: { updatedAt: "desc" },
         });
 
-        const progress = rawProgress.map((p) => ({
-            ...p,
-            book: p.book
-                ? {
-                    ...p.book,
-                    coverImage:
-                        p.book.coverImage && p.book.coverImage.length > 2048
-                            ? null
-                            : p.book.coverImage,
-                }
-                : null,
-        }));
+        const progress = rawProgress;
 
         return NextResponse.json({ progress });
     } catch (error) {

@@ -46,7 +46,9 @@ export default async function SiswaDashboard() {
       userId: session.userId,
     },
     include: {
-      book: true,
+      book: {
+        select: { id: true, title: true, author: true }
+      },
     },
     orderBy: {
       borrowDate: "desc",
@@ -60,7 +62,9 @@ export default async function SiswaDashboard() {
       dueDate: { lt: new Date() },
     },
     include: {
-      book: true,
+      book: {
+        select: { id: true, title: true }
+      },
     },
     orderBy: {
       dueDate: "asc",
@@ -75,7 +79,9 @@ export default async function SiswaDashboard() {
       status: "ACTIVE",
     },
     include: {
-      book: true,
+      book: {
+        select: { id: true, title: true, author: true }
+      },
     },
   });
 
@@ -93,7 +99,9 @@ export default async function SiswaDashboard() {
       userId: session.userId,
     },
     include: {
-      ebook: true,
+      ebook: {
+        select: { id: true, title: true, author: true, category: true }
+      },
     },
     orderBy: {
       lastReadAt: "desc",

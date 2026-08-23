@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
           year: true,
           category: true,
           description: true,
-          coverImage: true,
           fileSize: true,
           fileName: true,
           createdAt: true,
@@ -51,11 +50,7 @@ export async function GET(request: NextRequest) {
       db.eBook.count({ where }),
     ]);
 
-    // Strip coverImage if it's a huge base64 string to keep payload small
-    const sanitized = ebooks.map((eb) => ({
-      ...eb,
-      coverImage: eb.coverImage && eb.coverImage.length > 2048 ? null : eb.coverImage,
-    }));
+    const sanitized = ebooks;
 
     return NextResponse.json({
       ebooks: sanitized,

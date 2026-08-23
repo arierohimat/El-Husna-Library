@@ -29,7 +29,12 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ book });
+    const sanitized = {
+      ...book,
+      coverImage: book.coverImage && book.coverImage.length > 2048 ? null : book.coverImage,
+    };
+
+    return NextResponse.json({ book: sanitized });
   } catch (error) {
     console.error("Get book error:", error);
     return NextResponse.json(
@@ -113,7 +118,7 @@ export async function PUT(
         year,
         category,
         stock,
-        coverImage: coverImage || null,
+        coverImage: coverImage && coverImage.length <= 2048 ? coverImage : null,
         bookshelfId: bookshelfId || null,
       },
       include: {

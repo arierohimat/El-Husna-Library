@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
         year,
         category,
         stock,
-        coverImage: coverImage || null,
+        coverImage: coverImage && coverImage.length <= 2048 ? coverImage : null,
         bookshelfId: bookshelfId || null,
       },
       include: {

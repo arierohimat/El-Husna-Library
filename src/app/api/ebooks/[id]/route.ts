@@ -14,7 +14,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const { id } = await params;
   const ebook = await db.eBook.findUnique({ where: { id } });
   if (!ebook) return NextResponse.json({ error: "E-Book tidak ditemukan" }, { status: 404 });
-  return NextResponse.json({ ebook });
+
+  const sanitized = {
+    ...ebook,
+    coverImage: ebook.coverImage && ebook.coverImage.length > 2048 ? null : ebook.coverImage,
+  };
+
+  return NextResponse.json({ ebook: sanitized });
 }
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
